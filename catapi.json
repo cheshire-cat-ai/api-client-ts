@@ -1,0 +1,1463 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "😸 Cheshire-Cat API",
+        "description": "Customizable AI architecture",
+        "version": "0.0.5",
+        "x-logo": {
+            "url": "https://github.com/cheshire-cat-ai/core/blob/main/cheshire-cat.jpeg?raw=true"
+        }
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "Status"
+                ],
+                "summary": "Home",
+                "description": "Server status",
+                "operationId": "home",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Home",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/settings/": {
+            "get": {
+                "tags": [
+                    "Settings - General"
+                ],
+                "summary": "Get Settings",
+                "operationId": "get_settings",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Limit",
+                            "type": "integer",
+                            "default": 100
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Page",
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Search",
+                            "type": "string",
+                            "default": ""
+                        },
+                        "name": "search",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            },
+            "post": {
+                "tags": [
+                    "Settings - General"
+                ],
+                "summary": "Create Setting",
+                "operationId": "create_setting",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Setting"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/settings/{settingId}": {
+            "get": {
+                "tags": [
+                    "Settings - General"
+                ],
+                "summary": "Get Setting",
+                "operationId": "get_setting",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Settingid",
+                            "type": "string"
+                        },
+                        "name": "settingId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            },
+            "delete": {
+                "tags": [
+                    "Settings - General"
+                ],
+                "summary": "Delete Setting",
+                "operationId": "delete_setting",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Settingid",
+                            "type": "string"
+                        },
+                        "name": "settingId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            },
+            "patch": {
+                "tags": [
+                    "Settings - General"
+                ],
+                "summary": "Update Setting",
+                "operationId": "update_setting",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Settingid",
+                            "type": "string"
+                        },
+                        "name": "settingId",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Setting"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/settings/prompt/": {
+            "get": {
+                "tags": [
+                    "Settings - Prompt"
+                ],
+                "summary": "Get Default Prompt Settings",
+                "operationId": "get_default_prompt_settings",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PromptSettings"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/settings/llm/": {
+            "get": {
+                "tags": [
+                    "Settings - Large Language Model"
+                ],
+                "summary": "Get Settings",
+                "operationId": "get_settings",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/settings/llm/{languageModelName}": {
+            "put": {
+                "tags": [
+                    "Settings - Large Language Model"
+                ],
+                "summary": "Upsert Llm Setting",
+                "operationId": "upsert_llm_setting",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Languagemodelname",
+                            "type": "string"
+                        },
+                        "name": "languageModelName",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "title": "Payload",
+                                "type": "object"
+                            },
+                            "example": {
+                                "openai_api_key": "your-key-here"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/settings/embedder/": {
+            "get": {
+                "tags": [
+                    "Settings - Embedder"
+                ],
+                "summary": "Get Settings",
+                "operationId": "get_settings",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/settings/embedder/{languageEmbedderName}": {
+            "put": {
+                "tags": [
+                    "Settings - Embedder"
+                ],
+                "summary": "Upsert Embedder Setting",
+                "operationId": "upsert_embedder_setting",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Languageembeddername",
+                            "type": "string"
+                        },
+                        "name": "languageEmbedderName",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "title": "Payload",
+                                "type": "object"
+                            },
+                            "example": {
+                                "openai_api_key": "your-key-here"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/plugins/": {
+            "get": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "List Available Plugins",
+                "description": "List available plugins",
+                "operationId": "list_available_plugins",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PluginsList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/plugins/install/": {
+            "post": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "Install Plugin",
+                "description": "Install a new plugin from a zip file",
+                "operationId": "install_plugin",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_install_plugin"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Install Plugin",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/plugins/toggle/{plugin_id}": {
+            "put": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "Toggle Plugin",
+                "description": "Enable or disable a single plugin",
+                "operationId": "toggle_plugin",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Plugin Id",
+                            "type": "string"
+                        },
+                        "name": "plugin_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Toggle Plugin",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/plugins/{plugin_id}": {
+            "get": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "Get Plugin Details",
+                "description": "Returns information on a single plugin",
+                "operationId": "get_plugin_details",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Plugin Id",
+                            "type": "string"
+                        },
+                        "name": "plugin_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Plugin"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/memory/point/{memory_id}/": {
+            "delete": {
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Delete Element In Memory",
+                "description": "Delete specific element in memory.",
+                "operationId": "delete_element_in_memory",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Memory Id",
+                            "type": "string"
+                        },
+                        "name": "memory_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Delete Element In Memory",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/memory/recall/": {
+            "get": {
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Recall Memories From Text",
+                "description": "Search k memories similar to given text.",
+                "operationId": "recall_memories_from_text",
+                "parameters": [
+                    {
+                        "description": "Find memories similar to this text.",
+                        "required": true,
+                        "schema": {
+                            "title": "Text",
+                            "type": "string",
+                            "description": "Find memories similar to this text."
+                        },
+                        "name": "text",
+                        "in": "query"
+                    },
+                    {
+                        "description": "How many memories to return.",
+                        "required": false,
+                        "schema": {
+                            "title": "K",
+                            "type": "integer",
+                            "description": "How many memories to return.",
+                            "default": 100
+                        },
+                        "name": "k",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MemoryRecall"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/memory/collections/": {
+            "get": {
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Get Collections",
+                "operationId": "get_collections",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CollectionsList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/memory/collections/{collection_id}": {
+            "delete": {
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Wipe Single Collection",
+                "description": "Delete and recreate a collection",
+                "operationId": "wipe_single_collection",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Collection Id",
+                            "type": "string"
+                        },
+                        "name": "collection_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Wipe Single Collection",
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/memory/wipe-collections/": {
+            "delete": {
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Wipe Collections",
+                "description": "Delete and create all collections",
+                "operationId": "wipe_collections",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Wipe Collections",
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/memory/working-memory/conversation-history/": {
+            "delete": {
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Wipe Conversation History",
+                "description": "Delete conversation history from working memory",
+                "operationId": "wipe_conversation_history",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WipedConversation"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/rabbithole/": {
+            "post": {
+                "tags": [
+                    "Rabbit Hole"
+                ],
+                "summary": "Upload File",
+                "description": "Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.\nChunks will be then vectorized and stored into documents memory.",
+                "operationId": "upload_file",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_file"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/rabbithole/web/": {
+            "post": {
+                "tags": [
+                    "Rabbit Hole"
+                ],
+                "summary": "Upload Url",
+                "operationId": "upload_url",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_url"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WebResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/rabbithole/memory/": {
+            "post": {
+                "tags": [
+                    "Rabbit Hole"
+                ],
+                "summary": "Upload Memory",
+                "description": "Upload a memory json file to the CCat memory",
+                "operationId": "upload_memory",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_memory"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Upload Memory",
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        },
+        "/admin/": {
+            "get": {
+                "summary": "Get Injected Admin",
+                "operationId": "get_injected_admin",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": null
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Body_install_plugin": {
+                "title": "Body_install_plugin",
+                "required": [
+                    "file"
+                ],
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "title": "File",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "Body_upload_file": {
+                "title": "Body_upload_file",
+                "required": [
+                    "file"
+                ],
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "title": "File",
+                        "type": "string",
+                        "format": "binary"
+                    },
+                    "chunk_size": {
+                        "title": "Chunk Size",
+                        "type": "integer",
+                        "description": "Maximum length of each chunk after the document is split (in characters)",
+                        "default": 400
+                    },
+                    "chunk_overlap": {
+                        "title": "Chunk Overlap",
+                        "type": "integer",
+                        "description": "Chunk overlap (in characters)",
+                        "default": 100
+                    }
+                }
+            },
+            "Body_upload_memory": {
+                "title": "Body_upload_memory",
+                "required": [
+                    "file"
+                ],
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "title": "File",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "Body_upload_url": {
+                "title": "Body_upload_url",
+                "required": [
+                    "url"
+                ],
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "title": "Url",
+                        "type": "string",
+                        "description": "URL of the website to which you want to save the content"
+                    },
+                    "chunk_size": {
+                        "title": "Chunk Size",
+                        "type": "integer",
+                        "description": "Maximum length of each chunk after the document is split (in characters)",
+                        "default": 400
+                    },
+                    "chunk_overlap": {
+                        "title": "Chunk Overlap",
+                        "type": "integer",
+                        "description": "Chunk overlap (in characters)",
+                        "default": 100
+                    }
+                }
+            },
+            "Collection": {
+                "title": "Collection",
+                "required": [
+                    "name",
+                    "vectors_count"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "vectors_count": {
+                        "title": "Vectors Count",
+                        "type": "integer"
+                    }
+                }
+            },
+            "CollectionData": {
+                "title": "CollectionData",
+                "required": [
+                    "page_content",
+                    "metadata",
+                    "score",
+                    "vector"
+                ],
+                "type": "object",
+                "properties": {
+                    "page_content": {
+                        "title": "Page Content",
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/MetaData"
+                    },
+                    "score": {
+                        "title": "Score",
+                        "type": "integer"
+                    },
+                    "vector": {
+                        "title": "Vector",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            },
+            "CollectionsList": {
+                "title": "CollectionsList",
+                "required": [
+                    "status",
+                    "results",
+                    "collections"
+                ],
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    },
+                    "results": {
+                        "title": "Results",
+                        "type": "integer"
+                    },
+                    "collections": {
+                        "title": "Collections",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Collection"
+                        }
+                    }
+                }
+            },
+            "FileResponse": {
+                "title": "FileResponse",
+                "required": [
+                    "status",
+                    "filename",
+                    "content_type",
+                    "info"
+                ],
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    },
+                    "filename": {
+                        "title": "Filename",
+                        "type": "string"
+                    },
+                    "content_type": {
+                        "title": "Content Type",
+                        "type": "string"
+                    },
+                    "info": {
+                        "title": "Info",
+                        "type": "string"
+                    }
+                }
+            },
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                }
+            },
+            "MemoryRecall": {
+                "title": "MemoryRecall",
+                "required": [
+                    "query",
+                    "vectors"
+                ],
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "$ref": "#/components/schemas/QueryData"
+                    },
+                    "vectors": {
+                        "$ref": "#/components/schemas/VectorsData"
+                    }
+                }
+            },
+            "MetaData": {
+                "title": "MetaData",
+                "required": [
+                    "source",
+                    "when"
+                ],
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "title": "Source",
+                        "type": "string"
+                    },
+                    "when": {
+                        "title": "When",
+                        "type": "integer"
+                    }
+                }
+            },
+            "Plugin": {
+                "title": "Plugin",
+                "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "author_name",
+                    "author_url",
+                    "plugin_url",
+                    "tags",
+                    "thumb",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string"
+                    },
+                    "author_name": {
+                        "title": "Author Name",
+                        "type": "string"
+                    },
+                    "author_url": {
+                        "title": "Author Url",
+                        "type": "string"
+                    },
+                    "plugin_url": {
+                        "title": "Plugin Url",
+                        "type": "string"
+                    },
+                    "tags": {
+                        "title": "Tags",
+                        "type": "string"
+                    },
+                    "thumb": {
+                        "title": "Thumb",
+                        "type": "string"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "type": "string"
+                    }
+                }
+            },
+            "PluginsList": {
+                "title": "PluginsList",
+                "required": [
+                    "results",
+                    "installed",
+                    "registry"
+                ],
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "title": "Results",
+                        "type": "integer"
+                    },
+                    "installed": {
+                        "title": "Installed",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Plugin"
+                        }
+                    },
+                    "registry": {
+                        "title": "Registry",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Plugin"
+                        }
+                    }
+                }
+            },
+            "PromptSettings": {
+                "title": "PromptSettings",
+                "required": [
+                    "prefix",
+                    "use_episodic_memory",
+                    "use_declarative_memory",
+                    "use_procedural_memory"
+                ],
+                "type": "object",
+                "properties": {
+                    "prefix": {
+                        "title": "Prefix",
+                        "type": "string"
+                    },
+                    "use_episodic_memory": {
+                        "title": "Use Episodic Memory",
+                        "type": "boolean"
+                    },
+                    "use_declarative_memory": {
+                        "title": "Use Declarative Memory",
+                        "type": "boolean"
+                    },
+                    "use_procedural_memory": {
+                        "title": "Use Procedural Memory",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "QueryData": {
+                "title": "QueryData",
+                "required": [
+                    "text",
+                    "vector"
+                ],
+                "type": "object",
+                "properties": {
+                    "text": {
+                        "title": "Text",
+                        "type": "string"
+                    },
+                    "vector": {
+                        "title": "Vector",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            },
+            "Setting": {
+                "title": "Setting",
+                "required": [
+                    "name",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "setting_id": {
+                        "title": "Setting Id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "value": {
+                        "title": "Value",
+                        "type": "object"
+                    },
+                    "category": {
+                        "title": "Category",
+                        "type": "string",
+                        "default": "general"
+                    },
+                    "enabled": {
+                        "title": "Enabled",
+                        "type": "boolean",
+                        "default": true
+                    },
+                    "createdAt": {
+                        "title": "Createdat",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "title": "Updatedat",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Location",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        }
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                }
+            },
+            "VectorsData": {
+                "title": "VectorsData",
+                "required": [
+                    "embedder",
+                    "collections"
+                ],
+                "type": "object",
+                "properties": {
+                    "embedder": {
+                        "title": "Embedder",
+                        "type": "string"
+                    },
+                    "collections": {
+                        "title": "Collections",
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/CollectionData"
+                            }
+                        }
+                    }
+                }
+            },
+            "WebResponse": {
+                "title": "WebResponse",
+                "required": [
+                    "status",
+                    "url",
+                    "info"
+                ],
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    },
+                    "url": {
+                        "title": "Url",
+                        "type": "string"
+                    },
+                    "info": {
+                        "title": "Info",
+                        "type": "string"
+                    }
+                }
+            },
+            "WipedConversation": {
+                "title": "WipedConversation",
+                "required": [
+                    "deleted"
+                ],
+                "type": "object",
+                "properties": {
+                    "deleted": {
+                        "title": "Deleted",
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        "securitySchemes": null
+    }
+}
