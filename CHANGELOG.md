@@ -1,5 +1,12 @@
 # ccat-api
 
+## 0.2.1
+
+### Patch Changes
+
+- 16b9513: - The default port is now '1865'
+  - init() now returns the class instance
+
 ## 0.2.0
 
 ### Minor Changes
