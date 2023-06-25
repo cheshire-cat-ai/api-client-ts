@@ -1,5 +1,15 @@
 # ccat-api
 
+## 0.2.2
+
+### Patch Changes
+
+- 850bd81: Changes:
+
+  - Added types for websocket.
+  - Added eslint.
+  - Now throwing error codes instead of strings.
+
 ## 0.2.1
 
 ### Patch Changes
