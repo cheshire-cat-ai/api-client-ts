@@ -4,7 +4,7 @@ import { PromptSettings } from './models/PromptSettings'
 import { 
     CatSettings,
     SocketResponse, SocketError, 
-    ErrorCodes, 
+    ErrorCode, 
     isMessageResponse 
 } from './utils'
 
@@ -15,7 +15,7 @@ export class CatClient {
     private connectedHandler?: () => void
     private closedHandler?: () => void
     private messageHandler?: (data: SocketResponse) => void
-    private errorHandler?: (error: Error, event?: Event) => void
+    private errorHandler?: (error: ErrorCode, event?: WebSocket.ErrorEvent) => void
     
     constructor(settings: CatSettings) {
         this.config = {
@@ -29,32 +29,36 @@ export class CatClient {
         if (this.config.instant) this.init()
     }
 
+    private initWebSocket() {
+        this.ws = new WebSocket(`ws${this.url}/${this.config.wsPath}`)
+        this.ws.onopen = () => {
+            if (this.connectedHandler) this.connectedHandler()
+        }
+        this.ws.onclose = () => {
+            if (this.closedHandler) this.closedHandler()
+        }
+        this.ws.onmessage = (event) => {
+            if (this.messageHandler) {
+                const data = JSON.parse(event.data.toString()) as SocketError | SocketResponse
+                if (isMessageResponse(data)) {
+                    this.messageHandler(data)
+                } else if (this.errorHandler) {
+                    const errorCode = data.code as keyof typeof ErrorCode
+                    const errorMessage = ErrorCode[errorCode] || ErrorCode.ApiError
+                    this.errorHandler(errorMessage)
+                }
+            }
+        }
+        this.ws.onerror = (event) => {
+            if (this.errorHandler) {
+                this.errorHandler(ErrorCode.WebSocketConnectionError, event)
+            }
+        }
+    }
+
     init() {
         if (!this.ws && !this.apiClient) {
-            this.ws = new WebSocket(`ws${this.url}/${this.config.wsPath}`)
-            this.ws.onopen = () => {
-                if (this.connectedHandler) this.connectedHandler()
-            }
-            this.ws.onclose = () => {
-                if (this.closedHandler) this.closedHandler()
-            }
-            this.ws.onmessage = (event: MessageEvent<string>) => {
-                if (this.messageHandler) {
-                    const data = JSON.parse(event.data) as SocketError | SocketResponse
-                    if (isMessageResponse(data)) {
-                        this.messageHandler(data)
-                    } else if (this.errorHandler) {
-                        const errorCode = data.code as keyof typeof ErrorCodes
-                        const errorMessage = ErrorCodes[errorCode] || ErrorCodes.APIError
-                        this.errorHandler(new Error(errorMessage))
-                    }
-                }
-            }
-            this.ws.onerror = (event: Event) => {
-                if (this.errorHandler) {
-                    this.errorHandler(new Error(ErrorCodes.WebSocketConnectionError), event)
-                }
-            }
+            this.initWebSocket()
             this.apiClient = new CCatAPI({
                 BASE: `http${this.url}`,
                 HEADERS: {
@@ -62,7 +66,7 @@ export class CatClient {
                 }
             })
             return this
-        } else throw new Error(ErrorCodes.AlreadyInitialized)
+        } else throw new Error("The Cheshire Cat Client was already initialized")
     }
 
     get api() {
@@ -74,10 +78,8 @@ export class CatClient {
     }
 
     send(message: string, settings?: PromptSettings) {
-        if (this.ws.readyState !== 1) {
-            const error = new Error(ErrorCodes.SocketClosed)
-            if (this.errorHandler) this.errorHandler(error)
-            else throw error
+        if (this.ws.readyState !== WebSocket.OPEN && this.errorHandler) {
+            this.errorHandler(ErrorCode.SocketClosed)
         }
         const jsonMessage = JSON.stringify({ 
             text: message, 
@@ -101,7 +103,7 @@ export class CatClient {
         return this
     }
 
-    onError(handler: (error: Error, event?: Event) => void) {
+    onError(handler: (error: ErrorCode, event?: WebSocket.ErrorEvent) => void) {
         this.errorHandler = handler
         return this
     }

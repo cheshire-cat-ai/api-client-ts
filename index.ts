@@ -5,7 +5,8 @@ export default CatClient;
 export * from './api/client';
 export * from './api/utils';
 
-export type { CancelablePromise, CancelError } from './api/core/CancelablePromise';
+export { CancelablePromise, CancelError } from './api/core/CancelablePromise';
+export { ApiError } from './api/core/ApiError';
 
 export type { BodyInstallPlugin } from './api/models/BodyInstallPlugin';
 export type { BodyUploadFile } from './api/models/BodyUploadFile';

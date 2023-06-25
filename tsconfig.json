@@ -1,4 +1,9 @@
 {
+  "include": [
+    ".eslintrc.cjs",
+    "./api/**/*.ts",
+    "index.ts"
+  ],
   "compilerOptions": {
     "useDefineForClassFields": true,
     "lib": [

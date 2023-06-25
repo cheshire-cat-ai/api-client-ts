@@ -8,20 +8,19 @@ export interface CatSettings {
     timeout?: number
 }
 
-export enum ErrorCodes {
-    IndexError = 'Something went wrong while processing your message. Please try again later.',
-    SocketClosed = 'The connection to the server was closed. Please try refreshing the page.',
-    WebSocketConnectionError = 'Something went wrong while connecting to the server. Please try again later.',
-    APIError = 'Something went wrong while sending your message. Please try refreshing the page.',
-    FailedRetries = 'Failed to connect WebSocket after 3 retries.',
-    AlreadyInitialized = 'The Cheshire Cat Client was already initialized'
+export enum ErrorCode {
+    IndexError,
+    SocketClosed,
+    WebSocketConnectionError,
+    ApiError,
+    FailedRetries
 }
 
 export interface SocketResponse {
     error: false
     type: 'notification' | 'chat'
     content: string
-    why: any
+    why: unknown
 }
 
 export interface SocketError {
