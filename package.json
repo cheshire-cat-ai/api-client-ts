@@ -2,13 +2,22 @@
   "name": "ccat-api",
   "description": "API Client to communicate with the Cheshire Cat AI",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "zAlweNy26",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "keywords": [
-    "ccat", "cheshire-cat", "api", "client", "fastapi", "openapi", "ai", "llm", "chat", "bot"
+    "ccat",
+    "cheshire-cat",
+    "api",
+    "client",
+    "fastapi",
+    "openapi",
+    "ai",
+    "llm",
+    "chat",
+    "bot"
   ],
   "repository": {
     "type": "git",
