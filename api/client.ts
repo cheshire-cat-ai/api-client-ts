@@ -23,7 +23,7 @@ export class CatClient {
             instant: true,
             timeout: 10000,
             wsPath: 'ws',
-            port: '',
+            port: '1865',
             ...settings
         }
         if (this.config.instant) this.init()
@@ -61,6 +61,7 @@ export class CatClient {
                     'access_token': this.config.authKey ?? '',
                 }
             })
+            return this
         } else throw new Error(ErrorCodes.AlreadyInitialized)
     }
 
