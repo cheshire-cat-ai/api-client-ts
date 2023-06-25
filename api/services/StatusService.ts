@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { Status } from '../models/Status';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
@@ -11,10 +13,10 @@ export class StatusService {
     /**
      * Home
      * Server status
-     * @returns any Successful Response
+     * @returns Status Successful Response
      * @throws ApiError
      */
-    public home(): CancelablePromise<Record<string, any>> {
+    public home(): CancelablePromise<Status> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/',

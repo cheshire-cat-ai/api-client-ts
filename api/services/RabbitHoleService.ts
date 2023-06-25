@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Body_upload_file } from '../models/Body_upload_file';
-import type { Body_upload_memory } from '../models/Body_upload_memory';
-import type { Body_upload_url } from '../models/Body_upload_url';
+import type { BodyUploadFile } from '../models/BodyUploadFile';
+import type { BodyUploadMemory } from '../models/BodyUploadMemory';
+import type { BodyUploadUrl } from '../models/BodyUploadUrl';
 import type { FileResponse } from '../models/FileResponse';
 import type { WebResponse } from '../models/WebResponse';
 
@@ -24,7 +24,7 @@ export class RabbitHoleService {
     public uploadFile({
 formData,
 }: {
-formData: Body_upload_file,
+formData: BodyUploadFile,
 }): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
@@ -45,7 +45,7 @@ formData: Body_upload_file,
     public uploadUrl({
 requestBody,
 }: {
-requestBody: Body_upload_url,
+requestBody: BodyUploadUrl,
 }): CancelablePromise<WebResponse> {
         return this.httpRequest.request({
             method: 'POST',
@@ -67,7 +67,7 @@ requestBody: Body_upload_url,
     public uploadMemory({
 formData,
 }: {
-formData: Body_upload_memory,
+formData: BodyUploadMemory,
 }): CancelablePromise<Record<string, any>> {
         return this.httpRequest.request({
             method: 'POST',

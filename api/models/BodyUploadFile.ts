@@ -2,11 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Body_upload_url = {
-    /**
-     * URL of the website to which you want to save the content
-     */
-    url: string;
+export type BodyUploadFile = {
+    file: Blob;
     /**
      * Maximum length of each chunk after the document is split (in characters)
      */

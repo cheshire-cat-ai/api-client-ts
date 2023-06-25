@@ -2,6 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Body_install_plugin = {
+export type BodyInstallPlugin = {
     file: Blob;
 };

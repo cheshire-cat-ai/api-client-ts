@@ -1,46 +1,12 @@
 import WebSocket from 'isomorphic-ws'
 import { CCatAPI } from './CCatAPI'
-
-interface CatSettings {
-    baseUrl: string
-    authKey?: string
-    port?: string
-    wsPath?: string
-    instant?: boolean
-    secure?: boolean
-    timeout?: number
-}
-
-enum ErrorCodes {
-    IndexError = 'Something went wrong while processing your message. Please try again later.',
-    SocketClosed = 'The connection to the server was closed. Please try refreshing the page.',
-    WebSocketConnectionError = 'Something went wrong while connecting to the server. Please try again later.',
-    APIError = 'Something went wrong while sending your message. Please try refreshing the page.',
-    FailedRetries = 'Failed to connect WebSocket after 3 retries.',
-    AlreadyInitialized = 'The Cheshire Cat Client was already initialized'
-}
-
-interface MessageResponse {
-    error: false
-    type: 'notification' | 'chat'
-    content: string
-    why: any
-}
-
-interface MessageError {
-    error: true
-    code: string
-}
-
-type PromptSettings = {
-    prefix: string
-} & {
-    [key: string]: boolean
-}
-
-const isMessageResponse = (value: unknown): value is MessageResponse => {
-    return !!(value && typeof value === 'object' && 'content' in value && 'why' in value && 'error' in value && value.error === false)
-}
+import { PromptSettings } from './models/PromptSettings'
+import { 
+    CatSettings,
+    SocketResponse, SocketError, 
+    ErrorCodes, 
+    isMessageResponse 
+} from './utils'
 
 export class CatClient {
     private config!: CatSettings
@@ -48,8 +14,8 @@ export class CatClient {
     private ws!: WebSocket
     private connectedHandler?: () => void
     private closedHandler?: () => void
-    private messageHandler?: (data: Omit<MessageResponse, 'error'>) => void
-    private errorHandler?: (error: Error) => void
+    private messageHandler?: (data: SocketResponse) => void
+    private errorHandler?: (error: Error, event?: Event) => void
     
     constructor(settings: CatSettings) {
         this.config = {
@@ -74,13 +40,10 @@ export class CatClient {
             }
             this.ws.onmessage = (event: MessageEvent<string>) => {
                 if (this.messageHandler) {
-                    const data = JSON.parse(event.data) as MessageError | MessageResponse
+                    const data = JSON.parse(event.data) as SocketError | SocketResponse
                     if (isMessageResponse(data)) {
-                        const { content, type, why } = data
-                        this.messageHandler({ content, type, why})
-                        return
-                    }
-                    if (this.errorHandler) {
+                        this.messageHandler(data)
+                    } else if (this.errorHandler) {
                         const errorCode = data.code as keyof typeof ErrorCodes
                         const errorMessage = ErrorCodes[errorCode] || ErrorCodes.APIError
                         this.errorHandler(new Error(errorMessage))
@@ -89,7 +52,7 @@ export class CatClient {
             }
             this.ws.onerror = (event: Event) => {
                 if (this.errorHandler) {
-                    this.errorHandler(new Error(ErrorCodes.WebSocketConnectionError))
+                    this.errorHandler(new Error(ErrorCodes.WebSocketConnectionError), event)
                 }
             }
             this.apiClient = new CCatAPI({
@@ -122,22 +85,22 @@ export class CatClient {
         this.ws.send(jsonMessage)
     }
 
-    onConnected(handler: typeof this.connectedHandler) {
+    onConnected(handler: () => void) {
         this.connectedHandler = handler
         return this
     }
 
-    onClosed(handler: typeof this.closedHandler) {
+    onClosed(handler: () => void) {
         this.closedHandler = handler
         return this
     }
 
-    onMessage(handler: typeof this.messageHandler) {
+    onMessage(handler: (data: SocketResponse) => void) {
         this.messageHandler = handler
         return this
     }
 
-    onError(handler: typeof this.errorHandler) {
+    onError(handler: (error: Error, event?: Event) => void) {
         this.errorHandler = handler
         return this
     }

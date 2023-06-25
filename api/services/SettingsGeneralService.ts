@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Setting } from '../models/Setting';
+import type { SettingResponse } from '../models/SettingResponse';
+import type { SettingsList } from '../models/SettingsList';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -12,7 +14,7 @@ export class SettingsGeneralService {
 
     /**
      * Get Settings
-     * @returns any Successful Response
+     * @returns SettingsList Successful Response
      * @throws ApiError
      */
     public getSettings({
@@ -23,7 +25,7 @@ search = '',
 limit?: number,
 page?: number,
 search?: string,
-}): CancelablePromise<any> {
+}): CancelablePromise<SettingsList> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/',
@@ -40,14 +42,14 @@ search?: string,
 
     /**
      * Create Setting
-     * @returns any Successful Response
+     * @returns SettingResponse Successful Response
      * @throws ApiError
      */
     public createSetting({
 requestBody,
 }: {
 requestBody: Setting,
-}): CancelablePromise<any> {
+}): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/settings/',
@@ -61,14 +63,14 @@ requestBody: Setting,
 
     /**
      * Get Setting
-     * @returns any Successful Response
+     * @returns SettingResponse Successful Response
      * @throws ApiError
      */
     public getSetting({
 settingId,
 }: {
 settingId: string,
-}): CancelablePromise<any> {
+}): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/{settingId}',
@@ -105,7 +107,7 @@ settingId: string,
 
     /**
      * Update Setting
-     * @returns any Successful Response
+     * @returns SettingResponse Successful Response
      * @throws ApiError
      */
     public updateSetting({
@@ -114,7 +116,7 @@ requestBody,
 }: {
 settingId: string,
 requestBody: Setting,
-}): CancelablePromise<any> {
+}): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PATCH',
             url: '/settings/{settingId}',

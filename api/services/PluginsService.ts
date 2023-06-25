@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Body_install_plugin } from '../models/Body_install_plugin';
+import type { BodyInstallPlugin } from '../models/BodyInstallPlugin';
 import type { Plugin } from '../models/Plugin';
 import type { PluginsList } from '../models/PluginsList';
 
@@ -34,7 +34,7 @@ export class PluginsService {
     public installPlugin({
 formData,
 }: {
-formData: Body_install_plugin,
+formData: BodyInstallPlugin,
 }): CancelablePromise<Record<string, any>> {
         return this.httpRequest.request({
             method: 'POST',

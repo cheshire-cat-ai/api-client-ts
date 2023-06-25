@@ -5,7 +5,6 @@ import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
 import { AxiosHttpRequest } from './core/AxiosHttpRequest';
 
-import { DefaultService } from './services/DefaultService';
 import { MemoryService } from './services/MemoryService';
 import { PluginsService } from './services/PluginsService';
 import { RabbitHoleService } from './services/RabbitHoleService';
@@ -19,7 +18,6 @@ type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 
 export class CCatAPI {
 
-    public readonly default: DefaultService;
     public readonly memory: MemoryService;
     public readonly plugins: PluginsService;
     public readonly rabbitHole: RabbitHoleService;
@@ -44,7 +42,6 @@ export class CCatAPI {
             ENCODE_PATH: config?.ENCODE_PATH,
         });
 
-        this.default = new DefaultService(this.request);
         this.memory = new MemoryService(this.request);
         this.plugins = new PluginsService(this.request);
         this.rabbitHole = new RabbitHoleService(this.request);
