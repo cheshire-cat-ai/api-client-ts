@@ -1245,12 +1245,17 @@
             "PluginsList": {
                 "title": "PluginsList",
                 "required": [
+                    "status",
                     "results",
                     "installed",
                     "registry"
                 ],
                 "type": "object",
                 "properties": {
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    },
                     "results": {
                         "title": "Results",
                         "type": "integer"
