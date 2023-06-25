@@ -2,8 +2,8 @@ import WebSocket from 'isomorphic-ws'
 import { CCatAPI } from './CCatAPI'
 
 interface CatSettings {
-    authKey: string
     baseUrl: string
+    authKey?: string
     port?: string
     wsPath?: string
     instant?: boolean
@@ -95,7 +95,7 @@ export class CatClient {
             this.apiClient = new CCatAPI({
                 BASE: `http${this.url}`,
                 HEADERS: {
-                    'access_token': this.config.authKey,
+                    'access_token': this.config.authKey ?? '',
                 }
             })
         } else throw new Error(ErrorCodes.AlreadyInitialized)

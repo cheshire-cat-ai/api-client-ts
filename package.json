@@ -1,16 +1,29 @@
 {
   "name": "ccat-api",
+  "description": "API Client to communicate with the Cheshire Cat AI",
   "license": "MIT",
   "version": "0.1.0",
+  "author": "zAlweNy26",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "keywords": [
+    "ccat", "cheshire-cat", "api", "client", "fastapi", "openapi", "ai", "llm", "chat", "bot"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zAlweNy26/ccat-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zAlweNy26/ccat-api/issues"
+  },
+  "homepage": "https://github.com/zAlweNy26/ccat-api",
   "scripts": {
     "build": "tsup index.ts --format cjs,esm --dts",
     "release": "pnpm run build && changeset publish",
     "lint": "tsc",
     "start": "ts-node index.ts",
-    "generate": "openapi --input ./catapi.json --output ./api --client axios --name CCatAPI --useUnionTypes  --useOptions"
+    "generate": "openapi --input ./catapi.json --output ./api --client axios --name CCatAPI --useUnionTypes --useOptions"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
