@@ -4,8 +4,7 @@
 
 ### Patch Changes
 
-- 850bd81: Changes:
-
+- 850bd81:
   - Added types for websocket.
   - Added eslint.
   - Now throwing error codes instead of strings.
