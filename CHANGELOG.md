@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.2.3
+
+### Patch Changes
+
+- 41e6da6: Added delete plugin endpoint
+
 ## 0.2.2
 
 ### Patch Changes
