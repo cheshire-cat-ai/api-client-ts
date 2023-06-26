@@ -28,29 +28,6 @@ export class PluginsService {
     }
 
     /**
-     * Delete Plugin
-     * Physically remove a plugin
-     * @returns DeleteResponse Successful Response
-     * @throws ApiError
-     */
-    public deletePlugin({
-pluginId,
-}: {
-pluginId: string,
-}): CancelablePromise<DeleteResponse> {
-        return this.httpRequest.request({
-            method: 'DELETE',
-            url: '/plugins/',
-            path: {
-                'plugin_id': pluginId,
-            },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-
-    /**
      * Upload Plugin
      * Install a new plugin from a zip file
      * @returns FileResponse Successful Response
@@ -108,6 +85,29 @@ pluginId: string,
 }): CancelablePromise<Plugin> {
         return this.httpRequest.request({
             method: 'GET',
+            url: '/plugins/{plugin_id}',
+            path: {
+                'plugin_id': pluginId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Delete Plugin
+     * Physically remove a plugin
+     * @returns DeleteResponse Successful Response
+     * @throws ApiError
+     */
+    public deletePlugin({
+pluginId,
+}: {
+pluginId: string,
+}): CancelablePromise<DeleteResponse> {
+        return this.httpRequest.request({
+            method: 'DELETE',
             url: '/plugins/{plugin_id}',
             path: {
                 'plugin_id': pluginId,
