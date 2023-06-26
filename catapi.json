@@ -514,7 +514,7 @@
                 "security": null
             }
         },
-        "/plugins/install/": {
+        "/plugins/upload/": {
             "post": {
                 "tags": [
                     "Plugins"

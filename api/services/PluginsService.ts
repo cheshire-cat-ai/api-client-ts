@@ -63,7 +63,7 @@ formData: BodyUploadPlugin,
 }): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/plugins/install/',
+            url: '/plugins/upload/',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
