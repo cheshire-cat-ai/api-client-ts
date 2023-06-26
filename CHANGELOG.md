@@ -4,8 +4,7 @@
 
 ### Minor Changes
 
-- ffec775: \
-
+- ffec775:
   - Documented code
   - Fixed typos
   - Added WebSocket settings (delay, path, retries, onFailed)
