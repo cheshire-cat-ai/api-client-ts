@@ -5,24 +5,33 @@ import {
     CatSettings,
     SocketResponse, SocketError, 
     ErrorCode, 
-    isMessageResponse 
+    isMessageResponse,
+    WebSocketSettings
 } from './utils'
 
+/**
+ * The class to communicate with the Cheshire Cat AI
+ */
 export class CatClient {
     private config!: CatSettings
     private apiClient!: CCatAPI
     private ws!: WebSocket
     private connectedHandler?: () => void
-    private closedHandler?: () => void
+    private disconnectedHandler?: () => void
     private messageHandler?: (data: SocketResponse) => void
     private errorHandler?: (error: ErrorCode, event?: WebSocket.ErrorEvent) => void
+    private explicitlyClosed = false
+    private retried = 0
     
+    /**
+     * Initialize the class with the specified settings
+     * @param settings The settings to pass
+     */
     constructor(settings: CatSettings) {
         this.config = {
             secure: false,
             instant: true,
             timeout: 10000,
-            wsPath: 'ws',
             port: '1865',
             ...settings
         }
@@ -30,33 +39,46 @@ export class CatClient {
     }
 
     private initWebSocket() {
-        this.ws = new WebSocket(`ws${this.url}/${this.config.wsPath}`)
+        const setsWs = {
+            delay: 5000,
+            path: 'ws',
+            retries: 3,
+            ...this.config.ws
+        } satisfies WebSocketSettings
+        this.ws = new WebSocket(`ws${this.url}/${setsWs.path}`)
         this.ws.onopen = () => {
-            if (this.connectedHandler) this.connectedHandler()
+            this.connectedHandler?.()
         }
         this.ws.onclose = () => {
-            if (this.closedHandler) this.closedHandler()
+            if (!this.explicitlyClosed) {
+                this.retried += 1
+                if (setsWs.retries < 0 || this.retried < setsWs.retries) {
+                    setTimeout(() => this.initWebSocket(), setsWs.delay)
+                } else setsWs.onFailed?.(ErrorCode.FailedRetry)
+            }
+            this.disconnectedHandler?.()
         }
         this.ws.onmessage = (event) => {
-            if (this.messageHandler) {
-                const data = JSON.parse(event.data.toString()) as SocketError | SocketResponse
-                if (isMessageResponse(data)) {
-                    this.messageHandler(data)
-                } else if (this.errorHandler) {
-                    const errorCode = data.code as keyof typeof ErrorCode
-                    const errorMessage = ErrorCode[errorCode] || ErrorCode.ApiError
-                    this.errorHandler(errorMessage)
-                }
+            const data = JSON.parse(event.data.toString()) as SocketError | SocketResponse
+            if (isMessageResponse(data)) {
+                this.messageHandler?.(data)
+                return
             }
+            const errorCode = data.code as keyof typeof ErrorCode
+            const errorMessage = ErrorCode[errorCode] || ErrorCode.ApiError
+            this.errorHandler?.(errorMessage)
         }
         this.ws.onerror = (event) => {
-            if (this.errorHandler) {
-                this.errorHandler(ErrorCode.WebSocketConnectionError, event)
-            }
+            this.errorHandler?.(ErrorCode.WebSocketConnectionError, event)
         }
     }
 
-    init() {
+    /**
+     * Initialize the WebSocket and the API Client
+     * @throws An error saying that the client was already initialized
+     * @returns the current {@link CatClient} class instance
+     */
+    init(): CatClient {
         if (!this.ws && !this.apiClient) {
             this.initWebSocket()
             this.apiClient = new CCatAPI({
@@ -69,17 +91,29 @@ export class CatClient {
         } else throw new Error("The Cheshire Cat Client was already initialized")
     }
 
-    get api() {
+    /**
+     * @returns The API Client
+     */
+    get api(): CCatAPI {
         return this.apiClient
     }
 
+    /**
+     * Closes the WebSocket connection
+     */
     close() {
         this.ws.close()
+        this.explicitlyClosed = true
     }
 
+    /**
+     * Sends a message via WebSocket to the Cat
+     * @param message The message to pass
+     * @param settings The prompt settings to pass
+     */
     send(message: string, settings?: PromptSettings) {
-        if (this.ws.readyState !== WebSocket.OPEN && this.errorHandler) {
-            this.errorHandler(ErrorCode.SocketClosed)
+        if (this.ws.readyState !== WebSocket.OPEN) {
+            this.errorHandler?.(ErrorCode.SocketClosed)
         }
         const jsonMessage = JSON.stringify({ 
             text: message, 
@@ -88,22 +122,42 @@ export class CatClient {
         this.ws.send(jsonMessage)
     }
 
-    onConnected(handler: () => void) {
+    /**
+     * Calls the handler when the WebSocket is connected 
+     * @param handler The function to call
+     * @returns the current {@link CatClient} class instance
+     */
+    onConnected(handler: () => void): CatClient {
         this.connectedHandler = handler
         return this
     }
 
-    onClosed(handler: () => void) {
-        this.closedHandler = handler
+    /**
+     * Calls the handler when the WebSocket is disconnected
+     * @param handler The function to call
+     * @returns the current {@link CatClient} class instance
+     */
+    onDisconnected(handler: () => void): CatClient {
+        this.disconnectedHandler = handler
         return this
     }
 
-    onMessage(handler: (data: SocketResponse) => void) {
+    /**
+     * Calls the handler when a new message arrives from the WebSocket
+     * @param handler The function to call
+     * @returns the current {@link CatClient} class instance
+     */
+    onMessage(handler: (data: SocketResponse) => void): CatClient {
         this.messageHandler = handler
         return this
     }
 
-    onError(handler: (error: ErrorCode, event?: WebSocket.ErrorEvent) => void) {
+    /**
+     * Calls the handler when the WebSocket catches an exception
+     * @param handler The function to call
+     * @returns the current {@link CatClient} class instance
+     */
+    onError(handler: (error: ErrorCode, event?: WebSocket.ErrorEvent) => void): CatClient {
         this.errorHandler = handler
         return this
     }

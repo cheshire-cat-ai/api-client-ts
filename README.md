@@ -28,19 +28,28 @@ const cat = new CatClient({
 })
 ```
 
-## Settings properties
+## Client settings
 
 **API_KEY**, **CORE_HOST**, **CORE_PORT** and **CORE_USE_SECURE_PROTOCOLS** refer to the CCAT Core [.env file](https://github.com/cheshire-cat-ai/core/blob/main/.env.example).
 
-| **Property** | **Type** | **Default**  | **Description**                                                                            |
-|:------------:|:--------:|:------------:|:------------------------------------------------------------------------------------------:|
-| **baseUrl**  | string   | **Required** | The same of **CORE_HOST**                                                                  |
-| **authKey**  | string   | ''           | The same of **API_KEY**                                                                    |
-| **port**     | string   | '1865'       | The same of the **CORE_PORT**                                                              |
-| **wsPath**   | string   | 'ws'         | Websocket path to use to communicate with the CCat                                         |
-| **instant**  | boolean  | true         | Instantly initialize the websocket and the API client, or later with **.init()**           |
-| **secure**   | boolean  | false        | The same of the **CORE_USE_SECURE_PROTOCOLS**                                              |
-| **timeout**  | number   | 10000        | Timeout in **ms** for the endpoints                                                        |
+| **Property** | **Type** | **Default**  | **Description**                                                                  |
+|:------------:|:--------:|:------------:|:--------------------------------------------------------------------------------:|
+| **baseUrl**  | string   | **Required** | The same of **CORE_HOST**                                                        |
+| **authKey**  | string   | ''           | The same of **API_KEY**                                                          |
+| **port**     | string   | '1865'       | The same of the **CORE_PORT**                                                    |
+| **ws**       | string   | undefined    | An object of type [WebSocketSettings](#websocket-settings)                       |
+| **instant**  | boolean  | true         | Instantly initialize the websocket and the API client, or later with **.init()** |
+| **secure**   | boolean  | false        | The same of the **CORE_USE_SECURE_PROTOCOLS**                                    |
+| **timeout**  | number   | 10000        | Timeout for the endpoints, in milliseconds                                       |
+
+### WebSocket settings
+
+| **Property** | **Type**            | **Default**  | **Description**                                           |
+|:------------:|:-------------------:|:------------:|:---------------------------------------------------------:|
+| **path**     | string              | 'ws'         | Websocket path to use to communicate with the CCat        |
+| **retries**  | number              | 3            | The maximum number of retries before calling **onFailed** |
+| **delay**    | number              | 5000         | The delay for reconnect, in milliseconds                  |
+| **onFailed** | (ErrorCode) => void | undefined    | The function to call after failing all the retries        |
 
 Then, for example, you can configure the LLM like this:
 

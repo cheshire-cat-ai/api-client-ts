@@ -1,11 +1,18 @@
+export interface WebSocketSettings {
+    path?: string
+    retries?: number
+    delay?: number
+    onFailed?: (error: ErrorCode) => void
+}
+
 export interface CatSettings {
     baseUrl: string
     authKey?: string
     port?: string
-    wsPath?: string
     instant?: boolean
     secure?: boolean
     timeout?: number
+    ws?: WebSocketSettings
 }
 
 export enum ErrorCode {
@@ -13,7 +20,7 @@ export enum ErrorCode {
     SocketClosed,
     WebSocketConnectionError,
     ApiError,
-    FailedRetries
+    FailedRetry
 }
 
 export interface SocketResponse {
