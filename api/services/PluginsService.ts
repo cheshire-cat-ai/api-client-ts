@@ -1,7 +1,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BodyInstallPlugin } from '../models/BodyInstallPlugin';
+import type { BodyUploadPlugin } from '../models/BodyUploadPlugin';
+import type { DeleteResponse } from '../models/DeleteResponse';
+import type { FileResponse } from '../models/FileResponse';
 import type { Plugin } from '../models/Plugin';
 import type { PluginsList } from '../models/PluginsList';
 
@@ -26,16 +28,39 @@ export class PluginsService {
     }
 
     /**
-     * Install Plugin
-     * Install a new plugin from a zip file
-     * @returns any Successful Response
+     * Delete Plugin
+     * Physically remove a plugin
+     * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    public installPlugin({
+    public deletePlugin({
+pluginId,
+}: {
+pluginId: string,
+}): CancelablePromise<DeleteResponse> {
+        return this.httpRequest.request({
+            method: 'DELETE',
+            url: '/plugins/',
+            path: {
+                'plugin_id': pluginId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Upload Plugin
+     * Install a new plugin from a zip file
+     * @returns FileResponse Successful Response
+     * @throws ApiError
+     */
+    public uploadPlugin({
 formData,
 }: {
-formData: BodyInstallPlugin,
-}): CancelablePromise<Record<string, any>> {
+formData: BodyUploadPlugin,
+}): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/plugins/install/',

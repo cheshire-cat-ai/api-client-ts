@@ -2,6 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type WipedConversation = {
-    deleted: boolean;
+export type BodyUploadPlugin = {
+    file: Blob;
 };

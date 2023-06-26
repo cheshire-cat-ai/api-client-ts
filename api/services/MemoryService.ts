@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CollectionsList } from '../models/CollectionsList';
+import type { DeleteResponse } from '../models/DeleteResponse';
 import type { MemoryRecall } from '../models/MemoryRecall';
-import type { WipedConversation } from '../models/WipedConversation';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -15,14 +15,14 @@ export class MemoryService {
     /**
      * Delete Element In Memory
      * Delete specific element in memory.
-     * @returns any Successful Response
+     * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
     public deleteElementInMemory({
 memoryId,
 }: {
 memoryId: string,
-}): CancelablePromise<Record<string, any>> {
+}): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/point/{memory_id}/',
@@ -118,10 +118,10 @@ collectionId: string,
     /**
      * Wipe Conversation History
      * Delete conversation history from working memory
-     * @returns WipedConversation Successful Response
+     * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    public wipeConversationHistory(): CancelablePromise<WipedConversation> {
+    public wipeConversationHistory(): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/working-memory/conversation-history/',

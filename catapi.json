@@ -470,6 +470,48 @@
                     }
                 },
                 "security": null
+            },
+            "delete": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "Delete Plugin",
+                "description": "Physically remove a plugin",
+                "operationId": "delete_plugin",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Plugin Id",
+                            "type": "string"
+                        },
+                        "name": "plugin_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeleteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
             }
         },
         "/plugins/install/": {
@@ -477,14 +519,14 @@
                 "tags": [
                     "Plugins"
                 ],
-                "summary": "Install Plugin",
+                "summary": "Upload Plugin",
                 "description": "Install a new plugin from a zip file",
-                "operationId": "install_plugin",
+                "operationId": "upload_plugin",
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/BodyInstallPlugin"
+                                "$ref": "#/components/schemas/BodyUploadPlugin"
                             }
                         }
                     },
@@ -496,8 +538,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Install Plugin",
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/FileResponse"
                                 }
                             }
                         }
@@ -630,8 +671,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Delete Element In Memory",
-                                    "type": "object"
+                                    "$ref": "#/components/schemas/DeleteResponse"
                                 }
                             }
                         }
@@ -819,7 +859,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/WipedConversation"
+                                    "$ref": "#/components/schemas/DeleteResponse"
                                 }
                             }
                         }
@@ -960,8 +1000,8 @@
     },
     "components": {
         "schemas": {
-            "BodyInstallPlugin": {
-                "title": "BodyInstallPlugin",
+            "BodyUploadPlugin": {
+                "title": "BodyUploadPlugin",
                 "required": [
                     "file"
                 ],
@@ -1117,19 +1157,14 @@
             "FileResponse": {
                 "title": "FileResponse",
                 "required": [
-                    "status",
                     "filename",
                     "content_type",
                     "info"
                 ],
                 "type": "object",
                 "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
                     "filename": {
-                        "title": "Filename",
+                        "title": "File Name",
                         "type": "string"
                     },
                     "content_type": {
@@ -1578,16 +1613,28 @@
                     }
                 }
             },
-            "WipedConversation": {
-                "title": "WipedConversation",
+            "DeleteResponse": {
+                "title": "DeleteResponse",
                 "required": [
+                    "status",
                     "deleted"
                 ],
                 "type": "object",
                 "properties": {
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    },
                     "deleted": {
                         "title": "Deleted",
-                        "type": "boolean"
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object"
+                            }
+                        ]
                     }
                 }
             },
