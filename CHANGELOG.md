@@ -1,5 +1,14 @@
 # ccat-api
 
+## 0.3.0
+
+### Minor Changes
+
+- ffec775:
+  - Documented code
+  - Fixed typos
+  - Added WebSocket settings (delay, path, retries, onFailed)
+
 ## 0.2.3
 
 ### Patch Changes
