@@ -1,5 +1,13 @@
 # ccat-api
 
+## 0.4.0
+
+### Minor Changes
+
+- b2b8832:
+  - Switched from options to single arguments
+  - Updated types to sync with backend
+
 ## 0.3.1
 
 ### Patch Changes
