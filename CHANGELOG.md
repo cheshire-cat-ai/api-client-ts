@@ -4,7 +4,8 @@
 
 ### Minor Changes
 
-- b2b8832: - Switched from options to single arguments
+- b2b8832:
+  - Switched from options to single arguments
   - Updated types to sync with backend
 
 ## 0.3.1
