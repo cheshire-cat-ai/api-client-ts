@@ -24,7 +24,8 @@ To set up the client, you must first import the `CatClient` class:
 import { CatClient } from 'ccat-api'
 
 const cat = new CatClient({
-    baseUrl: 'localhost'
+    baseUrl: 'localhost',
+    //... other settings
 })
 ```
 
@@ -54,11 +55,8 @@ const cat = new CatClient({
 Then, for example, you can configure the LLM like this:
 
 ```ts
-cat.api.settingsLargeLanguageModel.upsertLlmSetting({
-    languageModelName: 'LLMOpenAIConfig',
-    requestBody: {
-        openai_api_key: 'OPEN_API_KEY'
-    }
+cat.api.settingsLargeLanguageModel.upsertLlmSetting('LLMOpenAIConfig', {
+    openai_api_key: 'OPEN_API_KEY'
 })
 ```
 
@@ -77,8 +75,16 @@ cat.onConnected(() => {
     console.log(msg)
 }).onError(err => {
     console.log(err)
-}).onClosed(() => {
-    console.log('Socket closed')
+}).onDisconnected(() => {
+    console.log('Socket disconnected')
+})
+```
+
+For example, you can get the list of plugins like this:
+
+```ts
+cat.api.plugins.listAvailablePlugins().then(plugins => {
+    console.log(plugins)
 })
 ```
 

@@ -15,14 +15,13 @@ export class MemoryService {
     /**
      * Delete Element In Memory
      * Delete specific element in memory.
+     * @param memoryId 
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    public deleteElementInMemory({
-memoryId,
-}: {
+    public deleteElementInMemory(
 memoryId: string,
-}): CancelablePromise<DeleteResponse> {
+): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/point/{memory_id}/',
@@ -38,22 +37,15 @@ memoryId: string,
     /**
      * Recall Memories From Text
      * Search k memories similar to given text.
+     * @param text Find memories similar to this text.
+     * @param k How many memories to return.
      * @returns MemoryRecall Successful Response
      * @throws ApiError
      */
-    public recallMemoriesFromText({
-text,
-k = 100,
-}: {
-/**
- * Find memories similar to this text.
- */
+    public recallMemoriesFromText(
 text: string,
-/**
- * How many memories to return.
- */
-k?: number,
-}): CancelablePromise<MemoryRecall> {
+k: number = 100,
+): CancelablePromise<MemoryRecall> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/memory/recall/',
@@ -82,14 +74,13 @@ k?: number,
     /**
      * Wipe Single Collection
      * Delete and recreate a collection
-     * @returns boolean Successful Response
+     * @param collectionId 
+     * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    public wipeSingleCollection({
-collectionId,
-}: {
+    public wipeSingleCollection(
 collectionId: string,
-}): CancelablePromise<Record<string, boolean>> {
+): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/collections/{collection_id}',
@@ -105,10 +96,10 @@ collectionId: string,
     /**
      * Wipe Collections
      * Delete and create all collections
-     * @returns boolean Successful Response
+     * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    public wipeCollections(): CancelablePromise<Record<string, boolean>> {
+    public wipeCollections(): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/wipe-collections/',

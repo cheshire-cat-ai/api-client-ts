@@ -18,14 +18,13 @@ export class RabbitHoleService {
      * Upload File
      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
  * Chunks will be then vectorized and stored into documents memory.
+     * @param formData 
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
-    public uploadFile({
-formData,
-}: {
+    public uploadFile(
 formData: BodyUploadFile,
-}): CancelablePromise<FileResponse> {
+): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/rabbithole/',
@@ -39,14 +38,13 @@ formData: BodyUploadFile,
 
     /**
      * Upload Url
+     * @param requestBody 
      * @returns WebResponse Successful Response
      * @throws ApiError
      */
-    public uploadUrl({
-requestBody,
-}: {
+    public uploadUrl(
 requestBody: BodyUploadUrl,
-}): CancelablePromise<WebResponse> {
+): CancelablePromise<WebResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/rabbithole/web/',
@@ -61,14 +59,13 @@ requestBody: BodyUploadUrl,
     /**
      * Upload Memory
      * Upload a memory json file to the CCat memory
+     * @param formData 
      * @returns any Successful Response
      * @throws ApiError
      */
-    public uploadMemory({
-formData,
-}: {
+    public uploadMemory(
 formData: BodyUploadMemory,
-}): CancelablePromise<Record<string, any>> {
+): CancelablePromise<Record<string, any>> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/rabbithole/memory/',

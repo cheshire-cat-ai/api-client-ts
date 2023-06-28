@@ -14,18 +14,17 @@ export class SettingsGeneralService {
 
     /**
      * Get Settings
+     * @param limit The maximum number of settings to fetch
+     * @param page The number of settings' page to fetch
+     * @param search The setting to search
      * @returns SettingsList Successful Response
      * @throws ApiError
      */
-    public getSettings({
-limit = 100,
-page = 1,
-search = '',
-}: {
-limit?: number,
-page?: number,
-search?: string,
-}): CancelablePromise<SettingsList> {
+    public getSettings(
+limit: number = 100,
+page: number = 1,
+search: string = '',
+): CancelablePromise<SettingsList> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/',
@@ -42,14 +41,13 @@ search?: string,
 
     /**
      * Create Setting
+     * @param requestBody 
      * @returns SettingResponse Successful Response
      * @throws ApiError
      */
-    public createSetting({
-requestBody,
-}: {
+    public createSetting(
 requestBody: Setting,
-}): CancelablePromise<SettingResponse> {
+): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/settings/',
@@ -63,14 +61,13 @@ requestBody: Setting,
 
     /**
      * Get Setting
+     * @param settingId 
      * @returns SettingResponse Successful Response
      * @throws ApiError
      */
-    public getSetting({
-settingId,
-}: {
+    public getSetting(
 settingId: string,
-}): CancelablePromise<SettingResponse> {
+): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/{settingId}',
@@ -85,14 +82,13 @@ settingId: string,
 
     /**
      * Delete Setting
+     * @param settingId 
      * @returns any Successful Response
      * @throws ApiError
      */
-    public deleteSetting({
-settingId,
-}: {
+    public deleteSetting(
 settingId: string,
-}): CancelablePromise<any> {
+): CancelablePromise<any> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/settings/{settingId}',
@@ -107,16 +103,15 @@ settingId: string,
 
     /**
      * Update Setting
+     * @param settingId 
+     * @param requestBody 
      * @returns SettingResponse Successful Response
      * @throws ApiError
      */
-    public updateSetting({
-settingId,
-requestBody,
-}: {
+    public updateSetting(
 settingId: string,
 requestBody: Setting,
-}): CancelablePromise<SettingResponse> {
+): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PATCH',
             url: '/settings/{settingId}',

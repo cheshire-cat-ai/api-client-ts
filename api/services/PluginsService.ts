@@ -3,8 +3,8 @@
 /* eslint-disable */
 import type { BodyUploadPlugin } from '../models/BodyUploadPlugin';
 import type { DeleteResponse } from '../models/DeleteResponse';
-import type { FileResponse } from '../models/FileResponse';
 import type { Plugin } from '../models/Plugin';
+import type { PluginResponse } from '../models/PluginResponse';
 import type { PluginsList } from '../models/PluginsList';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -30,14 +30,13 @@ export class PluginsService {
     /**
      * Upload Plugin
      * Install a new plugin from a zip file
-     * @returns FileResponse Successful Response
+     * @param formData 
+     * @returns PluginResponse Successful Response
      * @throws ApiError
      */
-    public uploadPlugin({
-formData,
-}: {
+    public uploadPlugin(
 formData: BodyUploadPlugin,
-}): CancelablePromise<FileResponse> {
+): CancelablePromise<PluginResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/plugins/upload/',
@@ -52,14 +51,13 @@ formData: BodyUploadPlugin,
     /**
      * Toggle Plugin
      * Enable or disable a single plugin
+     * @param pluginId 
      * @returns any Successful Response
      * @throws ApiError
      */
-    public togglePlugin({
-pluginId,
-}: {
+    public togglePlugin(
 pluginId: string,
-}): CancelablePromise<Record<string, any>> {
+): CancelablePromise<Record<string, any>> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/plugins/toggle/{plugin_id}',
@@ -75,14 +73,16 @@ pluginId: string,
     /**
      * Get Plugin Details
      * Returns information on a single plugin
-     * @returns Plugin Successful Response
+     * @param pluginId 
+     * @returns any Successful Response
      * @throws ApiError
      */
-    public getPluginDetails({
-pluginId,
-}: {
+    public getPluginDetails(
 pluginId: string,
-}): CancelablePromise<Plugin> {
+): CancelablePromise<{
+status: string;
+data: Plugin;
+}> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/plugins/{plugin_id}',
@@ -98,14 +98,13 @@ pluginId: string,
     /**
      * Delete Plugin
      * Physically remove a plugin
+     * @param pluginId 
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    public deletePlugin({
-pluginId,
-}: {
+    public deletePlugin(
 pluginId: string,
-}): CancelablePromise<DeleteResponse> {
+): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/plugins/{plugin_id}',

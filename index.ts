@@ -22,6 +22,7 @@ export type { HTTPValidationError } from './api/models/HTTPValidationError';
 export type { MemoryRecall } from './api/models/MemoryRecall';
 export type { MetaData } from './api/models/MetaData';
 export type { Plugin } from './api/models/Plugin';
+export type { PluginResponse } from './api/models/PluginResponse';
 export type { PluginsList } from './api/models/PluginsList';
 export type { PromptSettings } from './api/models/PromptSettings';
 export type { QueryData } from './api/models/QueryData';

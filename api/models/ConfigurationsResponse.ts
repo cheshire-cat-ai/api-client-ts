@@ -9,7 +9,7 @@ export type ConfigurationsResponse = {
     status: string;
     results: number;
     settings: Array<Setting>;
-    schemas: Array<Schema>;
+    schemas: Record<string, Schema>;
     allowed_configurations: Array<string>;
     selected_configuration: string;
 };

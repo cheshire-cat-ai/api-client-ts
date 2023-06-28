@@ -25,16 +25,15 @@ export class SettingsLargeLanguageModelService {
 
     /**
      * Upsert Llm Setting
+     * @param languageModelName 
+     * @param requestBody 
      * @returns SettingResponse Successful Response
      * @throws ApiError
      */
-    public upsertLlmSetting({
-languageModelName,
-requestBody,
-}: {
+    public upsertLlmSetting(
 languageModelName: string,
 requestBody: Record<string, any>,
-}): CancelablePromise<SettingResponse> {
+): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/settings/llm/{languageModelName}',

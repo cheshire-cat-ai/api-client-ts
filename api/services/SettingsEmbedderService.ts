@@ -25,16 +25,15 @@ export class SettingsEmbedderService {
 
     /**
      * Upsert Embedder Setting
+     * @param languageEmbedderName 
+     * @param requestBody 
      * @returns SettingResponse Successful Response
      * @throws ApiError
      */
-    public upsertEmbedderSetting({
-languageEmbedderName,
-requestBody,
-}: {
+    public upsertEmbedderSetting(
 languageEmbedderName: string,
 requestBody: Record<string, any>,
-}): CancelablePromise<SettingResponse> {
+): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/settings/embedder/{languageEmbedderName}',
