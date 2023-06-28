@@ -29,7 +29,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/settings/": {
@@ -96,7 +96,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             },
             "post": {
                 "tags": [
@@ -136,7 +136,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/settings/{settingId}": {
@@ -179,7 +179,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             },
             "delete": {
                 "tags": [
@@ -218,7 +218,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             },
             "patch": {
                 "tags": [
@@ -269,7 +269,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/settings/prompt/": {
@@ -291,7 +291,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/settings/llm/": {
@@ -299,7 +299,7 @@
                 "tags": [
                     "Settings - Large Language Model"
                 ],
-                "summary": "Get Settings",
+                "summary": "Get LLM Settings",
                 "operationId": "get_settings",
                 "responses": {
                     "200": {
@@ -313,7 +313,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/settings/llm/{languageModelName}": {
@@ -370,7 +370,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/settings/embedder/": {
@@ -378,7 +378,7 @@
                 "tags": [
                     "Settings - Embedder"
                 ],
-                "summary": "Get Settings",
+                "summary": "Get Embedder Settings",
                 "operationId": "get_settings",
                 "responses": {
                     "200": {
@@ -392,7 +392,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/settings/embedder/{languageEmbedderName}": {
@@ -449,7 +449,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/plugins/": {
@@ -472,7 +472,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/plugins/upload/": {
@@ -515,7 +515,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/plugins/toggle/{plugin_id}": {
@@ -560,7 +560,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/plugins/{plugin_id}": {
@@ -600,7 +600,6 @@
                                             "type": "string"
                                         },
                                         "data": {
-                                            "title": "Plugin",
                                             "$ref": "#/components/schemas/Plugin"
                                         }
                                     }
@@ -619,7 +618,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             },
             "delete": {
                 "tags": [
@@ -661,7 +660,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/memory/point/{memory_id}/": {
@@ -705,7 +704,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/memory/recall/": {
@@ -763,7 +762,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/memory/collections/": {
@@ -785,7 +784,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/memory/collections/{collection_id}": {
@@ -829,7 +828,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/memory/wipe-collections/": {
@@ -852,7 +851,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/memory/working-memory/conversation-history/": {
@@ -875,7 +874,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/rabbithole/": {
@@ -918,7 +917,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/rabbithole/web/": {
@@ -960,7 +959,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         },
         "/rabbithole/memory/": {
@@ -1004,7 +1003,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         }
     },
@@ -1689,6 +1688,6 @@
                 }
             }
         },
-        "securitySchemes": null
+        "securitySchemes": {}
     }
 }
