@@ -1,5 +1,14 @@
 # ccat-api
 
+## 0.4.1
+
+### Patch Changes
+
+- 7f7c81f:
+  - Added setter to change auth key at runtime
+  - Added getter to get the state of the websocket
+  - PromptSettings passed in send() are now Partial
+
 ## 0.4.0
 
 ### Minor Changes
