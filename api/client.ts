@@ -99,6 +99,13 @@ export class CatClient {
     }
 
     /**
+     * Changes the authentication key at runtime
+     */
+    set authKey(key: string) {
+        this.config.authKey = key
+    }
+
+    /**
      * Closes the WebSocket connection
      */
     close() {
@@ -107,11 +114,18 @@ export class CatClient {
     }
 
     /**
+     * Get the state of the WebSocket
+     */
+    get readyState() {
+        return this.ws.readyState
+    }
+
+    /**
      * Sends a message via WebSocket to the Cat
      * @param message The message to pass
      * @param settings The prompt settings to pass
      */
-    send(message: string, settings?: PromptSettings) {
+    send(message: string, settings?: Partial<PromptSettings>) {
         if (this.ws.readyState !== WebSocket.OPEN) {
             this.errorHandler?.(ErrorCode.SocketClosed)
         }
