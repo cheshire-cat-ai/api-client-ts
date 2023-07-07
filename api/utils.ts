@@ -1,3 +1,9 @@
+import { PromptSettings as DefaultPromptSettings } from './models/PromptSettings'
+
+export interface PromptSettings extends DefaultPromptSettings {
+    [key: string]: any
+}
+
 export interface WebSocketSettings {
     path?: string
     retries?: number

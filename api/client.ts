@@ -1,12 +1,12 @@
 import WebSocket from 'isomorphic-ws'
 import { CCatAPI } from './CCatAPI'
-import { PromptSettings } from './models/PromptSettings'
 import { 
     CatSettings,
     SocketResponse, SocketError, 
     ErrorCode, 
     isMessageResponse,
-    WebSocketSettings
+    WebSocketSettings,
+    PromptSettings
 } from './utils'
 
 /**
