@@ -1,5 +1,14 @@
 # ccat-api
 
+## 0.4.3
+
+### Patch Changes
+
+- bf53aa8: Privatized unused code in services
+
+  - Added AcceptedFileContentTypes const for file upload
+  - Added enumator WebSocketState for .readyState
+
 ## 0.4.2
 
 ### Patch Changes
