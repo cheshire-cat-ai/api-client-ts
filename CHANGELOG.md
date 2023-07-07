@@ -1,5 +1,13 @@
 # ccat-api
 
+## 0.4.2
+
+### Patch Changes
+
+- 9cdfd68: Added possibility to put custom keys in PromptSettings (ex. for plugins)
+
+  - Added documentation for client settings
+
 ## 0.4.1
 
 ### Patch Changes
