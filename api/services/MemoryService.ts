@@ -10,7 +10,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class MemoryService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Delete Element In Memory

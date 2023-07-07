@@ -59,12 +59,18 @@ export interface CatSettings {
     ws?: WebSocketSettings
 }
 
+export const AcceptedFileContentTypes = [
+    'text/plain', 
+    'text/markdown', 
+    'application/pdf'
+] as const
+
 export enum ErrorCode {
-    IndexError,
-    SocketClosed,
-    WebSocketConnectionError,
-    ApiError,
-    FailedRetry
+    IndexError, SocketClosed, WebSocketConnectionError, ApiError, FailedRetry
+}
+
+export enum WebSocketState {
+    CONNECTING, OPEN, CLOSING, CLOSED
 }
 
 export interface SocketResponse {

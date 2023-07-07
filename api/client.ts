@@ -1,12 +1,11 @@
 import WebSocket from 'isomorphic-ws'
 import { CCatAPI } from './CCatAPI'
 import { 
-    CatSettings,
-    SocketResponse, SocketError, 
-    ErrorCode, 
+    SocketResponse, SocketError, WebSocketState,
+    WebSocketSettings, PromptSettings,
     isMessageResponse,
-    WebSocketSettings,
-    PromptSettings
+    CatSettings,
+    ErrorCode, 
 } from './utils'
 
 /**
@@ -39,22 +38,22 @@ export class CatClient {
     }
 
     private initWebSocket() {
-        const setsWs = {
+        const socketSettings = {
             delay: 5000,
             path: 'ws',
             retries: 3,
             ...this.config.ws
         } satisfies WebSocketSettings
-        this.ws = new WebSocket(`ws${this.url}/${setsWs.path}`)
+        this.ws = new WebSocket(`ws${this.url}/${socketSettings.path}`)
         this.ws.onopen = () => {
             this.connectedHandler?.()
         }
         this.ws.onclose = () => {
             if (!this.explicitlyClosed) {
                 this.retried += 1
-                if (setsWs.retries < 0 || this.retried < setsWs.retries) {
-                    setTimeout(() => this.initWebSocket(), setsWs.delay)
-                } else setsWs.onFailed?.(ErrorCode.FailedRetry)
+                if (socketSettings.retries < 0 || this.retried < socketSettings.retries) {
+                    setTimeout(() => this.initWebSocket(), socketSettings.delay)
+                } else socketSettings.onFailed?.(ErrorCode.FailedRetry)
             }
             this.disconnectedHandler?.()
         }
@@ -116,7 +115,7 @@ export class CatClient {
     /**
      * Get the state of the WebSocket
      */
-    get readyState() {
+    get readyState(): WebSocketState {
         return this.ws.readyState
     }
 

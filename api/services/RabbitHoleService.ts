@@ -12,7 +12,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class RabbitHoleService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Upload File

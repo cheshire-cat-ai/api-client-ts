@@ -12,7 +12,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class PluginsService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * List Available Plugins

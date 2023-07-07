@@ -9,7 +9,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class SettingsEmbedderService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get Settings
