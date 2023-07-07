@@ -5,19 +5,57 @@ export interface PromptSettings extends DefaultPromptSettings {
 }
 
 export interface WebSocketSettings {
+    /** 
+     * Websocket path to use to communicate with the CCat 
+     * @default 'ws'
+    */
     path?: string
+    /** 
+     * The maximum number of retries before calling {@link WebSocketSettings.onFailed}
+     * @default 3
+    */
     retries?: number
+    /** 
+     * The delay for reconnect, in milliseconds
+     * @default 5000
+    */
     delay?: number
+    /** 
+     * The function to call after failing all the retries
+     * @default undefined
+    */
     onFailed?: (error: ErrorCode) => void
 }
 
 export interface CatSettings {
+    /** The URL to which connect to the Cat */
     baseUrl: string
+    /** 
+     * The key to authenticate the Cat endpoints
+     * @default ''
+    */
     authKey?: string
+    /** 
+     * The port to which connect to the Cat
+     * @default '1865'
+    */
     port?: string
+    /** 
+     * Choose to either initialize the client instantly or not
+     * @default true
+    */
     instant?: boolean
+    /** 
+     * Choose to either use the secure protocol or not
+     * @default false
+    */
     secure?: boolean
+    /** 
+     * Timeout for the endpoints, in milliseconds
+     * @default 10000
+    */
     timeout?: number
+    /** An object of type {@link WebSocketSettings} */
     ws?: WebSocketSettings
 }
 
