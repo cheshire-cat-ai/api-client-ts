@@ -1,5 +1,14 @@
 # ccat-api
 
+## 0.4.4
+
+### Patch Changes
+
+- c5fe613: Changed AcceptedFileContentTypes -> AcceptedFileTypes
+
+  - Added accepted memory types
+  - Added accepted plugin types
+
 ## 0.4.3
 
 ### Patch Changes
