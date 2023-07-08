@@ -59,11 +59,26 @@ export interface CatSettings {
     ws?: WebSocketSettings
 }
 
-export const AcceptedFileContentTypes = [
+export const AcceptedFileTypes = [
     'text/plain', 
     'text/markdown', 
     'application/pdf'
 ] as const
+
+export type AcceptedFileType = typeof AcceptedFileTypes[number]
+
+export const AcceptedMemoryTypes = [
+    'application/json'
+] as const
+
+export type AcceptedMemoryType = typeof AcceptedMemoryTypes[number]
+
+export const AcceptedPluginTypes = [
+    'application/zip',
+    'application/x-tar'
+] as const
+
+export type AcceptedPluginType = typeof AcceptedPluginTypes[number]
 
 export enum ErrorCode {
     IndexError, SocketClosed, WebSocketConnectionError, ApiError, FailedRetry
