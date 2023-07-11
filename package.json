@@ -2,7 +2,7 @@
   "name": "ccat-api",
   "description": "API Client to communicate with the Cheshire Cat AI",
   "license": "MIT",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "author": "zAlweNy26",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
