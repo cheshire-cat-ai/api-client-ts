@@ -1,5 +1,14 @@
 # ccat-api
 
+## 0.4.5
+
+### Patch Changes
+
+- 467c9fe: Sync with cat's backend:
+
+  - Updated /memory/delete endpoint
+  - Updated packages
+
 ## 0.4.4
 
 ### Patch Changes
