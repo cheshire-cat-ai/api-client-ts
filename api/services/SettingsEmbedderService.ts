@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -12,11 +13,12 @@ export class SettingsEmbedderService {
     constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * Get Settings
+     * Get Embedder Settings
+     * Get the list of the Embedders
      * @returns ConfigurationsResponse Successful Response
      * @throws ApiError
      */
-    public getSettings(): CancelablePromise<ConfigurationsResponse> {
+    public getEmbedderSettings(): CancelablePromise<ConfigurationsResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/embedder/',
@@ -25,6 +27,7 @@ export class SettingsEmbedderService {
 
     /**
      * Upsert Embedder Setting
+     * Upsert the Embedder setting
      * @param languageEmbedderName 
      * @param requestBody 
      * @returns SettingResponse Successful Response

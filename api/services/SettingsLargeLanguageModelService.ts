@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -12,11 +13,12 @@ export class SettingsLargeLanguageModelService {
     constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * Get Settings
+     * Get LLM Settings
+     * Get the list of the Large Language Models
      * @returns ConfigurationsResponse Successful Response
      * @throws ApiError
      */
-    public getSettings(): CancelablePromise<ConfigurationsResponse> {
+    public getLlmSettings(): CancelablePromise<ConfigurationsResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/llm/',
@@ -24,7 +26,8 @@ export class SettingsLargeLanguageModelService {
     }
 
     /**
-     * Upsert Llm Setting
+     * Upsert LLM Setting
+     * Upsert the Large Language Model setting
      * @param languageModelName 
      * @param requestBody 
      * @returns SettingResponse Successful Response

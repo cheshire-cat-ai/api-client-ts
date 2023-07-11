@@ -1,8 +1,6 @@
 import { PromptSettings as DefaultPromptSettings } from './models/PromptSettings'
 
-export interface PromptSettings extends DefaultPromptSettings {
-    [key: string]: any
-}
+export type PromptSettings = DefaultPromptSettings & Record<string, any>
 
 export interface WebSocketSettings {
     /** 

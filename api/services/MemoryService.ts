@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -15,17 +16,20 @@ export class MemoryService {
     /**
      * Delete Element In Memory
      * Delete specific element in memory.
+     * @param collectionId 
      * @param memoryId 
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
     public deleteElementInMemory(
+collectionId: string,
 memoryId: string,
 ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/point/{memory_id}/',
+            url: '/memory/point/{collection_id}/{memory_id}/',
             path: {
+                'collection_id': collectionId,
                 'memory_id': memoryId,
             },
             errors: {
@@ -39,12 +43,14 @@ memoryId: string,
      * Search k memories similar to given text.
      * @param text Find memories similar to this text.
      * @param k How many memories to return.
+     * @param userId User id.
      * @returns MemoryRecall Successful Response
      * @throws ApiError
      */
     public recallMemoriesFromText(
 text: string,
 k: number = 100,
+userId: string = 'user',
 ): CancelablePromise<MemoryRecall> {
         return this.httpRequest.request({
             method: 'GET',
@@ -52,6 +58,7 @@ k: number = 100,
             query: {
                 'text': text,
                 'k': k,
+                'user_id': userId,
             },
             errors: {
                 422: `Validation Error`,
@@ -61,6 +68,7 @@ k: number = 100,
 
     /**
      * Get Collections
+     * Get list of available collections
      * @returns CollectionsList Successful Response
      * @throws ApiError
      */

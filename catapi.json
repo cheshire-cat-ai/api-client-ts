@@ -38,6 +38,7 @@
                     "Settings - General"
                 ],
                 "summary": "Get Settings",
+                "description": "Get the entire list of settings available in the database",
                 "operationId": "get_settings",
                 "parameters": [
                     {
@@ -103,6 +104,7 @@
                     "Settings - General"
                 ],
                 "summary": "Create Setting",
+                "description": "Create a new setting in the database",
                 "operationId": "create_setting",
                 "requestBody": {
                     "content": {
@@ -145,6 +147,7 @@
                     "Settings - General"
                 ],
                 "summary": "Get Setting",
+                "description": "Get the a specific setting from the database",
                 "operationId": "get_setting",
                 "parameters": [
                     {
@@ -186,6 +189,7 @@
                     "Settings - General"
                 ],
                 "summary": "Delete Setting",
+                "description": "Delete a specific setting in the database",
                 "operationId": "delete_setting",
                 "parameters": [
                     {
@@ -225,6 +229,7 @@
                     "Settings - General"
                 ],
                 "summary": "Update Setting",
+                "description": "Update a specific setting in the database",
                 "operationId": "update_setting",
                 "parameters": [
                     {
@@ -300,7 +305,8 @@
                     "Settings - Large Language Model"
                 ],
                 "summary": "Get LLM Settings",
-                "operationId": "get_settings",
+                "description": "Get the list of the Large Language Models",
+                "operationId": "get_llm_settings",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -321,7 +327,8 @@
                 "tags": [
                     "Settings - Large Language Model"
                 ],
-                "summary": "Upsert Llm Setting",
+                "summary": "Upsert LLM Setting",
+                "description": "Upsert the Large Language Model setting",
                 "operationId": "upsert_llm_setting",
                 "parameters": [
                     {
@@ -379,7 +386,8 @@
                     "Settings - Embedder"
                 ],
                 "summary": "Get Embedder Settings",
-                "operationId": "get_settings",
+                "description": "Get the list of the Embedders",
+                "operationId": "get_embedder_settings",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -401,6 +409,7 @@
                     "Settings - Embedder"
                 ],
                 "summary": "Upsert Embedder Setting",
+                "description": "Upsert the Embedder setting",
                 "operationId": "upsert_embedder_setting",
                 "parameters": [
                     {
@@ -588,7 +597,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Upload Memory",
+                                    "title": "Response Get Plugin Details",
                                     "type": "object",
                                     "required": [
                                         "status",
@@ -663,7 +672,7 @@
                 "security": []
             }
         },
-        "/memory/point/{memory_id}/": {
+        "/memory/point/{collection_id}/{memory_id}/": {
             "delete": {
                 "tags": [
                     "Memory"
@@ -672,6 +681,15 @@
                 "description": "Delete specific element in memory.",
                 "operationId": "delete_element_in_memory",
                 "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Collection Id",
+                            "type": "string"
+                        },
+                        "name": "collection_id",
+                        "in": "path"
+                    },
                     {
                         "required": true,
                         "schema": {
@@ -738,6 +756,18 @@
                         },
                         "name": "k",
                         "in": "query"
+                    },
+                    {
+                        "description": "User id.",
+                        "required": false,
+                        "schema": {
+                            "title": "User Id",
+                            "type": "string",
+                            "description": "User id.",
+                            "default": "user"
+                        },
+                        "name": "user_id",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -771,6 +801,7 @@
                     "Memory"
                 ],
                 "summary": "Get Collections",
+                "description": "Get list of available collections",
                 "operationId": "get_collections",
                 "responses": {
                     "200": {
@@ -926,6 +957,7 @@
                     "Rabbit Hole"
                 ],
                 "summary": "Upload Url",
+                "description": "Upload a url. Website content will be extracted and segmented into chunks.\nChunks will be then vectorized and stored into documents memory.",
                 "operationId": "upload_url",
                 "requestBody": {
                     "content": {
@@ -968,7 +1000,7 @@
                     "Rabbit Hole"
                 ],
                 "summary": "Upload Memory",
-                "description": "Upload a memory json file to the CCat memory",
+                "description": "Upload a memory json file to the cat memory",
                 "operationId": "upload_memory",
                 "requestBody": {
                     "content": {
@@ -1113,7 +1145,8 @@
                     "page_content",
                     "metadata",
                     "score",
-                    "vector"
+                    "vector",
+                    "id"
                 ],
                 "type": "object",
                 "properties": {
@@ -1123,6 +1156,10 @@
                     },
                     "metadata": {
                         "$ref": "#/components/schemas/MetaData"
+                    },
+                    "id": {
+                        "title": "Id",
+                        "type": "string"
                     },
                     "score": {
                         "title": "Score",

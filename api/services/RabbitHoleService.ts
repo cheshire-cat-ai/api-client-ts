@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -38,6 +39,8 @@ formData: BodyUploadFile,
 
     /**
      * Upload Url
+     * Upload a url. Website content will be extracted and segmented into chunks.
+ * Chunks will be then vectorized and stored into documents memory.
      * @param requestBody 
      * @returns WebResponse Successful Response
      * @throws ApiError
@@ -58,7 +61,7 @@ requestBody: BodyUploadUrl,
 
     /**
      * Upload Memory
-     * Upload a memory json file to the CCat memory
+     * Upload a memory json file to the cat memory
      * @param formData 
      * @returns any Successful Response
      * @throws ApiError

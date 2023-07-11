@@ -1,3 +1,4 @@
+/* generated using openapi-typescript-codegen -- do no edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -14,6 +15,7 @@ export class SettingsGeneralService {
 
     /**
      * Get Settings
+     * Get the entire list of settings available in the database
      * @param limit The maximum number of settings to fetch
      * @param page The number of settings' page to fetch
      * @param search The setting to search
@@ -41,6 +43,7 @@ search: string = '',
 
     /**
      * Create Setting
+     * Create a new setting in the database
      * @param requestBody 
      * @returns SettingResponse Successful Response
      * @throws ApiError
@@ -61,6 +64,7 @@ requestBody: Setting,
 
     /**
      * Get Setting
+     * Get the a specific setting from the database
      * @param settingId 
      * @returns SettingResponse Successful Response
      * @throws ApiError
@@ -82,6 +86,7 @@ settingId: string,
 
     /**
      * Delete Setting
+     * Delete a specific setting in the database
      * @param settingId 
      * @returns any Successful Response
      * @throws ApiError
@@ -103,6 +108,7 @@ settingId: string,
 
     /**
      * Update Setting
+     * Update a specific setting in the database
      * @param settingId 
      * @param requestBody 
      * @returns SettingResponse Successful Response

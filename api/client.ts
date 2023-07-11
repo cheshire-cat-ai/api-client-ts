@@ -58,7 +58,8 @@ export class CatClient {
             this.disconnectedHandler?.()
         }
         this.ws.onmessage = (event) => {
-            const data = JSON.parse(event.data.toString()) as SocketError | SocketResponse
+            if (typeof event.data != 'string') return
+            const data = JSON.parse(event.data) as SocketError | SocketResponse
             if (isMessageResponse(data)) {
                 this.messageHandler?.(data)
                 return
@@ -130,7 +131,7 @@ export class CatClient {
         }
         const jsonMessage = JSON.stringify({ 
             text: message, 
-            prompt_settings: settings 
+            prompt_settings: settings
         })
         this.ws.send(jsonMessage)
     }
