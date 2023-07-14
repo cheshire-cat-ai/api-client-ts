@@ -1078,6 +1078,12 @@
                         "type": "integer",
                         "description": "Chunk overlap (in characters)",
                         "default": 100
+                    },
+                    "summary": {
+                        "title": "Summary",
+                        "type": "boolean",
+                        "description": "Enables call to summary hook for this file",
+                        "default": false
                     }
                 }
             },
@@ -1118,6 +1124,12 @@
                         "type": "integer",
                         "description": "Chunk overlap (in characters)",
                         "default": 100
+                    },
+                    "summary": {
+                        "title": "Summary",
+                        "type": "boolean",
+                        "description": "Enables call to summary hook for this file",
+                        "default": false
                     }
                 }
             },

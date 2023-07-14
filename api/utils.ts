@@ -22,7 +22,7 @@ export interface WebSocketSettings {
      * The function to call after failing all the retries
      * @default undefined
     */
-    onFailed?: (error: ErrorCode) => void
+    onFailed?: (error: SocketError) => void
 }
 
 export interface CatSettings {
@@ -78,33 +78,25 @@ export const AcceptedPluginTypes = [
 
 export type AcceptedPluginType = typeof AcceptedPluginTypes[number]
 
-export enum ErrorCode {
-    IndexError, SocketClosed, WebSocketConnectionError, ApiError, FailedRetry
-}
-
 export enum WebSocketState {
     CONNECTING, OPEN, CLOSING, CLOSED
 }
 
 export interface SocketResponse {
-    error: false
     type: 'notification' | 'chat'
     content: string
-    why: unknown
+    why?: unknown
 }
 
 export interface SocketError {
-    error: true
-    code: string
+    name: string
+    description: string
 }
 
 export const isMessageResponse = (value: unknown): value is SocketResponse => {
-    return !!(value 
-        && typeof value === 'object' 
-        && 'content' in value 
-        && 'why' in value 
+    return !!(value && typeof value === 'object' 
+        && 'content' in value
         && 'type' in value
-        && 'error' in value 
-        && value.error === false
+        && value.type !== 'error'
     )
 }

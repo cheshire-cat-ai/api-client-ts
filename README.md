@@ -49,7 +49,7 @@ const cat = new CatClient({
 |:------------:|:-------------------:|:------------:|:---------------------------------------------------------:|
 | **path**     | string              | 'ws'         | Websocket path to use to communicate with the CCat        |
 | **retries**  | number              | 3            | The maximum number of retries before calling **onFailed** |
-| **delay**    | number              | 5000         | The delay for reconnect, in milliseconds                  |
+| **delay**    | number              | 3000         | The delay for reconnect, in milliseconds                  |
 | **onFailed** | (ErrorCode) => void | undefined    | The function to call after failing all the retries        |
 
 Then, for example, you can configure the LLM like this:

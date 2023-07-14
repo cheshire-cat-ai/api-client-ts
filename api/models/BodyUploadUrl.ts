@@ -16,4 +16,8 @@ export type BodyUploadUrl = {
      * Chunk overlap (in characters)
      */
     chunk_overlap?: number;
+    /**
+     * Enables call to summary hook for this file
+     */
+    summary?: boolean;
 };
