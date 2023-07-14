@@ -1,5 +1,15 @@
 # ccat-api
 
+## 0.5.0
+
+### Minor Changes
+
+- 693df12: Added reset method
+
+  - Updated error handling
+  - Now api getter and websocket can be undefined
+  - Added summary parameter in file and url upload
+
 ## 0.4.5
 
 ### Patch Changes
