@@ -8,7 +8,5 @@ export type Setting = {
     name: string;
     value: Record<string, any>;
     category?: string;
-    enabled?: boolean;
-    createdAt?: string;
-    updatedAt?: string;
+    updated_at?: number;
 };

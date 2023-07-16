@@ -44,28 +44,6 @@
                     {
                         "required": false,
                         "schema": {
-                            "title": "Limit",
-                            "type": "integer",
-                            "default": 100
-                        },
-                        "description": "The maximum number of settings to fetch",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "required": false,
-                        "schema": {
-                            "title": "Page",
-                            "type": "integer",
-                            "default": 1
-                        },
-                        "description": "The number of settings' page to fetch",
-                        "name": "page",
-                        "in": "query"
-                    },
-                    {
-                        "required": false,
-                        "schema": {
                             "title": "Search",
                             "type": "string",
                             "default": ""
@@ -224,12 +202,12 @@
                 },
                 "security": []
             },
-            "patch": {
+            "put": {
                 "tags": [
                     "Settings - General"
                 ],
                 "summary": "Update Setting",
-                "description": "Update a specific setting in the database",
+                "description": "Update a specific setting in the database if it exists",
                 "operationId": "update_setting",
                 "parameters": [
                     {
@@ -1470,20 +1448,9 @@
                         "type": "string",
                         "default": "general"
                     },
-                    "enabled": {
-                        "title": "Enabled",
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "createdAt": {
-                        "title": "Createdat",
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updatedAt": {
-                        "title": "Updatedat",
-                        "type": "string",
-                        "format": "date-time"
+                    "updated_at": {
+                        "title": "Updated Timestamp",
+                        "type": "number"
                     }
                 }
             },

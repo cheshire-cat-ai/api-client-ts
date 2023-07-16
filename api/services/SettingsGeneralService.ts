@@ -16,23 +16,17 @@ export class SettingsGeneralService {
     /**
      * Get Settings
      * Get the entire list of settings available in the database
-     * @param limit The maximum number of settings to fetch
-     * @param page The number of settings' page to fetch
      * @param search The setting to search
      * @returns SettingsList Successful Response
      * @throws ApiError
      */
     public getSettings(
-limit: number = 100,
-page: number = 1,
 search: string = '',
 ): CancelablePromise<SettingsList> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/',
             query: {
-                'limit': limit,
-                'page': page,
                 'search': search,
             },
             errors: {
@@ -108,7 +102,7 @@ settingId: string,
 
     /**
      * Update Setting
-     * Update a specific setting in the database
+     * Update a specific setting in the database if it exists
      * @param settingId 
      * @param requestBody 
      * @returns SettingResponse Successful Response
@@ -119,7 +113,7 @@ settingId: string,
 requestBody: Setting,
 ): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
-            method: 'PATCH',
+            method: 'PUT',
             url: '/settings/{settingId}',
             path: {
                 'settingId': settingId,

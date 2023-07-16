@@ -15,7 +15,8 @@ module.exports = {
     rules: {
         "no-throw-literal": "off",
         "@typescript-eslint/no-throw-literal": "error",
-        "@typescript-eslint/no-explicit-any": "warn"
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/ban-tslint-comment": "off"
     },
     root: true,
 };
