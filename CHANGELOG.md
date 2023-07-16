@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.5.1
+
+### Patch Changes
+
+- 9400f12: Sync with Cheshire Cat Core
+
 ## 0.5.0
 
 ### Minor Changes
