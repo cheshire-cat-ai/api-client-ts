@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PromptSettings } from '../models/PromptSettings';
+import type { DefaultPromptSettings } from '../models/DefaultPromptSettings';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -13,10 +13,10 @@ export class SettingsPromptService {
 
     /**
      * Get Default Prompt Settings
-     * @returns PromptSettings Successful Response
+     * @returns DefaultPromptSettings Successful Response
      * @throws ApiError
      */
-    public getDefaultPromptSettings(): CancelablePromise<PromptSettings> {
+    public getDefaultPromptSettings(): CancelablePromise<DefaultPromptSettings> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/prompt/',

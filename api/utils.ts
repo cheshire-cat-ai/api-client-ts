@@ -1,4 +1,4 @@
-import { PromptSettings as DefaultPromptSettings } from './models/PromptSettings'
+import { DefaultPromptSettings } from './models/DefaultPromptSettings'
 
 export type PromptSettings = DefaultPromptSettings & Record<string, any>
 

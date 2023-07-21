@@ -268,7 +268,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/PromptSettings"
+                                    "$ref": "#/components/schemas/DefaultPromptSettings"
                                 }
                             }
                         }
@@ -1490,8 +1490,8 @@
                     }
                 }
             },
-            "PromptSettings": {
-                "title": "PromptSettings",
+            "DefaultPromptSettings": {
+                "title": "DefaultPromptSettings",
                 "required": [
                     "prefix",
                     "use_episodic_memory",

@@ -190,7 +190,7 @@ export class CatClient {
     }
     
     private get url() {
-        return `${this.config.secure ? 's://' : '://'}
+        return `${this.config.secure ? 's' : ''}://
             ${this.config.baseUrl}
             ${this.config.port ? `:${this.config.port}` : ''}
             `.replace(/\s/g, '')

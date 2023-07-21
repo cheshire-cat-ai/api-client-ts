@@ -24,7 +24,7 @@ export type { MetaData } from './api/models/MetaData';
 export type { Plugin } from './api/models/Plugin';
 export type { PluginsList } from './api/models/PluginsList';
 export type { PluginSettings } from './api/models/PluginSettings';
-export type { PromptSettings as DefaultPromptSettings } from './api/models/PromptSettings';
+export type { DefaultPromptSettings } from './api/models/DefaultPromptSettings';
 export type { QueryData } from './api/models/QueryData';
 export type { JsonSchema } from './api/models/JsonSchema';
 export type { Setting } from './api/models/Setting';
