@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.6.1
+
+### Patch Changes
+
+- c97d9b8: Fixed DefaultPromptSettings exported interface name
+
 ## 0.6.0
 
 ### Minor Changes
