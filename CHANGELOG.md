@@ -1,5 +1,13 @@
 # ccat-api
 
+## 0.6.0
+
+### Minor Changes
+
+- ab329b4: Refactored models
+
+  - Added new plugin settings endpoints
+
 ## 0.5.1
 
 ### Patch Changes
