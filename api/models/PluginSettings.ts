@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type FileResponse = {
+export type PluginSettings = {
     status: string;
-    filename: string;
-    content_type: string;
-    info: string;
+    settings: Record<string, any>;
 };

@@ -3,14 +3,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Schema } from './Schema';
+import type { JsonSchema } from './JsonSchema';
 import type { Setting } from './Setting';
 
 export type ConfigurationsResponse = {
     status: string;
     results: number;
     settings: Array<Setting>;
-    schemas: Record<string, Schema>;
+    schemas: Record<string, (JsonSchema & {
+name_human_readable?: string;
+})>;
     allowed_configurations: Array<string>;
     selected_configuration: string;
 };

@@ -88,14 +88,14 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Setting"
+                                "$ref": "#/components/schemas/SettingBody"
                             }
                         }
                     },
                     "required": true
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
@@ -224,7 +224,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Setting"
+                                "$ref": "#/components/schemas/SettingBody"
                             }
                         }
                     },
@@ -486,7 +486,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/PluginResponse"
+                                    "$ref": "#/components/schemas/FileResponse"
                                 }
                             }
                         }
@@ -632,6 +632,121 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/DeleteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/plugins/settings/{plugin_id}": {
+            "get": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "Get Plugin Settings",
+                "description": "Returns the settings of a specific plugin",
+                "operationId": "get_plugin_settings",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Plugin Id",
+                            "type": "string"
+                        },
+                        "name": "plugin_id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/PluginSettings"
+                                        },
+                                        {
+                                            "required": [
+                                                "schema"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "schema": {
+                                                    "$ref": "#/components/schemas/JsonSchema"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": null
+            },
+            "put": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "Upsert Plugin Settings",
+                "description": "Updates the settings of a specific plugin",
+                "operationId": "upsert_plugin_settings",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Plugin Id",
+                            "type": "string"
+                        },
+                        "name": "plugin_id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "title": "Payload",
+                                "type": "object"
+                            },
+                            "example": {
+                                "active": false
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PluginSettings"
                                 }
                             }
                         }
@@ -1190,37 +1305,38 @@
                     }
                 }
             },
-            "PluginResponse": {
-                "title": "PluginResponse",
+            "PluginSettings": {
+                "title": "CollectionData",
                 "required": [
-                    "filename",
-                    "content_type",
-                    "info"
+                    "status",
+                    "settings"
                 ],
                 "type": "object",
                 "properties": {
-                    "filename": {
-                        "title": "File Name",
+                    "status": {
+                        "title": "Status",
                         "type": "string"
                     },
-                    "content_type": {
-                        "title": "Content Type",
-                        "type": "string"
-                    },
-                    "info": {
-                        "$ref": "#/components/schemas/Plugin"
+                    "settings": {
+                        "title": "Settings",
+                        "type": "object"
                     }
                 }
             },
             "FileResponse": {
                 "title": "FileResponse",
                 "required": [
+                    "status",
                     "filename",
                     "content_type",
                     "info"
                 ],
                 "type": "object",
                 "properties": {
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    },
                     "filename": {
                         "title": "File Name",
                         "type": "string"
@@ -1424,17 +1540,37 @@
                 }
             },
             "Setting": {
-                "title": "Setting",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/SettingBody"
+                    },
+                    {
+                        "required": [
+                            "setting_id",
+                            "updated_at"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "setting_id": {
+                                "title": "Setting Id",
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "title": "Updated Timestamp",
+                                "type": "number"
+                            }
+                        }
+                    }
+                ]
+            },
+            "SettingBody": {
+                "title": "SettingBody",
                 "required": [
                     "name",
                     "value"
                 ],
                 "type": "object",
                 "properties": {
-                    "setting_id": {
-                        "title": "Setting Id",
-                        "type": "string"
-                    },
                     "name": {
                         "title": "Name",
                         "type": "string"
@@ -1445,12 +1581,7 @@
                     },
                     "category": {
                         "title": "Category",
-                        "type": "string",
-                        "default": "general"
-                    },
-                    "updated_at": {
-                        "title": "Updated Timestamp",
-                        "type": "number"
+                        "type": "string"
                     }
                 }
             },
@@ -1497,19 +1628,23 @@
                     }
                 }
             },
-            "Schema": {
+            "JsonSchema": {
                 "title": "Schema",
                 "required": [
                     "title",
+                    "type",
                     "description",
                     "properties",
-                    "additionalProperties",
-                    "name_human_readable"
+                    "additionalProperties"
                 ],
                 "type": "object",
                 "properties": {
                     "title": {
                         "title": "Title",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Type",
                         "type": "string"
                     },
                     "description": {
@@ -1531,10 +1666,6 @@
                         "title": "AdditionalProperties",
                         "type": "boolean",
                         "default": false
-                    },
-                    "name_human_readable": {
-                        "title": "NameHumanReadable",
-                        "type": "string"
                     }
                 }
             },
@@ -1569,7 +1700,20 @@
                         "title": "Schemas",
                         "type": "object",
                         "additionalProperties": {
-                            "$ref": "#/components/schemas/Schema"
+                            "allOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonSchema"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "name_human_readable": {
+                                            "title": "NameHumanReadable",
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "allowed_configurations": {

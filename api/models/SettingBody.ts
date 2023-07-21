@@ -3,9 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type FileResponse = {
-    status: string;
-    filename: string;
-    content_type: string;
-    info: string;
+export type SettingBody = {
+    name: string;
+    value: Record<string, any>;
+    category?: string;
 };

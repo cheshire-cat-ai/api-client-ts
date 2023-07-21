@@ -3,10 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Setting = {
-    setting_id?: string;
-    name: string;
-    value: Record<string, any>;
-    category?: string;
-    updated_at?: number;
-};
+import type { SettingBody } from './SettingBody';
+
+export type Setting = (SettingBody & {
+setting_id: string;
+updated_at: number;
+});

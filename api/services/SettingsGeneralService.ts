@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Setting } from '../models/Setting';
+import type { SettingBody } from '../models/SettingBody';
 import type { SettingResponse } from '../models/SettingResponse';
 import type { SettingsList } from '../models/SettingsList';
 
@@ -43,7 +43,7 @@ search: string = '',
      * @throws ApiError
      */
     public createSetting(
-requestBody: Setting,
+requestBody: SettingBody,
 ): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'POST',
@@ -110,7 +110,7 @@ settingId: string,
      */
     public updateSetting(
 settingId: string,
-requestBody: Setting,
+requestBody: SettingBody,
 ): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PUT',
