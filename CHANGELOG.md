@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.6.2
+
+### Patch Changes
+
+- 6e8b315: Now the port is a number
+
 ## 0.6.1
 
 ### Patch Changes
