@@ -35,9 +35,9 @@ export interface CatSettings {
     authKey?: string
     /** 
      * The port to which connect to the Cat
-     * @default '1865'
+     * @default 1865
     */
-    port?: string
+    port?: number
     /** 
      * Choose to either initialize the client instantly or not
      * @default true

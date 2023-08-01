@@ -37,7 +37,7 @@ const cat = new CatClient({
 |:------------:|:--------:|:------------:|:--------------------------------------------------------------------------------:|
 | **baseUrl**  | string   | **Required** | The same of **CORE_HOST**                                                        |
 | **authKey**  | string   | ''           | The same of **API_KEY**                                                          |
-| **port**     | string   | '1865'       | The same of the **CORE_PORT**                                                    |
+| **port**     | number   | 1865         | The same of the **CORE_PORT**                                                    |
 | **instant**  | boolean  | true         | Instantly initialize the websocket and the API client, or later with **.init()** |
 | **secure**   | boolean  | false        | The same of the **CORE_USE_SECURE_PROTOCOLS**                                    |
 | **timeout**  | number   | 10000        | Timeout for the endpoints, in milliseconds                                       |

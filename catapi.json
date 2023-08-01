@@ -706,7 +706,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             },
             "put": {
                 "tags": [

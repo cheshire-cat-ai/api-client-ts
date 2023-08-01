@@ -30,7 +30,7 @@ export class CatClient {
             secure: false,
             instant: true,
             timeout: 10000,
-            port: '1865',
+            port: 1865,
             ...settings
         }
         if (this.config.instant) this.init()
@@ -76,11 +76,12 @@ export class CatClient {
         }
     }
 
-    reset() {
+    reset(): CatClient {
         this.retried = 0
         this.close()
         this.ws = undefined
         this.apiClient = undefined
+        return this
     }
 
     /**
@@ -118,9 +119,10 @@ export class CatClient {
     /**
      * Closes the WebSocket connection
      */
-    close() {
+    close(): CatClient {
         this.ws?.close()
         this.explicitlyClosed = true
+        return this
     }
 
     /**
@@ -135,18 +137,20 @@ export class CatClient {
      * @param message The message to pass
      * @param settings The prompt settings to pass
      */
-    send(message: string, settings?: Partial<PromptSettings>) {
+    send(message: string, settings?: Partial<PromptSettings>): CatClient {
         if (this.ws?.readyState !== WebSocket.OPEN) {
             this.errorHandler?.({
                 name: 'SocketClosed',
                 description: 'The connection to the server was closed'
             })
+            return this
         }
         const jsonMessage = JSON.stringify({ 
             text: message, 
             prompt_settings: settings
         })
         this.ws?.send(jsonMessage)
+        return this
     }
 
     /**
