@@ -55,6 +55,109 @@ declare abstract class BaseHttpRequest {
     abstract request<T>(options: ApiRequestOptions): CancelablePromise<T>;
 }
 
+type JsonSchema = {
+    title: string;
+    type: string;
+    description?: string;
+    properties: Record<string, any>;
+    required: Array<string>;
+    additionalProperties?: (boolean | Record<string, any>);
+    definitions?: Record<string, any>;
+};
+
+type SettingBody = {
+    name: string;
+    value: Record<string, any>;
+    category?: string;
+};
+
+type Setting = (SettingBody & {
+    setting_id: string;
+    updated_at: number;
+});
+
+type ModelsResponse = {
+    status: string;
+    results: number;
+    settings: Array<Setting>;
+    schemas: Record<string, (JsonSchema & {
+        nameHumanReadable?: string;
+    })>;
+    allowed_configurations: Array<string>;
+    selected_configuration: string;
+};
+
+type SettingResponse = {
+    status: string;
+    settings: Setting;
+};
+
+declare class EmbedderService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get Embedders Settings
+     * Get the list of the Embedders
+     * @returns ModelsResponse Successful Response
+     * @throws ApiError
+     */
+    getEmbeddersSettings(): CancelablePromise<ModelsResponse>;
+    /**
+     * Get Embedder Settings
+     * Get settings and schema of the specified Embedder
+     * @param languageEmbedderName
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    getEmbedderSettings(languageEmbedderName: string): CancelablePromise<(SettingResponse & {
+        schema: (JsonSchema & {
+            nameHumanReadable?: string;
+        });
+    })>;
+    /**
+     * Upsert Embedder Setting
+     * Upsert the Embedder setting
+     * @param languageEmbedderName
+     * @param requestBody
+     * @returns SettingResponse Successful Response
+     * @throws ApiError
+     */
+    upsertEmbedderSetting(languageEmbedderName: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
+}
+
+declare class LargeLanguageModelService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get LLMs Settings
+     * Get the list of the Large Language Models
+     * @returns ModelsResponse Successful Response
+     * @throws ApiError
+     */
+    getLlmsSettings(): CancelablePromise<ModelsResponse>;
+    /**
+     * Get Llm Settings
+     * Get settings and schema of the specified Large Language Model
+     * @param languageModelName
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    getLlmSettings(languageModelName: string): CancelablePromise<(SettingResponse & {
+        schema: (JsonSchema & {
+            nameHumanReadable?: string;
+        });
+    })>;
+    /**
+     * Upsert LLM Setting
+     * Upsert the Large Language Model setting
+     * @param languageModelName
+     * @param requestBody
+     * @returns SettingResponse Successful Response
+     * @throws ApiError
+     */
+    upsertLlmSetting(languageModelName: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
+}
+
 type Collection = {
     name: string;
     vectors_count: number;
@@ -68,7 +171,7 @@ type CollectionsList = {
 
 type DeleteResponse = {
     status: string;
-    deleted: (string | Record<string, any>);
+    deleted: (string | boolean | Record<string, any>);
 };
 
 type QueryData = {
@@ -79,6 +182,8 @@ type QueryData = {
 type MetaData = {
     source: string;
     when: number;
+    docstring?: string;
+    name?: string;
 };
 
 type CollectionData = {
@@ -104,15 +209,6 @@ declare class MemoryService {
     private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
-     * Delete Element In Memory
-     * Delete specific element in memory.
-     * @param collectionId
-     * @param memoryId
-     * @returns DeleteResponse Successful Response
-     * @throws ApiError
-     */
-    deleteElementInMemory(collectionId: string, memoryId: string): CancelablePromise<DeleteResponse>;
-    /**
      * Recall Memories From Text
      * Search k memories similar to given text.
      * @param text Find memories similar to this text.
@@ -130,6 +226,13 @@ declare class MemoryService {
      */
     getCollections(): CancelablePromise<CollectionsList>;
     /**
+     * Wipe Collections
+     * Delete and create all collections
+     * @returns DeleteResponse Successful Response
+     * @throws ApiError
+     */
+    wipeCollections(): CancelablePromise<DeleteResponse>;
+    /**
      * Wipe Single Collection
      * Delete and recreate a collection
      * @param collectionId
@@ -138,12 +241,14 @@ declare class MemoryService {
      */
     wipeSingleCollection(collectionId: string): CancelablePromise<DeleteResponse>;
     /**
-     * Wipe Collections
-     * Delete and create all collections
+     * Delete Element In Memory
+     * Delete specific element in memory.
+     * @param collectionId
+     * @param memoryId
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    wipeCollections(): CancelablePromise<DeleteResponse>;
+    deleteElementInMemory(collectionId: string, memoryId: string): CancelablePromise<DeleteResponse>;
     /**
      * Wipe Conversation History
      * Delete conversation history from working memory
@@ -153,7 +258,7 @@ declare class MemoryService {
     wipeConversationHistory(): CancelablePromise<DeleteResponse>;
 }
 
-type BodyUploadPlugin = {
+type BodyInstallPlugin = {
     file: Blob;
 };
 
@@ -162,15 +267,6 @@ type FileResponse = {
     filename: string;
     content_type: string;
     info: string;
-};
-
-type JsonSchema = {
-    title: string;
-    type: string;
-    description: string;
-    properties: Record<string, any>;
-    required?: Array<string>;
-    additionalProperties: boolean;
 };
 
 type Plugin = {
@@ -183,11 +279,7 @@ type Plugin = {
     tags: string;
     thumb: string;
     version: string;
-};
-
-type PluginSettings = {
-    status: string;
-    settings: Record<string, any>;
+    active?: boolean;
 };
 
 type PluginsList = {
@@ -195,6 +287,13 @@ type PluginsList = {
     results: number;
     installed: Array<Plugin>;
     registry: Array<Plugin>;
+};
+
+type PluginsSettingsResponse = {
+    status: string;
+    results: number;
+    settings: Array<Setting>;
+    schemas: Record<string, JsonSchema>;
 };
 
 declare class PluginsService {
@@ -208,13 +307,13 @@ declare class PluginsService {
      */
     listAvailablePlugins(): CancelablePromise<PluginsList>;
     /**
-     * Upload Plugin
+     * Install Plugin
      * Install a new plugin from a zip file
      * @param formData
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
-    uploadPlugin(formData: BodyUploadPlugin): CancelablePromise<FileResponse>;
+    installPlugin(formData: BodyInstallPlugin): CancelablePromise<FileResponse>;
     /**
      * Toggle Plugin
      * Enable or disable a single plugin
@@ -222,7 +321,10 @@ declare class PluginsService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    togglePlugin(pluginId: string): CancelablePromise<Record<string, any>>;
+    togglePlugin(pluginId: string): CancelablePromise<{
+        status: string;
+        info: string;
+    }>;
     /**
      * Get Plugin Details
      * Returns information on a single plugin
@@ -243,13 +345,20 @@ declare class PluginsService {
      */
     deletePlugin(pluginId: string): CancelablePromise<DeleteResponse>;
     /**
+     * Get Plugins Settings
+     * Returns the settings of all the plugins
+     * @returns PluginsSettingsResponse Successful Response
+     * @throws ApiError
+     */
+    getPluginsSettings(): CancelablePromise<PluginsSettingsResponse>;
+    /**
      * Get Plugin Settings
      * Returns the settings of a specific plugin
      * @param pluginId
      * @returns any Successful Response
      * @throws ApiError
      */
-    getPluginSettings(pluginId: string): CancelablePromise<(PluginSettings & {
+    getPluginSettings(pluginId: string): CancelablePromise<(SettingResponse & {
         schema: JsonSchema;
     })>;
     /**
@@ -257,10 +366,28 @@ declare class PluginsService {
      * Updates the settings of a specific plugin
      * @param pluginId
      * @param requestBody
-     * @returns PluginSettings Successful Response
+     * @returns SettingResponse Successful Response
      * @throws ApiError
      */
-    upsertPluginSettings(pluginId: string, requestBody: Record<string, any>): CancelablePromise<PluginSettings>;
+    upsertPluginSettings(pluginId: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
+}
+
+type DefaultPromptSettings = {
+    prefix: string;
+    use_episodic_memory: boolean;
+    use_declarative_memory: boolean;
+    use_procedural_memory: boolean;
+};
+
+declare class PromptService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get Default Prompt Settings
+     * @returns DefaultPromptSettings Successful Response
+     * @throws ApiError
+     */
+    getDefaultPromptSettings(): CancelablePromise<DefaultPromptSettings>;
 }
 
 type BodyUploadFile = {
@@ -339,61 +466,13 @@ declare class RabbitHoleService {
     uploadMemory(formData: BodyUploadMemory): CancelablePromise<Record<string, any>>;
 }
 
-type SettingBody = {
-    name: string;
-    value: Record<string, any>;
-    category?: string;
-};
-
-type Setting = (SettingBody & {
-    setting_id: string;
-    updated_at: number;
-});
-
-type ConfigurationsResponse = {
-    status: string;
-    results: number;
-    settings: Array<Setting>;
-    schemas: Record<string, (JsonSchema & {
-        name_human_readable?: string;
-    })>;
-    allowed_configurations: Array<string>;
-    selected_configuration: string;
-};
-
-type SettingResponse = {
-    status: string;
-    setting: Setting;
-};
-
-declare class SettingsEmbedderService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get Embedder Settings
-     * Get the list of the Embedders
-     * @returns ConfigurationsResponse Successful Response
-     * @throws ApiError
-     */
-    getEmbedderSettings(): CancelablePromise<ConfigurationsResponse>;
-    /**
-     * Upsert Embedder Setting
-     * Upsert the Embedder setting
-     * @param languageEmbedderName
-     * @param requestBody
-     * @returns SettingResponse Successful Response
-     * @throws ApiError
-     */
-    upsertEmbedderSetting(languageEmbedderName: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
-}
-
 type SettingsList = {
     status: string;
     results: number;
     settings: Array<Setting>;
 };
 
-declare class SettingsGeneralService {
+declare class SettingsService {
     private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
@@ -439,45 +518,6 @@ declare class SettingsGeneralService {
     updateSetting(settingId: string, requestBody: SettingBody): CancelablePromise<SettingResponse>;
 }
 
-declare class SettingsLargeLanguageModelService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get LLM Settings
-     * Get the list of the Large Language Models
-     * @returns ConfigurationsResponse Successful Response
-     * @throws ApiError
-     */
-    getLlmSettings(): CancelablePromise<ConfigurationsResponse>;
-    /**
-     * Upsert LLM Setting
-     * Upsert the Large Language Model setting
-     * @param languageModelName
-     * @param requestBody
-     * @returns SettingResponse Successful Response
-     * @throws ApiError
-     */
-    upsertLlmSetting(languageModelName: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
-}
-
-type DefaultPromptSettings = {
-    prefix: string;
-    use_episodic_memory: boolean;
-    use_declarative_memory: boolean;
-    use_procedural_memory: boolean;
-};
-
-declare class SettingsPromptService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get Default Prompt Settings
-     * @returns DefaultPromptSettings Successful Response
-     * @throws ApiError
-     */
-    getDefaultPromptSettings(): CancelablePromise<DefaultPromptSettings>;
-}
-
 type Status = {
     status: string;
 };
@@ -496,19 +536,19 @@ declare class StatusService {
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 declare class CCatAPI {
+    readonly embedder: EmbedderService;
+    readonly largeLanguageModel: LargeLanguageModelService;
     readonly memory: MemoryService;
     readonly plugins: PluginsService;
+    readonly prompt: PromptService;
     readonly rabbitHole: RabbitHoleService;
-    readonly settingsEmbedder: SettingsEmbedderService;
-    readonly settingsGeneral: SettingsGeneralService;
-    readonly settingsLargeLanguageModel: SettingsLargeLanguageModelService;
-    readonly settingsPrompt: SettingsPromptService;
+    readonly settings: SettingsService;
     readonly status: StatusService;
     readonly request: BaseHttpRequest;
     constructor(config?: Partial<OpenAPIConfig>, HttpRequest?: HttpRequestConstructor);
 }
 
-type PromptSettings = DefaultPromptSettings & Record<string, any>;
+type PromptSettings<TSettings = unknown> = DefaultPromptSettings & Record<string, TSettings>;
 interface WebSocketSettings {
     /**
      * Websocket path to use to communicate with the CCat
@@ -677,14 +717,10 @@ declare class ApiError extends Error {
     constructor(request: ApiRequestOptions, response: ApiResult, message: string);
 }
 
-type ValidationError = {
-    loc: Array<(string | number)>;
-    msg: string;
-    type: string;
-};
-
 type HTTPValidationError = {
-    detail?: Array<ValidationError>;
+    detail?: {
+        error: string;
+    };
 };
 
-export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyUploadFile, BodyUploadMemory, BodyUploadPlugin, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, ConfigurationsResponse, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginSettings, PluginsList, PromptSettings, QueryData, Setting, SettingBody, SettingResponse, SettingsList, SocketError, SocketResponse, Status, ValidationError, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, ModelsResponse, Plugin, PluginsList, PluginsSettingsResponse, PromptSettings, QueryData, Setting, SettingBody, SettingResponse, SettingsList, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
