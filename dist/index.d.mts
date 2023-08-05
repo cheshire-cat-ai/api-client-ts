@@ -65,21 +65,10 @@ type JsonSchema = {
     definitions?: Record<string, any>;
 };
 
-type SettingBody = {
-    name: string;
-    value: Record<string, any>;
-    category?: string;
-};
-
-type Setting = (SettingBody & {
-    setting_id: string;
-    updated_at: number;
-});
-
 type ModelsResponse = {
     status: string;
     results: number;
-    settings: Array<Setting>;
+    settings: Array<Record<string, any>>;
     schemas: Record<string, (JsonSchema & {
         nameHumanReadable?: string;
     })>;
@@ -89,7 +78,7 @@ type ModelsResponse = {
 
 type SettingResponse = {
     status: string;
-    settings: Setting;
+    settings: Record<string, any>;
 };
 
 declare class EmbedderService {
@@ -279,7 +268,7 @@ type Plugin = {
     tags: string;
     thumb: string;
     version: string;
-    active?: boolean;
+    active: boolean;
 };
 
 type PluginsList = {
@@ -292,7 +281,7 @@ type PluginsList = {
 type PluginsSettingsResponse = {
     status: string;
     results: number;
-    settings: Array<Setting>;
+    settings: Array<Record<string, any>>;
     schemas: Record<string, JsonSchema>;
 };
 
@@ -466,10 +455,16 @@ declare class RabbitHoleService {
     uploadMemory(formData: BodyUploadMemory): CancelablePromise<Record<string, any>>;
 }
 
+type SettingBody = {
+    name: string;
+    value: Record<string, any>;
+    category?: string;
+};
+
 type SettingsList = {
     status: string;
     results: number;
-    settings: Array<Setting>;
+    settings: Array<Record<string, any>>;
 };
 
 declare class SettingsService {
@@ -723,4 +718,4 @@ type HTTPValidationError = {
     };
 };
 
-export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, ModelsResponse, Plugin, PluginsList, PluginsSettingsResponse, PromptSettings, QueryData, Setting, SettingBody, SettingResponse, SettingsList, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, ModelsResponse, Plugin, PluginsList, PluginsSettingsResponse, PromptSettings, QueryData, SettingBody, SettingResponse, SettingsList, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
