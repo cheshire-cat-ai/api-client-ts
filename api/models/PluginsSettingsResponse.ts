@@ -4,11 +4,10 @@
 /* eslint-disable */
 
 import type { JsonSchema } from './JsonSchema';
-import type { Setting } from './Setting';
 
 export type PluginsSettingsResponse = {
     status: string;
     results: number;
-    settings: Array<Setting>;
+    settings: Array<Record<string, any>>;
     schemas: Record<string, JsonSchema>;
 };

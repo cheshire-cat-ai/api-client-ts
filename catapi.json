@@ -1586,7 +1586,8 @@
                     "plugin_url",
                     "tags",
                     "thumb",
-                    "version"
+                    "version",
+                    "active"
                 ],
                 "type": "object",
                 "properties": {
@@ -1715,30 +1716,6 @@
                     }
                 }
             },
-            "Setting": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/SettingBody"
-                    },
-                    {
-                        "required": [
-                            "setting_id",
-                            "updated_at"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "setting_id": {
-                                "title": "Setting Id",
-                                "type": "string"
-                            },
-                            "updated_at": {
-                                "title": "Updated Timestamp",
-                                "type": "number"
-                            }
-                        }
-                    }
-                ]
-            },
             "SettingBody": {
                 "title": "SettingBody",
                 "required": [
@@ -1774,7 +1751,7 @@
                         "type": "string"
                     },
                     "settings": {
-                        "$ref": "#/components/schemas/Setting"
+                        "type": "object"
                     }
                 }
             },
@@ -1799,7 +1776,7 @@
                         "title": "Settings",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/Setting"
+                            "type": "object"
                         }
                     }
                 }
@@ -1873,7 +1850,7 @@
                         "title": "Settings",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/Setting"
+                            "type": "object"
                         }
                     },
                     "schemas": {
@@ -1931,7 +1908,7 @@
                         "title": "Settings",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/Setting"
+                            "type": "object"
                         }
                     },
                     "schemas": {

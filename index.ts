@@ -27,7 +27,6 @@ export type { Plugin } from './api/models/Plugin';
 export type { PluginsList } from './api/models/PluginsList';
 export type { PluginsSettingsResponse } from './api/models/PluginsSettingsResponse';
 export type { QueryData } from './api/models/QueryData';
-export type { Setting } from './api/models/Setting';
 export type { SettingBody } from './api/models/SettingBody';
 export type { SettingResponse } from './api/models/SettingResponse';
 export type { SettingsList } from './api/models/SettingsList';

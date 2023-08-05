@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Setting } from './Setting';
-
 export type SettingResponse = {
     status: string;
-    settings: Setting;
+    settings: Record<string, any>;
 };
