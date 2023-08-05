@@ -35,7 +35,7 @@
         "/settings/": {
             "get": {
                 "tags": [
-                    "Settings - General"
+                    "Settings"
                 ],
                 "summary": "Get Settings",
                 "description": "Get the entire list of settings available in the database",
@@ -79,7 +79,7 @@
             },
             "post": {
                 "tags": [
-                    "Settings - General"
+                    "Settings"
                 ],
                 "summary": "Create Setting",
                 "description": "Create a new setting in the database",
@@ -119,10 +119,10 @@
                 "security": []
             }
         },
-        "/settings/{settingId}": {
+        "/settings/{settingId}/": {
             "get": {
                 "tags": [
-                    "Settings - General"
+                    "Settings"
                 ],
                 "summary": "Get Setting",
                 "description": "Get the a specific setting from the database",
@@ -164,7 +164,7 @@
             },
             "delete": {
                 "tags": [
-                    "Settings - General"
+                    "Settings"
                 ],
                 "summary": "Delete Setting",
                 "description": "Delete a specific setting in the database",
@@ -204,7 +204,7 @@
             },
             "put": {
                 "tags": [
-                    "Settings - General"
+                    "Settings"
                 ],
                 "summary": "Update Setting",
                 "description": "Update a specific setting in the database if it exists",
@@ -255,10 +255,10 @@
                 "security": []
             }
         },
-        "/settings/prompt/": {
+        "/prompt/settings/": {
             "get": {
                 "tags": [
-                    "Settings - Prompt"
+                    "Prompt"
                 ],
                 "summary": "Get Default Prompt Settings",
                 "operationId": "get_default_prompt_settings",
@@ -277,21 +277,21 @@
                 "security": []
             }
         },
-        "/settings/llm/": {
+        "/llm/settings/": {
             "get": {
                 "tags": [
-                    "Settings - Large Language Model"
+                    "Large Language Model"
                 ],
-                "summary": "Get LLM Settings",
+                "summary": "Get LLMs Settings",
                 "description": "Get the list of the Large Language Models",
-                "operationId": "get_llm_settings",
+                "operationId": "get_llms_settings",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ConfigurationsResponse"
+                                    "$ref": "#/components/schemas/ModelsResponse"
                                 }
                             }
                         }
@@ -300,10 +300,80 @@
                 "security": []
             }
         },
-        "/settings/llm/{languageModelName}": {
+        "/llm/settings/{languageModelName}/": {
+            "get": {
+                "tags": [
+                    "Large Language Model"
+                ],
+                "summary": "Get Llm Settings",
+                "description": "Get settings and schema of the specified Large Language Model",
+                "operationId": "get_llm_settings",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "languageModelName",
+                            "type": "string"
+                        },
+                        "name": "languageModelName",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SettingResponse"
+                                        },
+                                        {
+                                            "required": [
+                                                "schema"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "schema": {
+                                                    "allOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/JsonSchema"
+                                                        },
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "nameHumanReadable": {
+                                                                    "title": "NameHumanReadable",
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
             "put": {
                 "tags": [
-                    "Settings - Large Language Model"
+                    "Large Language Model"
                 ],
                 "summary": "Upsert LLM Setting",
                 "description": "Upsert the Large Language Model setting",
@@ -358,21 +428,21 @@
                 "security": []
             }
         },
-        "/settings/embedder/": {
+        "/embedder/settings/": {
             "get": {
                 "tags": [
-                    "Settings - Embedder"
+                    "Embedder"
                 ],
-                "summary": "Get Embedder Settings",
+                "summary": "Get Embedders Settings",
                 "description": "Get the list of the Embedders",
-                "operationId": "get_embedder_settings",
+                "operationId": "get_embedders_settings",
                 "responses": {
                     "200": {
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ConfigurationsResponse"
+                                    "$ref": "#/components/schemas/ModelsResponse"
                                 }
                             }
                         }
@@ -381,10 +451,80 @@
                 "security": []
             }
         },
-        "/settings/embedder/{languageEmbedderName}": {
+        "/embedder/settings/{languageEmbedderName}/": {
+            "get": {
+                "tags": [
+                    "Embedder"
+                ],
+                "summary": "Get Embedder Settings",
+                "description": "Get settings and schema of the specified Embedder",
+                "operationId": "get_embedder_settings",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "languageEmbedderName",
+                            "type": "string"
+                        },
+                        "name": "languageEmbedderName",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SettingResponse"
+                                        },
+                                        {
+                                            "required": [
+                                                "schema"
+                                            ],
+                                            "type": "object",
+                                            "properties": {
+                                                "schema": {
+                                                    "allOf": [
+                                                        {
+                                                            "$ref": "#/components/schemas/JsonSchema"
+                                                        },
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "nameHumanReadable": {
+                                                                    "title": "NameHumanReadable",
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
             "put": {
                 "tags": [
-                    "Settings - Embedder"
+                    "Embedder"
                 ],
                 "summary": "Upsert Embedder Setting",
                 "description": "Upsert the Embedder setting",
@@ -467,14 +607,14 @@
                 "tags": [
                     "Plugins"
                 ],
-                "summary": "Upload Plugin",
+                "summary": "Install Plugin",
                 "description": "Install a new plugin from a zip file",
-                "operationId": "upload_plugin",
+                "operationId": "install_plugin",
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/BodyUploadPlugin"
+                                "$ref": "#/components/schemas/BodyInstallPlugin"
                             }
                         }
                     },
@@ -530,8 +670,22 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Toggle Plugin",
-                                    "type": "object"
+                                    "title": "FileResponse",
+                                    "required": [
+                                        "status",
+                                        "info"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "title": "Status",
+                                            "type": "string"
+                                        },
+                                        "info": {
+                                            "title": "Info",
+                                            "type": "string"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -650,6 +804,29 @@
                 "security": []
             }
         },
+        "/plugins/settings/": {
+            "get": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "Get Plugins Settings",
+                "description": "Returns the settings of all the plugins",
+                "operationId": "get_plugins_settings",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PluginsSettingsResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
         "/plugins/settings/{plugin_id}": {
             "get": {
                 "tags": [
@@ -677,7 +854,7 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "$ref": "#/components/schemas/PluginSettings"
+                                            "$ref": "#/components/schemas/SettingResponse"
                                         },
                                         {
                                             "required": [
@@ -734,7 +911,8 @@
                                 "type": "object"
                             },
                             "example": {
-                                "active": false
+                                "setting_a": "some value",
+                                "setting_b": "another value"
                             }
                         }
                     },
@@ -746,60 +924,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/PluginSettings"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": []
-            }
-        },
-        "/memory/point/{collection_id}/{memory_id}/": {
-            "delete": {
-                "tags": [
-                    "Memory"
-                ],
-                "summary": "Delete Element In Memory",
-                "description": "Delete specific element in memory.",
-                "operationId": "delete_element_in_memory",
-                "parameters": [
-                    {
-                        "required": true,
-                        "schema": {
-                            "title": "Collection Id",
-                            "type": "string"
-                        },
-                        "name": "collection_id",
-                        "in": "path"
-                    },
-                    {
-                        "required": true,
-                        "schema": {
-                            "title": "Memory Id",
-                            "type": "string"
-                        },
-                        "name": "memory_id",
-                        "in": "path"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/DeleteResponse"
+                                    "$ref": "#/components/schemas/SettingResponse"
                                 }
                             }
                         }
@@ -909,9 +1034,30 @@
                     }
                 },
                 "security": []
+            },
+            "delete": {
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Wipe Collections",
+                "description": "Delete and create all collections",
+                "operationId": "wipe_collections",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeleteResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
             }
         },
-        "/memory/collections/{collection_id}": {
+        "/memory/collections/{collection_id}/": {
             "delete": {
                 "tags": [
                     "Memory"
@@ -955,14 +1101,34 @@
                 "security": []
             }
         },
-        "/memory/wipe-collections/": {
+        "/memory/collections/{collection_id}/points/{memory_id}/": {
             "delete": {
                 "tags": [
                     "Memory"
                 ],
-                "summary": "Wipe Collections",
-                "description": "Delete and create all collections",
-                "operationId": "wipe_collections",
+                "summary": "Delete Element In Memory",
+                "description": "Delete specific element in memory.",
+                "operationId": "delete_element_in_memory",
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Collection Id",
+                            "type": "string"
+                        },
+                        "name": "collection_id",
+                        "in": "path"
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "title": "Memory Id",
+                            "type": "string"
+                        },
+                        "name": "memory_id",
+                        "in": "path"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -973,12 +1139,22 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": []
             }
         },
-        "/memory/working-memory/conversation-history/": {
+        "/memory/conversation_history/": {
             "delete": {
                 "tags": [
                     "Memory"
@@ -1134,8 +1310,8 @@
     },
     "components": {
         "schemas": {
-            "BodyUploadPlugin": {
-                "title": "BodyUploadPlugin",
+            "BodyInstallPlugin": {
+                "title": "BodyInstallPlugin",
                 "required": [
                     "file"
                 ],
@@ -1305,24 +1481,6 @@
                     }
                 }
             },
-            "PluginSettings": {
-                "title": "CollectionData",
-                "required": [
-                    "status",
-                    "settings"
-                ],
-                "type": "object",
-                "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
-                    "settings": {
-                        "title": "Settings",
-                        "type": "object"
-                    }
-                }
-            },
             "FileResponse": {
                 "title": "FileResponse",
                 "required": [
@@ -1357,9 +1515,15 @@
                 "properties": {
                     "detail": {
                         "title": "Detail",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ValidationError"
+                        "required": [
+                            "error"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "title": "Message",
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -1400,6 +1564,14 @@
                     "when": {
                         "title": "When",
                         "type": "integer"
+                    },
+                    "docstring": {
+                        "title": "DocString",
+                        "type": "string"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
                     }
                 }
             },
@@ -1453,6 +1625,10 @@
                     "version": {
                         "title": "Version",
                         "type": "string"
+                    },
+                    "active": {
+                        "title": "Active",
+                        "type": "boolean"
                     }
                 }
             },
@@ -1590,14 +1766,14 @@
                 "type": "object",
                 "required": [
                     "status",
-                    "setting"
+                    "settings"
                 ],
                 "properties": {
                     "status": {
                         "title": "Status",
                         "type": "string"
                     },
-                    "setting": {
+                    "settings": {
                         "$ref": "#/components/schemas/Setting"
                     }
                 }
@@ -1629,13 +1805,12 @@
                 }
             },
             "JsonSchema": {
-                "title": "Schema",
+                "title": "JsonSchema",
                 "required": [
                     "title",
                     "type",
-                    "description",
-                    "properties",
-                    "additionalProperties"
+                    "required",
+                    "properties"
                 ],
                 "type": "object",
                 "properties": {
@@ -1663,14 +1838,19 @@
                         }
                     },
                     "additionalProperties": {
-                        "title": "AdditionalProperties",
-                        "type": "boolean",
-                        "default": false
+                        "oneOf": [
+                            { "type": "boolean" },
+                            { "type": "object" }
+                        ]
+                    },
+                    "definitions": {
+                        "title": "Definitions",
+                        "type": "object"
                     }
                 }
             },
-            "ConfigurationsResponse": {
-                "title": "ConfigurationsResponse",
+            "ModelsResponse": {
+                "title": "ModelsResponse",
                 "required": [
                     "status",
                     "results",
@@ -1707,7 +1887,7 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "name_human_readable": {
+                                        "nameHumanReadable": {
                                             "title": "NameHumanReadable",
                                             "type": "string"
                                         }
@@ -1729,36 +1909,37 @@
                     }
                 }
             },
-            "ValidationError": {
-                "title": "ValidationError",
+            "PluginsSettingsResponse": {
+                "title": "PluginsSettingsResponse",
                 "required": [
-                    "loc",
-                    "msg",
-                    "type"
+                    "status",
+                    "results",
+                    "settings",
+                    "schemas"
                 ],
                 "type": "object",
                 "properties": {
-                    "loc": {
-                        "title": "Location",
+                    "status": {
+                        "title": "Status",
+                        "type": "string"
+                    },
+                    "results": {
+                        "title": "Results",
+                        "type": "integer"
+                    },
+                    "settings": {
+                        "title": "Settings",
                         "type": "array",
                         "items": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "integer"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/Setting"
                         }
                     },
-                    "msg": {
-                        "title": "Message",
-                        "type": "string"
-                    },
-                    "type": {
-                        "title": "Error Type",
-                        "type": "string"
+                    "schemas": {
+                        "title": "Schemas",
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/JsonSchema"
+                        }
                     }
                 }
             },
@@ -1826,6 +2007,9 @@
                         "oneOf": [
                             {
                                 "type": "string"
+                            },
+                            {
+                                "type": "boolean"
                             },
                             {
                                 "type": "object"

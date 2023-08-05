@@ -2,26 +2,53 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ConfigurationsResponse } from '../models/ConfigurationsResponse';
+import type { JsonSchema } from '../models/JsonSchema';
+import type { ModelsResponse } from '../models/ModelsResponse';
 import type { SettingResponse } from '../models/SettingResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
-export class SettingsLargeLanguageModelService {
+export class LargeLanguageModelService {
 
     constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * Get LLM Settings
+     * Get LLMs Settings
      * Get the list of the Large Language Models
-     * @returns ConfigurationsResponse Successful Response
+     * @returns ModelsResponse Successful Response
      * @throws ApiError
      */
-    public getLlmSettings(): CancelablePromise<ConfigurationsResponse> {
+    public getLlmsSettings(): CancelablePromise<ModelsResponse> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/settings/llm/',
+            url: '/llm/settings/',
+        });
+    }
+
+    /**
+     * Get Llm Settings
+     * Get settings and schema of the specified Large Language Model
+     * @param languageModelName 
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public getLlmSettings(
+languageModelName: string,
+): CancelablePromise<(SettingResponse & {
+schema: (JsonSchema & {
+nameHumanReadable?: string;
+});
+})> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/llm/settings/{languageModelName}/',
+            path: {
+                'languageModelName': languageModelName,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
         });
     }
 
@@ -39,7 +66,7 @@ requestBody: Record<string, any>,
 ): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/settings/llm/{languageModelName}',
+            url: '/llm/settings/{languageModelName}/',
             path: {
                 'languageModelName': languageModelName,
             },

@@ -2,13 +2,14 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BodyUploadPlugin } from '../models/BodyUploadPlugin';
+import type { BodyInstallPlugin } from '../models/BodyInstallPlugin';
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { FileResponse } from '../models/FileResponse';
 import type { JsonSchema } from '../models/JsonSchema';
 import type { Plugin } from '../models/Plugin';
-import type { PluginSettings } from '../models/PluginSettings';
 import type { PluginsList } from '../models/PluginsList';
+import type { PluginsSettingsResponse } from '../models/PluginsSettingsResponse';
+import type { SettingResponse } from '../models/SettingResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -31,14 +32,14 @@ export class PluginsService {
     }
 
     /**
-     * Upload Plugin
+     * Install Plugin
      * Install a new plugin from a zip file
      * @param formData 
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
-    public uploadPlugin(
-formData: BodyUploadPlugin,
+    public installPlugin(
+formData: BodyInstallPlugin,
 ): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
@@ -60,7 +61,10 @@ formData: BodyUploadPlugin,
      */
     public togglePlugin(
 pluginId: string,
-): CancelablePromise<Record<string, any>> {
+): CancelablePromise<{
+status: string;
+info: string;
+}> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/plugins/toggle/{plugin_id}',
@@ -121,6 +125,19 @@ pluginId: string,
     }
 
     /**
+     * Get Plugins Settings
+     * Returns the settings of all the plugins
+     * @returns PluginsSettingsResponse Successful Response
+     * @throws ApiError
+     */
+    public getPluginsSettings(): CancelablePromise<PluginsSettingsResponse> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/plugins/settings/',
+        });
+    }
+
+    /**
      * Get Plugin Settings
      * Returns the settings of a specific plugin
      * @param pluginId 
@@ -129,7 +146,7 @@ pluginId: string,
      */
     public getPluginSettings(
 pluginId: string,
-): CancelablePromise<(PluginSettings & {
+): CancelablePromise<(SettingResponse & {
 schema: JsonSchema;
 })> {
         return this.httpRequest.request({
@@ -149,13 +166,13 @@ schema: JsonSchema;
      * Updates the settings of a specific plugin
      * @param pluginId 
      * @param requestBody 
-     * @returns PluginSettings Successful Response
+     * @returns SettingResponse Successful Response
      * @throws ApiError
      */
     public upsertPluginSettings(
 pluginId: string,
 requestBody: Record<string, any>,
-): CancelablePromise<PluginSettings> {
+): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/plugins/settings/{plugin_id}',

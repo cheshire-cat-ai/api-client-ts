@@ -6,4 +6,6 @@
 export type MetaData = {
     source: string;
     when: number;
+    docstring?: string;
+    name?: string;
 };

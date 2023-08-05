@@ -9,7 +9,7 @@ import type { SettingsList } from '../models/SettingsList';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
-export class SettingsGeneralService {
+export class SettingsService {
 
     constructor(private readonly httpRequest: BaseHttpRequest) {}
 
@@ -68,7 +68,7 @@ settingId: string,
 ): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/settings/{settingId}',
+            url: '/settings/{settingId}/',
             path: {
                 'settingId': settingId,
             },
@@ -90,7 +90,7 @@ settingId: string,
 ): CancelablePromise<any> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/settings/{settingId}',
+            url: '/settings/{settingId}/',
             path: {
                 'settingId': settingId,
             },
@@ -114,7 +114,7 @@ requestBody: SettingBody,
 ): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/settings/{settingId}',
+            url: '/settings/{settingId}/',
             path: {
                 'settingId': settingId,
             },

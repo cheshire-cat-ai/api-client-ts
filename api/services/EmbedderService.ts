@@ -2,26 +2,53 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ConfigurationsResponse } from '../models/ConfigurationsResponse';
+import type { JsonSchema } from '../models/JsonSchema';
+import type { ModelsResponse } from '../models/ModelsResponse';
 import type { SettingResponse } from '../models/SettingResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
-export class SettingsEmbedderService {
+export class EmbedderService {
 
     constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * Get Embedder Settings
+     * Get Embedders Settings
      * Get the list of the Embedders
-     * @returns ConfigurationsResponse Successful Response
+     * @returns ModelsResponse Successful Response
      * @throws ApiError
      */
-    public getEmbedderSettings(): CancelablePromise<ConfigurationsResponse> {
+    public getEmbeddersSettings(): CancelablePromise<ModelsResponse> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/settings/embedder/',
+            url: '/embedder/settings/',
+        });
+    }
+
+    /**
+     * Get Embedder Settings
+     * Get settings and schema of the specified Embedder
+     * @param languageEmbedderName 
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public getEmbedderSettings(
+languageEmbedderName: string,
+): CancelablePromise<(SettingResponse & {
+schema: (JsonSchema & {
+nameHumanReadable?: string;
+});
+})> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/embedder/settings/{languageEmbedderName}/',
+            path: {
+                'languageEmbedderName': languageEmbedderName,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
         });
     }
 
@@ -39,7 +66,7 @@ requestBody: Record<string, any>,
 ): CancelablePromise<SettingResponse> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/settings/embedder/{languageEmbedderName}',
+            url: '/embedder/settings/{languageEmbedderName}/',
             path: {
                 'languageEmbedderName': languageEmbedderName,
             },

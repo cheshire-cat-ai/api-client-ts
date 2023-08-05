@@ -7,5 +7,5 @@ import type { Setting } from './Setting';
 
 export type SettingResponse = {
     status: string;
-    setting: Setting;
+    settings: Setting;
 };
