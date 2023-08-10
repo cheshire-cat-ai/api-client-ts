@@ -8,5 +8,5 @@ import type { JsonSchema } from './JsonSchema';
 export type Setting = {
     name: string;
     value: Record<string, any>;
-    schema?: (JsonSchema | Record<string, any>);
+    schema?: JsonSchema;
 };

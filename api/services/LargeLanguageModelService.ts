@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { JsonSchema } from '../models/JsonSchema';
 import type { Setting } from '../models/Setting';
 import type { SettingsResponse } from '../models/SettingsResponse';
 
@@ -30,16 +29,12 @@ export class LargeLanguageModelService {
      * Get Llm Settings
      * Get settings and schema of the specified Large Language Model
      * @param languageModelName 
-     * @returns any Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public getLlmSettings(
 languageModelName: string,
-): CancelablePromise<(Setting & {
-schema: (JsonSchema & {
-nameHumanReadable?: string;
-});
-})> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/llm/settings/{languageModelName}/',

@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { JsonSchema } from '../models/JsonSchema';
 import type { Setting } from '../models/Setting';
 import type { SettingsResponse } from '../models/SettingsResponse';
 
@@ -30,16 +29,12 @@ export class EmbedderService {
      * Get Embedder Settings
      * Get settings and schema of the specified Embedder
      * @param languageEmbedderName 
-     * @returns any Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public getEmbedderSettings(
 languageEmbedderName: string,
-): CancelablePromise<(Setting & {
-schema: (JsonSchema & {
-nameHumanReadable?: string;
-});
-})> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/embedder/settings/{languageEmbedderName}/',
