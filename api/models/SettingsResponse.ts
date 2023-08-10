@@ -5,7 +5,7 @@
 
 import type { Setting } from './Setting';
 
-export type SettingResponse = {
-    status: string;
-    setting: Setting;
+export type SettingsResponse = {
+    settings: Array<Setting>;
+    selected_configuration?: string;
 };

@@ -2,26 +2,48 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ConfigurationsResponse } from '../models/ConfigurationsResponse';
-import type { SettingResponse } from '../models/SettingResponse';
+import type { Setting } from '../models/Setting';
+import type { SettingsResponse } from '../models/SettingsResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
-export class SettingsLargeLanguageModelService {
+export class LargeLanguageModelService {
 
     constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * Get LLM Settings
+     * Get LLMs Settings
      * Get the list of the Large Language Models
-     * @returns ConfigurationsResponse Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
-    public getLlmSettings(): CancelablePromise<ConfigurationsResponse> {
+    public getLlmsSettings(): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/settings/llm/',
+            url: '/llm/settings/',
+        });
+    }
+
+    /**
+     * Get Llm Settings
+     * Get settings and schema of the specified Large Language Model
+     * @param languageModelName 
+     * @returns Setting Successful Response
+     * @throws ApiError
+     */
+    public getLlmSettings(
+languageModelName: string,
+): CancelablePromise<Setting> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/llm/settings/{languageModelName}/',
+            path: {
+                'languageModelName': languageModelName,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
         });
     }
 
@@ -30,16 +52,16 @@ export class SettingsLargeLanguageModelService {
      * Upsert the Large Language Model setting
      * @param languageModelName 
      * @param requestBody 
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public upsertLlmSetting(
 languageModelName: string,
 requestBody: Record<string, any>,
-): CancelablePromise<SettingResponse> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/settings/llm/{languageModelName}',
+            url: '/llm/settings/{languageModelName}/',
             path: {
                 'languageModelName': languageModelName,
             },

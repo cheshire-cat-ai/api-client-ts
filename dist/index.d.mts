@@ -55,20 +55,97 @@ declare abstract class BaseHttpRequest {
     abstract request<T>(options: ApiRequestOptions): CancelablePromise<T>;
 }
 
+type JsonSchema = {
+    title: string;
+    type: string;
+    description?: string;
+    properties: Record<string, any>;
+    required: Array<string>;
+    additionalProperties?: (boolean | Record<string, any>);
+    definitions?: Record<string, any>;
+    humanReadableName: string;
+};
+
+type Setting = {
+    name: string;
+    value: Record<string, any>;
+    schema?: JsonSchema;
+};
+
+type SettingsResponse = {
+    settings: Array<Setting>;
+    selected_configuration?: string;
+};
+
+declare class EmbedderService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get Embedders Settings
+     * Get the list of the Embedders
+     * @returns SettingsResponse Successful Response
+     * @throws ApiError
+     */
+    getEmbeddersSettings(): CancelablePromise<SettingsResponse>;
+    /**
+     * Get Embedder Settings
+     * Get settings and schema of the specified Embedder
+     * @param languageEmbedderName
+     * @returns Setting Successful Response
+     * @throws ApiError
+     */
+    getEmbedderSettings(languageEmbedderName: string): CancelablePromise<Setting>;
+    /**
+     * Upsert Embedder Setting
+     * Upsert the Embedder setting
+     * @param languageEmbedderName
+     * @param requestBody
+     * @returns Setting Successful Response
+     * @throws ApiError
+     */
+    upsertEmbedderSetting(languageEmbedderName: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
+}
+
+declare class LargeLanguageModelService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get LLMs Settings
+     * Get the list of the Large Language Models
+     * @returns SettingsResponse Successful Response
+     * @throws ApiError
+     */
+    getLlmsSettings(): CancelablePromise<SettingsResponse>;
+    /**
+     * Get Llm Settings
+     * Get settings and schema of the specified Large Language Model
+     * @param languageModelName
+     * @returns Setting Successful Response
+     * @throws ApiError
+     */
+    getLlmSettings(languageModelName: string): CancelablePromise<Setting>;
+    /**
+     * Upsert LLM Setting
+     * Upsert the Large Language Model setting
+     * @param languageModelName
+     * @param requestBody
+     * @returns Setting Successful Response
+     * @throws ApiError
+     */
+    upsertLlmSetting(languageModelName: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
+}
+
 type Collection = {
     name: string;
     vectors_count: number;
 };
 
 type CollectionsList = {
-    status: string;
-    results: number;
     collections: Array<Collection>;
 };
 
 type DeleteResponse = {
-    status: string;
-    deleted: (string | Record<string, any>);
+    deleted: (string | boolean | Record<string, any>);
 };
 
 type QueryData = {
@@ -79,6 +156,8 @@ type QueryData = {
 type MetaData = {
     source: string;
     when: number;
+    docstring?: string;
+    name?: string;
 };
 
 type CollectionData = {
@@ -95,7 +174,6 @@ type VectorsData = {
 };
 
 type MemoryRecall = {
-    status: string;
     query: QueryData;
     vectors: VectorsData;
 };
@@ -103,15 +181,6 @@ type MemoryRecall = {
 declare class MemoryService {
     private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Delete Element In Memory
-     * Delete specific element in memory.
-     * @param collectionId
-     * @param memoryId
-     * @returns DeleteResponse Successful Response
-     * @throws ApiError
-     */
-    deleteElementInMemory(collectionId: string, memoryId: string): CancelablePromise<DeleteResponse>;
     /**
      * Recall Memories From Text
      * Search k memories similar to given text.
@@ -130,6 +199,13 @@ declare class MemoryService {
      */
     getCollections(): CancelablePromise<CollectionsList>;
     /**
+     * Wipe Collections
+     * Delete and create all collections
+     * @returns DeleteResponse Successful Response
+     * @throws ApiError
+     */
+    wipeCollections(): CancelablePromise<DeleteResponse>;
+    /**
      * Wipe Single Collection
      * Delete and recreate a collection
      * @param collectionId
@@ -138,12 +214,14 @@ declare class MemoryService {
      */
     wipeSingleCollection(collectionId: string): CancelablePromise<DeleteResponse>;
     /**
-     * Wipe Collections
-     * Delete and create all collections
+     * Delete Element In Memory
+     * Delete specific element in memory.
+     * @param collectionId
+     * @param memoryId
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    wipeCollections(): CancelablePromise<DeleteResponse>;
+    deleteElementInMemory(collectionId: string, memoryId: string): CancelablePromise<DeleteResponse>;
     /**
      * Wipe Conversation History
      * Delete conversation history from working memory
@@ -153,133 +231,7 @@ declare class MemoryService {
     wipeConversationHistory(): CancelablePromise<DeleteResponse>;
 }
 
-type BodyUploadPlugin = {
-    file: Blob;
-};
-
-type FileResponse = {
-    status: string;
-    filename: string;
-    content_type: string;
-    info: string;
-};
-
-type JsonSchema = {
-    title: string;
-    type: string;
-    description: string;
-    properties: Record<string, any>;
-    required?: Array<string>;
-    additionalProperties: boolean;
-};
-
-type Plugin = {
-    id: string;
-    name: string;
-    description: string;
-    author_name: string;
-    author_url: string;
-    plugin_url: string;
-    tags: string;
-    thumb: string;
-    version: string;
-};
-
-type PluginSettings = {
-    status: string;
-    settings: Record<string, any>;
-};
-
-type PluginsList = {
-    status: string;
-    results: number;
-    installed: Array<Plugin>;
-    registry: Array<Plugin>;
-};
-
-declare class PluginsService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * List Available Plugins
-     * List available plugins
-     * @returns PluginsList Successful Response
-     * @throws ApiError
-     */
-    listAvailablePlugins(): CancelablePromise<PluginsList>;
-    /**
-     * Upload Plugin
-     * Install a new plugin from a zip file
-     * @param formData
-     * @returns FileResponse Successful Response
-     * @throws ApiError
-     */
-    uploadPlugin(formData: BodyUploadPlugin): CancelablePromise<FileResponse>;
-    /**
-     * Toggle Plugin
-     * Enable or disable a single plugin
-     * @param pluginId
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    togglePlugin(pluginId: string): CancelablePromise<Record<string, any>>;
-    /**
-     * Get Plugin Details
-     * Returns information on a single plugin
-     * @param pluginId
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    getPluginDetails(pluginId: string): CancelablePromise<{
-        status: string;
-        data: Plugin;
-    }>;
-    /**
-     * Delete Plugin
-     * Physically remove a plugin
-     * @param pluginId
-     * @returns DeleteResponse Successful Response
-     * @throws ApiError
-     */
-    deletePlugin(pluginId: string): CancelablePromise<DeleteResponse>;
-    /**
-     * Get Plugin Settings
-     * Returns the settings of a specific plugin
-     * @param pluginId
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    getPluginSettings(pluginId: string): CancelablePromise<(PluginSettings & {
-        schema: JsonSchema;
-    })>;
-    /**
-     * Upsert Plugin Settings
-     * Updates the settings of a specific plugin
-     * @param pluginId
-     * @param requestBody
-     * @returns PluginSettings Successful Response
-     * @throws ApiError
-     */
-    upsertPluginSettings(pluginId: string, requestBody: Record<string, any>): CancelablePromise<PluginSettings>;
-}
-
-type BodyUploadFile = {
-    file: Blob;
-    /**
-     * Maximum length of each chunk after the document is split (in characters)
-     */
-    chunk_size?: number;
-    /**
-     * Chunk overlap (in characters)
-     */
-    chunk_overlap?: number;
-    /**
-     * Enables call to summary hook for this file
-     */
-    summary?: boolean;
-};
-
-type BodyUploadMemory = {
+type BodyInstallPlugin = {
     file: Blob;
 };
 
@@ -296,14 +248,147 @@ type BodyUploadUrl = {
      * Chunk overlap (in characters)
      */
     chunk_overlap?: number;
+};
+
+type FileResponse = {
+    filename: string;
+    content_type: string;
+    info: string;
+};
+
+type Plugin = {
+    id: string;
+    name: string;
+    description: string;
+    author_name: string;
+    author_url: string;
+    plugin_url: string;
+    tags: string;
+    thumb: string;
+    version: string;
+    active?: boolean;
+};
+
+type PluginsList = {
+    installed: Array<Plugin>;
+    registry: Array<Plugin>;
+};
+
+declare class PluginsService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
     /**
-     * Enables call to summary hook for this file
+     * List Available Plugins
+     * List available plugins
+     * @returns PluginsList Successful Response
+     * @throws ApiError
      */
-    summary?: boolean;
+    listAvailablePlugins(): CancelablePromise<PluginsList>;
+    /**
+     * Install Plugin
+     * Install a new plugin from a zip file
+     * @param formData
+     * @returns FileResponse Successful Response
+     * @throws ApiError
+     */
+    installPlugin(formData: BodyInstallPlugin): CancelablePromise<FileResponse>;
+    /**
+     * Install Plugin From Registry
+     * Install a new plugin from external repository
+     * @param formData
+     * @returns FileResponse Successful Response
+     * @throws ApiError
+     */
+    installPluginFromRegistry(formData: BodyUploadUrl): CancelablePromise<FileResponse>;
+    /**
+     * Toggle Plugin
+     * Enable or disable a single plugin
+     * @param pluginId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    togglePlugin(pluginId: string): CancelablePromise<{
+        info: string;
+    }>;
+    /**
+     * Get Plugin Details
+     * Returns information on a single plugin
+     * @param pluginId
+     * @returns Plugin Successful Response
+     * @throws ApiError
+     */
+    getPluginDetails(pluginId: string): CancelablePromise<Plugin>;
+    /**
+     * Delete Plugin
+     * Physically remove a plugin
+     * @param pluginId
+     * @returns DeleteResponse Successful Response
+     * @throws ApiError
+     */
+    deletePlugin(pluginId: string): CancelablePromise<DeleteResponse>;
+    /**
+     * Get Plugins Settings
+     * Returns the settings of all the plugins
+     * @returns SettingsResponse Successful Response
+     * @throws ApiError
+     */
+    getPluginsSettings(): CancelablePromise<SettingsResponse>;
+    /**
+     * Get Plugin Settings
+     * Returns the settings of a specific plugin
+     * @param pluginId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    getPluginSettings(pluginId: string): CancelablePromise<(Setting & {
+        schema: JsonSchema;
+    })>;
+    /**
+     * Upsert Plugin Settings
+     * Updates the settings of a specific plugin
+     * @param pluginId
+     * @param requestBody
+     * @returns Setting Successful Response
+     * @throws ApiError
+     */
+    upsertPluginSettings(pluginId: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
+}
+
+type DefaultPromptSettings = {
+    prefix: string;
+    use_episodic_memory: boolean;
+    use_declarative_memory: boolean;
+    use_procedural_memory: boolean;
+};
+
+declare class PromptService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get Default Prompt Settings
+     * @returns DefaultPromptSettings Successful Response
+     * @throws ApiError
+     */
+    getDefaultPromptSettings(): CancelablePromise<DefaultPromptSettings>;
+}
+
+type BodyUploadFile = {
+    file: Blob;
+    /**
+     * Maximum length of each chunk after the document is split (in characters)
+     */
+    chunk_size?: number;
+    /**
+     * Chunk overlap (in characters)
+     */
+    chunk_overlap?: number;
+};
+
+type BodyUploadMemory = {
+    file: Blob;
 };
 
 type WebResponse = {
-    status: string;
     url: string;
     info: string;
 };
@@ -345,81 +430,33 @@ type SettingBody = {
     category?: string;
 };
 
-type Setting = (SettingBody & {
-    setting_id: string;
-    updated_at: number;
-});
-
-type ConfigurationsResponse = {
-    status: string;
-    results: number;
-    settings: Array<Setting>;
-    schemas: Record<string, (JsonSchema & {
-        name_human_readable?: string;
-    })>;
-    allowed_configurations: Array<string>;
-    selected_configuration: string;
-};
-
-type SettingResponse = {
-    status: string;
-    setting: Setting;
-};
-
-declare class SettingsEmbedderService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get Embedder Settings
-     * Get the list of the Embedders
-     * @returns ConfigurationsResponse Successful Response
-     * @throws ApiError
-     */
-    getEmbedderSettings(): CancelablePromise<ConfigurationsResponse>;
-    /**
-     * Upsert Embedder Setting
-     * Upsert the Embedder setting
-     * @param languageEmbedderName
-     * @param requestBody
-     * @returns SettingResponse Successful Response
-     * @throws ApiError
-     */
-    upsertEmbedderSetting(languageEmbedderName: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
-}
-
-type SettingsList = {
-    status: string;
-    results: number;
-    settings: Array<Setting>;
-};
-
-declare class SettingsGeneralService {
+declare class SettingsService {
     private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Get Settings
      * Get the entire list of settings available in the database
      * @param search The setting to search
-     * @returns SettingsList Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
-    getSettings(search?: string): CancelablePromise<SettingsList>;
+    getSettings(search?: string): CancelablePromise<SettingsResponse>;
     /**
      * Create Setting
      * Create a new setting in the database
      * @param requestBody
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    createSetting(requestBody: SettingBody): CancelablePromise<SettingResponse>;
+    createSetting(requestBody: SettingBody): CancelablePromise<Setting>;
     /**
      * Get Setting
      * Get the a specific setting from the database
      * @param settingId
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    getSetting(settingId: string): CancelablePromise<SettingResponse>;
+    getSetting(settingId: string): CancelablePromise<Setting>;
     /**
      * Delete Setting
      * Delete a specific setting in the database
@@ -433,53 +470,15 @@ declare class SettingsGeneralService {
      * Update a specific setting in the database if it exists
      * @param settingId
      * @param requestBody
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    updateSetting(settingId: string, requestBody: SettingBody): CancelablePromise<SettingResponse>;
-}
-
-declare class SettingsLargeLanguageModelService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get LLM Settings
-     * Get the list of the Large Language Models
-     * @returns ConfigurationsResponse Successful Response
-     * @throws ApiError
-     */
-    getLlmSettings(): CancelablePromise<ConfigurationsResponse>;
-    /**
-     * Upsert LLM Setting
-     * Upsert the Large Language Model setting
-     * @param languageModelName
-     * @param requestBody
-     * @returns SettingResponse Successful Response
-     * @throws ApiError
-     */
-    upsertLlmSetting(languageModelName: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
-}
-
-type DefaultPromptSettings = {
-    prefix: string;
-    use_episodic_memory: boolean;
-    use_declarative_memory: boolean;
-    use_procedural_memory: boolean;
-};
-
-declare class SettingsPromptService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get Default Prompt Settings
-     * @returns DefaultPromptSettings Successful Response
-     * @throws ApiError
-     */
-    getDefaultPromptSettings(): CancelablePromise<DefaultPromptSettings>;
+    updateSetting(settingId: string, requestBody: SettingBody): CancelablePromise<Setting>;
 }
 
 type Status = {
     status: string;
+    version: string;
 };
 
 declare class StatusService {
@@ -496,19 +495,19 @@ declare class StatusService {
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 declare class CCatAPI {
+    readonly embedder: EmbedderService;
+    readonly largeLanguageModel: LargeLanguageModelService;
     readonly memory: MemoryService;
     readonly plugins: PluginsService;
+    readonly prompt: PromptService;
     readonly rabbitHole: RabbitHoleService;
-    readonly settingsEmbedder: SettingsEmbedderService;
-    readonly settingsGeneral: SettingsGeneralService;
-    readonly settingsLargeLanguageModel: SettingsLargeLanguageModelService;
-    readonly settingsPrompt: SettingsPromptService;
+    readonly settings: SettingsService;
     readonly status: StatusService;
     readonly request: BaseHttpRequest;
     constructor(config?: Partial<OpenAPIConfig>, HttpRequest?: HttpRequestConstructor);
 }
 
-type PromptSettings = DefaultPromptSettings & Record<string, any>;
+type PromptSettings<TSettings = unknown> = DefaultPromptSettings & Record<string, TSettings>;
 interface WebSocketSettings {
     /**
      * Websocket path to use to communicate with the CCat
@@ -677,14 +676,10 @@ declare class ApiError extends Error {
     constructor(request: ApiRequestOptions, response: ApiResult, message: string);
 }
 
-type ValidationError = {
-    loc: Array<(string | number)>;
-    msg: string;
-    type: string;
-};
-
 type HTTPValidationError = {
-    detail?: Array<ValidationError>;
+    detail?: {
+        error: string;
+    };
 };
 
-export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyUploadFile, BodyUploadMemory, BodyUploadPlugin, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, ConfigurationsResponse, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginSettings, PluginsList, PromptSettings, QueryData, Setting, SettingBody, SettingResponse, SettingsList, SocketError, SocketResponse, Status, ValidationError, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginsList, PromptSettings, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };

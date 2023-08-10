@@ -7,7 +7,7 @@ import type { DefaultPromptSettings } from '../models/DefaultPromptSettings';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
-export class SettingsPromptService {
+export class PromptService {
 
     constructor(private readonly httpRequest: BaseHttpRequest) {}
 
@@ -19,7 +19,7 @@ export class SettingsPromptService {
     public getDefaultPromptSettings(): CancelablePromise<DefaultPromptSettings> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/settings/prompt/',
+            url: '/prompt/settings/',
         });
     }
 

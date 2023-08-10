@@ -2,13 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BodyUploadPlugin } from '../models/BodyUploadPlugin';
+import type { BodyInstallPlugin } from '../models/BodyInstallPlugin';
+import type { BodyUploadUrl } from '../models/BodyUploadUrl';
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { FileResponse } from '../models/FileResponse';
 import type { JsonSchema } from '../models/JsonSchema';
 import type { Plugin } from '../models/Plugin';
-import type { PluginSettings } from '../models/PluginSettings';
 import type { PluginsList } from '../models/PluginsList';
+import type { Setting } from '../models/Setting';
+import type { SettingsResponse } from '../models/SettingsResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -31,18 +33,39 @@ export class PluginsService {
     }
 
     /**
-     * Upload Plugin
+     * Install Plugin
      * Install a new plugin from a zip file
      * @param formData 
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
-    public uploadPlugin(
-formData: BodyUploadPlugin,
+    public installPlugin(
+formData: BodyInstallPlugin,
 ): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/plugins/upload/',
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Install Plugin From Registry
+     * Install a new plugin from external repository
+     * @param formData 
+     * @returns FileResponse Successful Response
+     * @throws ApiError
+     */
+    public installPluginFromRegistry(
+formData: BodyUploadUrl,
+): CancelablePromise<FileResponse> {
+        return this.httpRequest.request({
+            method: 'POST',
+            url: '/plugins/upload/registry',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
@@ -60,7 +83,9 @@ formData: BodyUploadPlugin,
      */
     public togglePlugin(
 pluginId: string,
-): CancelablePromise<Record<string, any>> {
+): CancelablePromise<{
+info: string;
+}> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/plugins/toggle/{plugin_id}',
@@ -77,15 +102,12 @@ pluginId: string,
      * Get Plugin Details
      * Returns information on a single plugin
      * @param pluginId 
-     * @returns any Successful Response
+     * @returns Plugin Successful Response
      * @throws ApiError
      */
     public getPluginDetails(
 pluginId: string,
-): CancelablePromise<{
-status: string;
-data: Plugin;
-}> {
+): CancelablePromise<Plugin> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/plugins/{plugin_id}',
@@ -121,6 +143,19 @@ pluginId: string,
     }
 
     /**
+     * Get Plugins Settings
+     * Returns the settings of all the plugins
+     * @returns SettingsResponse Successful Response
+     * @throws ApiError
+     */
+    public getPluginsSettings(): CancelablePromise<SettingsResponse> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/plugins/settings/',
+        });
+    }
+
+    /**
      * Get Plugin Settings
      * Returns the settings of a specific plugin
      * @param pluginId 
@@ -129,7 +164,7 @@ pluginId: string,
      */
     public getPluginSettings(
 pluginId: string,
-): CancelablePromise<(PluginSettings & {
+): CancelablePromise<(Setting & {
 schema: JsonSchema;
 })> {
         return this.httpRequest.request({
@@ -149,13 +184,13 @@ schema: JsonSchema;
      * Updates the settings of a specific plugin
      * @param pluginId 
      * @param requestBody 
-     * @returns PluginSettings Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public upsertPluginSettings(
 pluginId: string,
 requestBody: Record<string, any>,
-): CancelablePromise<PluginSettings> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/plugins/settings/{plugin_id}',

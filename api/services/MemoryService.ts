@@ -14,31 +14,6 @@ export class MemoryService {
     constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
-     * Delete Element In Memory
-     * Delete specific element in memory.
-     * @param collectionId 
-     * @param memoryId 
-     * @returns DeleteResponse Successful Response
-     * @throws ApiError
-     */
-    public deleteElementInMemory(
-collectionId: string,
-memoryId: string,
-): CancelablePromise<DeleteResponse> {
-        return this.httpRequest.request({
-            method: 'DELETE',
-            url: '/memory/point/{collection_id}/{memory_id}/',
-            path: {
-                'collection_id': collectionId,
-                'memory_id': memoryId,
-            },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-
-    /**
      * Recall Memories From Text
      * Search k memories similar to given text.
      * @param text Find memories similar to this text.
@@ -80,6 +55,19 @@ userId: string = 'user',
     }
 
     /**
+     * Wipe Collections
+     * Delete and create all collections
+     * @returns DeleteResponse Successful Response
+     * @throws ApiError
+     */
+    public wipeCollections(): CancelablePromise<DeleteResponse> {
+        return this.httpRequest.request({
+            method: 'DELETE',
+            url: '/memory/collections/',
+        });
+    }
+
+    /**
      * Wipe Single Collection
      * Delete and recreate a collection
      * @param collectionId 
@@ -91,7 +79,7 @@ collectionId: string,
 ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/collections/{collection_id}',
+            url: '/memory/collections/{collection_id}/',
             path: {
                 'collection_id': collectionId,
             },
@@ -102,15 +90,27 @@ collectionId: string,
     }
 
     /**
-     * Wipe Collections
-     * Delete and create all collections
+     * Delete Element In Memory
+     * Delete specific element in memory.
+     * @param collectionId 
+     * @param memoryId 
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    public wipeCollections(): CancelablePromise<DeleteResponse> {
+    public deleteElementInMemory(
+collectionId: string,
+memoryId: string,
+): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/wipe-collections/',
+            url: '/memory/collections/{collection_id}/points/{memory_id}/',
+            path: {
+                'collection_id': collectionId,
+                'memory_id': memoryId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
         });
     }
 
@@ -123,7 +123,7 @@ collectionId: string,
     public wipeConversationHistory(): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/working-memory/conversation-history/',
+            url: '/memory/conversation_history/',
         });
     }
 

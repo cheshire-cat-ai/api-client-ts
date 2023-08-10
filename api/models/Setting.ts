@@ -3,9 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { SettingBody } from './SettingBody';
+import type { JsonSchema } from './JsonSchema';
 
-export type Setting = (SettingBody & {
-setting_id: string;
-updated_at: number;
-});
+export type Setting = {
+    name: string;
+    value: Record<string, any>;
+    schema?: JsonSchema;
+};

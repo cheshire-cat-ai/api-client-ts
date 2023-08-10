@@ -1,6 +1,6 @@
 import { DefaultPromptSettings } from './models/DefaultPromptSettings'
 
-export type PromptSettings = DefaultPromptSettings & Record<string, any>
+export type PromptSettings<TSettings = unknown> = DefaultPromptSettings & Record<string, TSettings>
 
 export interface WebSocketSettings {
     /** 

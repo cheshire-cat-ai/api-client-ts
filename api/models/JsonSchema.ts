@@ -6,8 +6,10 @@
 export type JsonSchema = {
     title: string;
     type: string;
-    description: string;
+    description?: string;
     properties: Record<string, any>;
-    required?: Array<string>;
-    additionalProperties: boolean;
+    required: Array<string>;
+    additionalProperties?: (boolean | Record<string, any>);
+    definitions?: Record<string, any>;
+    humanReadableName: string;
 };

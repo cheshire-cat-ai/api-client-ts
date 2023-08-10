@@ -370,31 +370,130 @@ var AxiosHttpRequest = class extends BaseHttpRequest {
   }
 };
 
-// api/services/MemoryService.ts
-var MemoryService = class {
+// api/services/EmbedderService.ts
+var EmbedderService = class {
   constructor(httpRequest) {
     this.httpRequest = httpRequest;
   }
   /**
-   * Delete Element In Memory
-   * Delete specific element in memory.
-   * @param collectionId 
-   * @param memoryId 
-   * @returns DeleteResponse Successful Response
+   * Get Embedders Settings
+   * Get the list of the Embedders
+   * @returns SettingsResponse Successful Response
    * @throws ApiError
    */
-  deleteElementInMemory(collectionId, memoryId) {
+  getEmbeddersSettings() {
     return this.httpRequest.request({
-      method: "DELETE",
-      url: "/memory/point/{collection_id}/{memory_id}/",
+      method: "GET",
+      url: "/embedder/settings/"
+    });
+  }
+  /**
+   * Get Embedder Settings
+   * Get settings and schema of the specified Embedder
+   * @param languageEmbedderName 
+   * @returns Setting Successful Response
+   * @throws ApiError
+   */
+  getEmbedderSettings(languageEmbedderName) {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/embedder/settings/{languageEmbedderName}/",
       path: {
-        "collection_id": collectionId,
-        "memory_id": memoryId
+        "languageEmbedderName": languageEmbedderName
       },
       errors: {
         422: `Validation Error`
       }
     });
+  }
+  /**
+   * Upsert Embedder Setting
+   * Upsert the Embedder setting
+   * @param languageEmbedderName 
+   * @param requestBody 
+   * @returns Setting Successful Response
+   * @throws ApiError
+   */
+  upsertEmbedderSetting(languageEmbedderName, requestBody) {
+    return this.httpRequest.request({
+      method: "PUT",
+      url: "/embedder/settings/{languageEmbedderName}/",
+      path: {
+        "languageEmbedderName": languageEmbedderName
+      },
+      body: requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+};
+
+// api/services/LargeLanguageModelService.ts
+var LargeLanguageModelService = class {
+  constructor(httpRequest) {
+    this.httpRequest = httpRequest;
+  }
+  /**
+   * Get LLMs Settings
+   * Get the list of the Large Language Models
+   * @returns SettingsResponse Successful Response
+   * @throws ApiError
+   */
+  getLlmsSettings() {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/llm/settings/"
+    });
+  }
+  /**
+   * Get Llm Settings
+   * Get settings and schema of the specified Large Language Model
+   * @param languageModelName 
+   * @returns Setting Successful Response
+   * @throws ApiError
+   */
+  getLlmSettings(languageModelName) {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/llm/settings/{languageModelName}/",
+      path: {
+        "languageModelName": languageModelName
+      },
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Upsert LLM Setting
+   * Upsert the Large Language Model setting
+   * @param languageModelName 
+   * @param requestBody 
+   * @returns Setting Successful Response
+   * @throws ApiError
+   */
+  upsertLlmSetting(languageModelName, requestBody) {
+    return this.httpRequest.request({
+      method: "PUT",
+      url: "/llm/settings/{languageModelName}/",
+      path: {
+        "languageModelName": languageModelName
+      },
+      body: requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+};
+
+// api/services/MemoryService.ts
+var MemoryService = class {
+  constructor(httpRequest) {
+    this.httpRequest = httpRequest;
   }
   /**
    * Recall Memories From Text
@@ -432,6 +531,18 @@ var MemoryService = class {
     });
   }
   /**
+   * Wipe Collections
+   * Delete and create all collections
+   * @returns DeleteResponse Successful Response
+   * @throws ApiError
+   */
+  wipeCollections() {
+    return this.httpRequest.request({
+      method: "DELETE",
+      url: "/memory/collections/"
+    });
+  }
+  /**
    * Wipe Single Collection
    * Delete and recreate a collection
    * @param collectionId 
@@ -441,7 +552,7 @@ var MemoryService = class {
   wipeSingleCollection(collectionId) {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/memory/collections/{collection_id}",
+      url: "/memory/collections/{collection_id}/",
       path: {
         "collection_id": collectionId
       },
@@ -451,15 +562,24 @@ var MemoryService = class {
     });
   }
   /**
-   * Wipe Collections
-   * Delete and create all collections
+   * Delete Element In Memory
+   * Delete specific element in memory.
+   * @param collectionId 
+   * @param memoryId 
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
-  wipeCollections() {
+  deleteElementInMemory(collectionId, memoryId) {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/memory/wipe-collections/"
+      url: "/memory/collections/{collection_id}/points/{memory_id}/",
+      path: {
+        "collection_id": collectionId,
+        "memory_id": memoryId
+      },
+      errors: {
+        422: `Validation Error`
+      }
     });
   }
   /**
@@ -471,7 +591,7 @@ var MemoryService = class {
   wipeConversationHistory() {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/memory/working-memory/conversation-history/"
+      url: "/memory/conversation_history/"
     });
   }
 };
@@ -494,16 +614,34 @@ var PluginsService = class {
     });
   }
   /**
-   * Upload Plugin
+   * Install Plugin
    * Install a new plugin from a zip file
    * @param formData 
    * @returns FileResponse Successful Response
    * @throws ApiError
    */
-  uploadPlugin(formData) {
+  installPlugin(formData) {
     return this.httpRequest.request({
       method: "POST",
       url: "/plugins/upload/",
+      formData,
+      mediaType: "multipart/form-data",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Install Plugin From Registry
+   * Install a new plugin from external repository
+   * @param formData 
+   * @returns FileResponse Successful Response
+   * @throws ApiError
+   */
+  installPluginFromRegistry(formData) {
+    return this.httpRequest.request({
+      method: "POST",
+      url: "/plugins/upload/registry",
       formData,
       mediaType: "multipart/form-data",
       errors: {
@@ -534,7 +672,7 @@ var PluginsService = class {
    * Get Plugin Details
    * Returns information on a single plugin
    * @param pluginId 
-   * @returns any Successful Response
+   * @returns Plugin Successful Response
    * @throws ApiError
    */
   getPluginDetails(pluginId) {
@@ -569,6 +707,18 @@ var PluginsService = class {
     });
   }
   /**
+   * Get Plugins Settings
+   * Returns the settings of all the plugins
+   * @returns SettingsResponse Successful Response
+   * @throws ApiError
+   */
+  getPluginsSettings() {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/plugins/settings/"
+    });
+  }
+  /**
    * Get Plugin Settings
    * Returns the settings of a specific plugin
    * @param pluginId 
@@ -592,7 +742,7 @@ var PluginsService = class {
    * Updates the settings of a specific plugin
    * @param pluginId 
    * @param requestBody 
-   * @returns PluginSettings Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   upsertPluginSettings(pluginId, requestBody) {
@@ -607,6 +757,24 @@ var PluginsService = class {
       errors: {
         422: `Validation Error`
       }
+    });
+  }
+};
+
+// api/services/PromptService.ts
+var PromptService = class {
+  constructor(httpRequest) {
+    this.httpRequest = httpRequest;
+  }
+  /**
+   * Get Default Prompt Settings
+   * @returns DefaultPromptSettings Successful Response
+   * @throws ApiError
+   */
+  getDefaultPromptSettings() {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/prompt/settings/"
     });
   }
 };
@@ -674,49 +842,8 @@ var RabbitHoleService = class {
   }
 };
 
-// api/services/SettingsEmbedderService.ts
-var SettingsEmbedderService = class {
-  constructor(httpRequest) {
-    this.httpRequest = httpRequest;
-  }
-  /**
-   * Get Embedder Settings
-   * Get the list of the Embedders
-   * @returns ConfigurationsResponse Successful Response
-   * @throws ApiError
-   */
-  getEmbedderSettings() {
-    return this.httpRequest.request({
-      method: "GET",
-      url: "/settings/embedder/"
-    });
-  }
-  /**
-   * Upsert Embedder Setting
-   * Upsert the Embedder setting
-   * @param languageEmbedderName 
-   * @param requestBody 
-   * @returns SettingResponse Successful Response
-   * @throws ApiError
-   */
-  upsertEmbedderSetting(languageEmbedderName, requestBody) {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/settings/embedder/{languageEmbedderName}",
-      path: {
-        "languageEmbedderName": languageEmbedderName
-      },
-      body: requestBody,
-      mediaType: "application/json",
-      errors: {
-        422: `Validation Error`
-      }
-    });
-  }
-};
-
-// api/services/SettingsGeneralService.ts
-var SettingsGeneralService = class {
+// api/services/SettingsService.ts
+var SettingsService = class {
   constructor(httpRequest) {
     this.httpRequest = httpRequest;
   }
@@ -724,7 +851,7 @@ var SettingsGeneralService = class {
    * Get Settings
    * Get the entire list of settings available in the database
    * @param search The setting to search
-   * @returns SettingsList Successful Response
+   * @returns SettingsResponse Successful Response
    * @throws ApiError
    */
   getSettings(search = "") {
@@ -743,7 +870,7 @@ var SettingsGeneralService = class {
    * Create Setting
    * Create a new setting in the database
    * @param requestBody 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   createSetting(requestBody) {
@@ -761,13 +888,13 @@ var SettingsGeneralService = class {
    * Get Setting
    * Get the a specific setting from the database
    * @param settingId 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   getSetting(settingId) {
     return this.httpRequest.request({
       method: "GET",
-      url: "/settings/{settingId}",
+      url: "/settings/{settingId}/",
       path: {
         "settingId": settingId
       },
@@ -786,7 +913,7 @@ var SettingsGeneralService = class {
   deleteSetting(settingId) {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/settings/{settingId}",
+      url: "/settings/{settingId}/",
       path: {
         "settingId": settingId
       },
@@ -800,13 +927,13 @@ var SettingsGeneralService = class {
    * Update a specific setting in the database if it exists
    * @param settingId 
    * @param requestBody 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   updateSetting(settingId, requestBody) {
     return this.httpRequest.request({
       method: "PUT",
-      url: "/settings/{settingId}",
+      url: "/settings/{settingId}/",
       path: {
         "settingId": settingId
       },
@@ -815,65 +942,6 @@ var SettingsGeneralService = class {
       errors: {
         422: `Validation Error`
       }
-    });
-  }
-};
-
-// api/services/SettingsLargeLanguageModelService.ts
-var SettingsLargeLanguageModelService = class {
-  constructor(httpRequest) {
-    this.httpRequest = httpRequest;
-  }
-  /**
-   * Get LLM Settings
-   * Get the list of the Large Language Models
-   * @returns ConfigurationsResponse Successful Response
-   * @throws ApiError
-   */
-  getLlmSettings() {
-    return this.httpRequest.request({
-      method: "GET",
-      url: "/settings/llm/"
-    });
-  }
-  /**
-   * Upsert LLM Setting
-   * Upsert the Large Language Model setting
-   * @param languageModelName 
-   * @param requestBody 
-   * @returns SettingResponse Successful Response
-   * @throws ApiError
-   */
-  upsertLlmSetting(languageModelName, requestBody) {
-    return this.httpRequest.request({
-      method: "PUT",
-      url: "/settings/llm/{languageModelName}",
-      path: {
-        "languageModelName": languageModelName
-      },
-      body: requestBody,
-      mediaType: "application/json",
-      errors: {
-        422: `Validation Error`
-      }
-    });
-  }
-};
-
-// api/services/SettingsPromptService.ts
-var SettingsPromptService = class {
-  constructor(httpRequest) {
-    this.httpRequest = httpRequest;
-  }
-  /**
-   * Get Default Prompt Settings
-   * @returns DefaultPromptSettings Successful Response
-   * @throws ApiError
-   */
-  getDefaultPromptSettings() {
-    return this.httpRequest.request({
-      method: "GET",
-      url: "/settings/prompt/"
     });
   }
 };
@@ -899,13 +967,13 @@ var StatusService = class {
 
 // api/CCatAPI.ts
 var CCatAPI = class {
+  embedder;
+  largeLanguageModel;
   memory;
   plugins;
+  prompt;
   rabbitHole;
-  settingsEmbedder;
-  settingsGeneral;
-  settingsLargeLanguageModel;
-  settingsPrompt;
+  settings;
   status;
   request;
   constructor(config, HttpRequest = AxiosHttpRequest) {
@@ -920,13 +988,13 @@ var CCatAPI = class {
       HEADERS: config?.HEADERS,
       ENCODE_PATH: config?.ENCODE_PATH
     });
+    this.embedder = new EmbedderService(this.request);
+    this.largeLanguageModel = new LargeLanguageModelService(this.request);
     this.memory = new MemoryService(this.request);
     this.plugins = new PluginsService(this.request);
+    this.prompt = new PromptService(this.request);
     this.rabbitHole = new RabbitHoleService(this.request);
-    this.settingsEmbedder = new SettingsEmbedderService(this.request);
-    this.settingsGeneral = new SettingsGeneralService(this.request);
-    this.settingsLargeLanguageModel = new SettingsLargeLanguageModelService(this.request);
-    this.settingsPrompt = new SettingsPromptService(this.request);
+    this.settings = new SettingsService(this.request);
     this.status = new StatusService(this.request);
   }
 };
