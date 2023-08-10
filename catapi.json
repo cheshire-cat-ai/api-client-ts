@@ -1658,7 +1658,7 @@
                     "type",
                     "required",
                     "properties",
-                    "nameHumanReadable"
+                    "humanReadableName"
                 ],
                 "type": "object",
                 "properties": {
@@ -1695,8 +1695,8 @@
                         "title": "Definitions",
                         "type": "object"
                     },
-                    "nameHumanReadable": {
-                        "title": "nameHumanReadable",
+                    "humanReadableName": {
+                        "title": "humanReadableName",
                         "type": "string"
                     }
                 }

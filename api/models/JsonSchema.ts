@@ -11,5 +11,5 @@ export type JsonSchema = {
     required: Array<string>;
     additionalProperties?: (boolean | Record<string, any>);
     definitions?: Record<string, any>;
-    nameHumanReadable: string;
+    humanReadableName: string;
 };
