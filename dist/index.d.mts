@@ -235,6 +235,21 @@ type BodyInstallPlugin = {
     file: Blob;
 };
 
+type BodyUploadUrl = {
+    /**
+     * URL of the website to which you want to save the content
+     */
+    url: string;
+    /**
+     * Maximum length of each chunk after the document is split (in characters)
+     */
+    chunk_size?: number;
+    /**
+     * Chunk overlap (in characters)
+     */
+    chunk_overlap?: number;
+};
+
 type FileResponse = {
     filename: string;
     content_type: string;
@@ -277,6 +292,14 @@ declare class PluginsService {
      * @throws ApiError
      */
     installPlugin(formData: BodyInstallPlugin): CancelablePromise<FileResponse>;
+    /**
+     * Install Plugin From Registry
+     * Install a new plugin from external repository
+     * @param formData
+     * @returns FileResponse Successful Response
+     * @throws ApiError
+     */
+    installPluginFromRegistry(formData: BodyUploadUrl): CancelablePromise<FileResponse>;
     /**
      * Toggle Plugin
      * Enable or disable a single plugin
@@ -359,33 +382,10 @@ type BodyUploadFile = {
      * Chunk overlap (in characters)
      */
     chunk_overlap?: number;
-    /**
-     * Enables call to summary hook for this file
-     */
-    summary?: boolean;
 };
 
 type BodyUploadMemory = {
     file: Blob;
-};
-
-type BodyUploadUrl = {
-    /**
-     * URL of the website to which you want to save the content
-     */
-    url: string;
-    /**
-     * Maximum length of each chunk after the document is split (in characters)
-     */
-    chunk_size?: number;
-    /**
-     * Chunk overlap (in characters)
-     */
-    chunk_overlap?: number;
-    /**
-     * Enables call to summary hook for this file
-     */
-    summary?: boolean;
 };
 
 type WebResponse = {

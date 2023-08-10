@@ -677,6 +677,24 @@ var PluginsService = class {
     });
   }
   /**
+   * Install Plugin From Registry
+   * Install a new plugin from external repository
+   * @param formData 
+   * @returns FileResponse Successful Response
+   * @throws ApiError
+   */
+  installPluginFromRegistry(formData) {
+    return this.httpRequest.request({
+      method: "POST",
+      url: "/plugins/upload/registry",
+      formData,
+      mediaType: "multipart/form-data",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
    * Toggle Plugin
    * Enable or disable a single plugin
    * @param pluginId 
