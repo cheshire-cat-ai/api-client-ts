@@ -65,20 +65,15 @@ type JsonSchema = {
     definitions?: Record<string, any>;
 };
 
-type ModelsResponse = {
-    status: string;
-    results: number;
-    settings: Array<Record<string, any>>;
-    schemas: Record<string, (JsonSchema & {
-        nameHumanReadable?: string;
-    })>;
-    allowed_configurations: Array<string>;
-    selected_configuration: string;
+type Setting = {
+    name: string;
+    value: Record<string, any>;
+    schema?: (JsonSchema | Record<string, any>);
 };
 
-type SettingResponse = {
-    status: string;
-    settings: Record<string, any>;
+type SettingsResponse = {
+    settings: Array<Setting>;
+    selected_configuration?: string;
 };
 
 declare class EmbedderService {
@@ -87,10 +82,10 @@ declare class EmbedderService {
     /**
      * Get Embedders Settings
      * Get the list of the Embedders
-     * @returns ModelsResponse Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
-    getEmbeddersSettings(): CancelablePromise<ModelsResponse>;
+    getEmbeddersSettings(): CancelablePromise<SettingsResponse>;
     /**
      * Get Embedder Settings
      * Get settings and schema of the specified Embedder
@@ -98,7 +93,7 @@ declare class EmbedderService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    getEmbedderSettings(languageEmbedderName: string): CancelablePromise<(SettingResponse & {
+    getEmbedderSettings(languageEmbedderName: string): CancelablePromise<(Setting & {
         schema: (JsonSchema & {
             nameHumanReadable?: string;
         });
@@ -108,10 +103,10 @@ declare class EmbedderService {
      * Upsert the Embedder setting
      * @param languageEmbedderName
      * @param requestBody
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    upsertEmbedderSetting(languageEmbedderName: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
+    upsertEmbedderSetting(languageEmbedderName: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
 }
 
 declare class LargeLanguageModelService {
@@ -120,10 +115,10 @@ declare class LargeLanguageModelService {
     /**
      * Get LLMs Settings
      * Get the list of the Large Language Models
-     * @returns ModelsResponse Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
-    getLlmsSettings(): CancelablePromise<ModelsResponse>;
+    getLlmsSettings(): CancelablePromise<SettingsResponse>;
     /**
      * Get Llm Settings
      * Get settings and schema of the specified Large Language Model
@@ -131,7 +126,7 @@ declare class LargeLanguageModelService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    getLlmSettings(languageModelName: string): CancelablePromise<(SettingResponse & {
+    getLlmSettings(languageModelName: string): CancelablePromise<(Setting & {
         schema: (JsonSchema & {
             nameHumanReadable?: string;
         });
@@ -141,10 +136,10 @@ declare class LargeLanguageModelService {
      * Upsert the Large Language Model setting
      * @param languageModelName
      * @param requestBody
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    upsertLlmSetting(languageModelName: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
+    upsertLlmSetting(languageModelName: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
 }
 
 type Collection = {
@@ -153,13 +148,10 @@ type Collection = {
 };
 
 type CollectionsList = {
-    status: string;
-    results: number;
     collections: Array<Collection>;
 };
 
 type DeleteResponse = {
-    status: string;
     deleted: (string | boolean | Record<string, any>);
 };
 
@@ -189,7 +181,6 @@ type VectorsData = {
 };
 
 type MemoryRecall = {
-    status: string;
     query: QueryData;
     vectors: VectorsData;
 };
@@ -252,7 +243,6 @@ type BodyInstallPlugin = {
 };
 
 type FileResponse = {
-    status: string;
     filename: string;
     content_type: string;
     info: string;
@@ -268,21 +258,12 @@ type Plugin = {
     tags: string;
     thumb: string;
     version: string;
-    active: boolean;
+    active?: boolean;
 };
 
 type PluginsList = {
-    status: string;
-    results: number;
     installed: Array<Plugin>;
     registry: Array<Plugin>;
-};
-
-type PluginsSettingsResponse = {
-    status: string;
-    results: number;
-    settings: Array<Record<string, any>>;
-    schemas: Record<string, JsonSchema>;
 };
 
 declare class PluginsService {
@@ -311,20 +292,16 @@ declare class PluginsService {
      * @throws ApiError
      */
     togglePlugin(pluginId: string): CancelablePromise<{
-        status: string;
         info: string;
     }>;
     /**
      * Get Plugin Details
      * Returns information on a single plugin
      * @param pluginId
-     * @returns any Successful Response
+     * @returns Plugin Successful Response
      * @throws ApiError
      */
-    getPluginDetails(pluginId: string): CancelablePromise<{
-        status: string;
-        data: Plugin;
-    }>;
+    getPluginDetails(pluginId: string): CancelablePromise<Plugin>;
     /**
      * Delete Plugin
      * Physically remove a plugin
@@ -336,10 +313,10 @@ declare class PluginsService {
     /**
      * Get Plugins Settings
      * Returns the settings of all the plugins
-     * @returns PluginsSettingsResponse Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
-    getPluginsSettings(): CancelablePromise<PluginsSettingsResponse>;
+    getPluginsSettings(): CancelablePromise<SettingsResponse>;
     /**
      * Get Plugin Settings
      * Returns the settings of a specific plugin
@@ -347,7 +324,7 @@ declare class PluginsService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    getPluginSettings(pluginId: string): CancelablePromise<(SettingResponse & {
+    getPluginSettings(pluginId: string): CancelablePromise<(Setting & {
         schema: JsonSchema;
     })>;
     /**
@@ -355,10 +332,10 @@ declare class PluginsService {
      * Updates the settings of a specific plugin
      * @param pluginId
      * @param requestBody
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    upsertPluginSettings(pluginId: string, requestBody: Record<string, any>): CancelablePromise<SettingResponse>;
+    upsertPluginSettings(pluginId: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
 }
 
 type DefaultPromptSettings = {
@@ -419,7 +396,6 @@ type BodyUploadUrl = {
 };
 
 type WebResponse = {
-    status: string;
     url: string;
     info: string;
 };
@@ -461,12 +437,6 @@ type SettingBody = {
     category?: string;
 };
 
-type SettingsList = {
-    status: string;
-    results: number;
-    settings: Array<Record<string, any>>;
-};
-
 declare class SettingsService {
     private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
@@ -474,26 +444,26 @@ declare class SettingsService {
      * Get Settings
      * Get the entire list of settings available in the database
      * @param search The setting to search
-     * @returns SettingsList Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
-    getSettings(search?: string): CancelablePromise<SettingsList>;
+    getSettings(search?: string): CancelablePromise<SettingsResponse>;
     /**
      * Create Setting
      * Create a new setting in the database
      * @param requestBody
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    createSetting(requestBody: SettingBody): CancelablePromise<SettingResponse>;
+    createSetting(requestBody: SettingBody): CancelablePromise<Setting>;
     /**
      * Get Setting
      * Get the a specific setting from the database
      * @param settingId
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    getSetting(settingId: string): CancelablePromise<SettingResponse>;
+    getSetting(settingId: string): CancelablePromise<Setting>;
     /**
      * Delete Setting
      * Delete a specific setting in the database
@@ -507,14 +477,15 @@ declare class SettingsService {
      * Update a specific setting in the database if it exists
      * @param settingId
      * @param requestBody
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    updateSetting(settingId: string, requestBody: SettingBody): CancelablePromise<SettingResponse>;
+    updateSetting(settingId: string, requestBody: SettingBody): CancelablePromise<Setting>;
 }
 
 type Status = {
     status: string;
+    version: string;
 };
 
 declare class StatusService {
@@ -718,4 +689,4 @@ type HTTPValidationError = {
     };
 };
 
-export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, ModelsResponse, Plugin, PluginsList, PluginsSettingsResponse, PromptSettings, QueryData, SettingBody, SettingResponse, SettingsList, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginsList, PromptSettings, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
