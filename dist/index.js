@@ -436,7 +436,7 @@ var EmbedderService = class {
    * Get Embedder Settings
    * Get settings and schema of the specified Embedder
    * @param languageEmbedderName 
-   * @returns any Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   getEmbedderSettings(languageEmbedderName) {
@@ -496,7 +496,7 @@ var LargeLanguageModelService = class {
    * Get Llm Settings
    * Get settings and schema of the specified Large Language Model
    * @param languageModelName 
-   * @returns any Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   getLlmSettings(languageModelName) {

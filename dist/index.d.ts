@@ -63,12 +63,13 @@ type JsonSchema = {
     required: Array<string>;
     additionalProperties?: (boolean | Record<string, any>);
     definitions?: Record<string, any>;
+    nameHumanReadable: string;
 };
 
 type Setting = {
     name: string;
     value: Record<string, any>;
-    schema?: (JsonSchema | Record<string, any>);
+    schema?: JsonSchema;
 };
 
 type SettingsResponse = {
@@ -90,14 +91,10 @@ declare class EmbedderService {
      * Get Embedder Settings
      * Get settings and schema of the specified Embedder
      * @param languageEmbedderName
-     * @returns any Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    getEmbedderSettings(languageEmbedderName: string): CancelablePromise<(Setting & {
-        schema: (JsonSchema & {
-            nameHumanReadable?: string;
-        });
-    })>;
+    getEmbedderSettings(languageEmbedderName: string): CancelablePromise<Setting>;
     /**
      * Upsert Embedder Setting
      * Upsert the Embedder setting
@@ -123,14 +120,10 @@ declare class LargeLanguageModelService {
      * Get Llm Settings
      * Get settings and schema of the specified Large Language Model
      * @param languageModelName
-     * @returns any Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
-    getLlmSettings(languageModelName: string): CancelablePromise<(Setting & {
-        schema: (JsonSchema & {
-            nameHumanReadable?: string;
-        });
-    })>;
+    getLlmSettings(languageModelName: string): CancelablePromise<Setting>;
     /**
      * Upsert LLM Setting
      * Upsert the Large Language Model setting
