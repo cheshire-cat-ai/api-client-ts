@@ -2,9 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { Setting } from '../models/Setting';
 import type { SettingBody } from '../models/SettingBody';
-import type { SettingResponse } from '../models/SettingResponse';
-import type { SettingsList } from '../models/SettingsList';
+import type { SettingsResponse } from '../models/SettingsResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -17,12 +17,12 @@ export class SettingsService {
      * Get Settings
      * Get the entire list of settings available in the database
      * @param search The setting to search
-     * @returns SettingsList Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
     public getSettings(
 search: string = '',
-): CancelablePromise<SettingsList> {
+): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/',
@@ -39,12 +39,12 @@ search: string = '',
      * Create Setting
      * Create a new setting in the database
      * @param requestBody 
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public createSetting(
 requestBody: SettingBody,
-): CancelablePromise<SettingResponse> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/settings/',
@@ -60,12 +60,12 @@ requestBody: SettingBody,
      * Get Setting
      * Get the a specific setting from the database
      * @param settingId 
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public getSetting(
 settingId: string,
-): CancelablePromise<SettingResponse> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/{settingId}/',
@@ -105,13 +105,13 @@ settingId: string,
      * Update a specific setting in the database if it exists
      * @param settingId 
      * @param requestBody 
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public updateSetting(
 settingId: string,
 requestBody: SettingBody,
-): CancelablePromise<SettingResponse> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/settings/{settingId}/',

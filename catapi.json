@@ -59,7 +59,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SettingsList"
+                                    "$ref": "#/components/schemas/SettingsResponse"
                                 }
                             }
                         }
@@ -100,7 +100,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SettingResponse"
+                                    "$ref": "#/components/schemas/Setting"
                                 }
                             }
                         }
@@ -144,7 +144,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SettingResponse"
+                                    "$ref": "#/components/schemas/Setting"
                                 }
                             }
                         }
@@ -236,7 +236,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SettingResponse"
+                                    "$ref": "#/components/schemas/Setting"
                                 }
                             }
                         }
@@ -291,7 +291,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ModelsResponse"
+                                    "$ref": "#/components/schemas/SettingsResponse"
                                 }
                             }
                         }
@@ -327,7 +327,7 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "$ref": "#/components/schemas/SettingResponse"
+                                            "$ref": "#/components/schemas/Setting"
                                         },
                                         {
                                             "required": [
@@ -409,7 +409,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SettingResponse"
+                                    "$ref": "#/components/schemas/Setting"
                                 }
                             }
                         }
@@ -442,7 +442,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ModelsResponse"
+                                    "$ref": "#/components/schemas/SettingsResponse"
                                 }
                             }
                         }
@@ -478,7 +478,7 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "$ref": "#/components/schemas/SettingResponse"
+                                            "$ref": "#/components/schemas/Setting"
                                         },
                                         {
                                             "required": [
@@ -560,7 +560,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SettingResponse"
+                                    "$ref": "#/components/schemas/Setting"
                                 }
                             }
                         }
@@ -670,17 +670,12 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "FileResponse",
+                                    "title": "ToggleResponse",
                                     "required": [
-                                        "status",
                                         "info"
                                     ],
                                     "type": "object",
                                     "properties": {
-                                        "status": {
-                                            "title": "Status",
-                                            "type": "string"
-                                        },
                                         "info": {
                                             "title": "Info",
                                             "type": "string"
@@ -729,21 +724,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "title": "Response Get Plugin Details",
-                                    "type": "object",
-                                    "required": [
-                                        "status",
-                                        "data"
-                                    ],
-                                    "properties": {
-                                        "status": {
-                                            "title": "Status",
-                                            "type": "string"
-                                        },
-                                        "data": {
-                                            "$ref": "#/components/schemas/Plugin"
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/Plugin"
                                 }
                             }
                         }
@@ -818,7 +799,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/PluginsSettingsResponse"
+                                    "$ref": "#/components/schemas/SettingsResponse"
                                 }
                             }
                         }
@@ -854,7 +835,7 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "$ref": "#/components/schemas/SettingResponse"
+                                            "$ref": "#/components/schemas/Setting"
                                         },
                                         {
                                             "required": [
@@ -924,7 +905,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SettingResponse"
+                                    "$ref": "#/components/schemas/Setting"
                                 }
                             }
                         }
@@ -1458,20 +1439,10 @@
             "CollectionsList": {
                 "title": "CollectionsList",
                 "required": [
-                    "status",
-                    "results",
                     "collections"
                 ],
                 "type": "object",
                 "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
-                    "results": {
-                        "title": "Results",
-                        "type": "integer"
-                    },
                     "collections": {
                         "title": "Collections",
                         "type": "array",
@@ -1484,17 +1455,12 @@
             "FileResponse": {
                 "title": "FileResponse",
                 "required": [
-                    "status",
                     "filename",
                     "content_type",
                     "info"
                 ],
                 "type": "object",
                 "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
                     "filename": {
                         "title": "File Name",
                         "type": "string"
@@ -1531,16 +1497,11 @@
             "MemoryRecall": {
                 "title": "MemoryRecall",
                 "required": [
-                    "status",
                     "query",
                     "vectors"
                 ],
                 "type": "object",
                 "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
                     "query": {
                         "$ref": "#/components/schemas/QueryData"
                     },
@@ -1586,8 +1547,7 @@
                     "plugin_url",
                     "tags",
                     "thumb",
-                    "version",
-                    "active"
+                    "version"
                 ],
                 "type": "object",
                 "properties": {
@@ -1636,21 +1596,11 @@
             "PluginsList": {
                 "title": "PluginsList",
                 "required": [
-                    "status",
-                    "results",
                     "installed",
                     "registry"
                 ],
                 "type": "object",
                 "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
-                    "results": {
-                        "title": "Results",
-                        "type": "integer"
-                    },
                     "installed": {
                         "title": "Installed",
                         "type": "array",
@@ -1738,46 +1688,29 @@
                     }
                 }
             },
-            "SettingResponse": {
-                "title": "SettingResponse",
+            "Setting": {
+                "title": "Setting",
                 "type": "object",
                 "required": [
-                    "status",
-                    "settings"
+                    "name",
+                    "value"
                 ],
                 "properties": {
-                    "status": {
-                        "title": "Status",
+                    "name": {
                         "type": "string"
                     },
-                    "settings": {
+                    "value": {
                         "type": "object"
-                    }
-                }
-            },
-            "SettingsList": {
-                "title": "SettingsList",
-                "required": [
-                    "status",
-                    "results",
-                    "settings"
-                ],
-                "type": "object",
-                "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
                     },
-                    "results": {
-                        "title": "Results",
-                        "type": "integer"
-                    },
-                    "settings": {
-                        "title": "Settings",
-                        "type": "array",
-                        "items": {
-                            "type": "object"
-                        }
+                    "schema": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/JsonSchema"
+                            },
+                            {
+                                "type": "object"
+                            }
+                        ]
                     }
                 }
             },
@@ -1826,97 +1759,24 @@
                     }
                 }
             },
-            "ModelsResponse": {
-                "title": "ModelsResponse",
+            "SettingsResponse": {
+                "title": "SettingsResponse",
                 "required": [
-                    "status",
-                    "results",
-                    "settings",
-                    "schemas",
-                    "allowed_configurations",
-                    "selected_configuration"
+                    "settings"
                 ],
                 "type": "object",
                 "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
-                    "results": {
-                        "title": "Results",
-                        "type": "integer"
-                    },
                     "settings": {
                         "title": "Settings",
                         "type": "array",
                         "items": {
-                            "type": "object"
-                        }
-                    },
-                    "schemas": {
-                        "title": "Schemas",
-                        "type": "object",
-                        "additionalProperties": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonSchema"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "nameHumanReadable": {
-                                            "title": "NameHumanReadable",
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "allowed_configurations": {
-                        "title": "AllowedConfigurations",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
+                            "$ref": "#/components/schemas/Setting"
                         }
                     },
                     "selected_configuration": {
                         "title": "SelectedConfiguration",
+                        "nullable": "true",
                         "type": "string"
-                    }
-                }
-            },
-            "PluginsSettingsResponse": {
-                "title": "PluginsSettingsResponse",
-                "required": [
-                    "status",
-                    "results",
-                    "settings",
-                    "schemas"
-                ],
-                "type": "object",
-                "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
-                    "results": {
-                        "title": "Results",
-                        "type": "integer"
-                    },
-                    "settings": {
-                        "title": "Settings",
-                        "type": "array",
-                        "items": {
-                            "type": "object"
-                        }
-                    },
-                    "schemas": {
-                        "title": "Schemas",
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/components/schemas/JsonSchema"
-                        }
                     }
                 }
             },
@@ -1947,16 +1807,11 @@
             "WebResponse": {
                 "title": "WebResponse",
                 "required": [
-                    "status",
                     "url",
                     "info"
                 ],
                 "type": "object",
                 "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
                     "url": {
                         "title": "Url",
                         "type": "string"
@@ -1970,15 +1825,10 @@
             "DeleteResponse": {
                 "title": "DeleteResponse",
                 "required": [
-                    "status",
                     "deleted"
                 ],
                 "type": "object",
                 "properties": {
-                    "status": {
-                        "title": "Status",
-                        "type": "string"
-                    },
                     "deleted": {
                         "title": "Deleted",
                         "oneOf": [
@@ -1998,12 +1848,17 @@
             "Status": {
                 "title": "Status",
                 "required": [
-                    "status"
+                    "status",
+                    "version"
                 ],
                 "type": "object",
                 "properties": {
                     "status": {
                         "title": "Status",
+                        "type": "string"
+                    },
+                    "version": {
+                        "title": "Version",
                         "type": "string"
                     }
                 }

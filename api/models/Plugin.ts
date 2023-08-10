@@ -13,5 +13,5 @@ export type Plugin = {
     tags: string;
     thumb: string;
     version: string;
-    active: boolean;
+    active?: boolean;
 };

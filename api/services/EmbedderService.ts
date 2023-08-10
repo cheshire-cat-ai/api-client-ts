@@ -3,8 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { JsonSchema } from '../models/JsonSchema';
-import type { ModelsResponse } from '../models/ModelsResponse';
-import type { SettingResponse } from '../models/SettingResponse';
+import type { Setting } from '../models/Setting';
+import type { SettingsResponse } from '../models/SettingsResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -16,10 +16,10 @@ export class EmbedderService {
     /**
      * Get Embedders Settings
      * Get the list of the Embedders
-     * @returns ModelsResponse Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
-    public getEmbeddersSettings(): CancelablePromise<ModelsResponse> {
+    public getEmbeddersSettings(): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/embedder/settings/',
@@ -35,7 +35,7 @@ export class EmbedderService {
      */
     public getEmbedderSettings(
 languageEmbedderName: string,
-): CancelablePromise<(SettingResponse & {
+): CancelablePromise<(Setting & {
 schema: (JsonSchema & {
 nameHumanReadable?: string;
 });
@@ -57,13 +57,13 @@ nameHumanReadable?: string;
      * Upsert the Embedder setting
      * @param languageEmbedderName 
      * @param requestBody 
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public upsertEmbedderSetting(
 languageEmbedderName: string,
 requestBody: Record<string, any>,
-): CancelablePromise<SettingResponse> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/embedder/settings/{languageEmbedderName}/',

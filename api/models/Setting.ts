@@ -5,9 +5,8 @@
 
 import type { JsonSchema } from './JsonSchema';
 
-export type PluginsSettingsResponse = {
-    status: string;
-    results: number;
-    settings: Array<Record<string, any>>;
-    schemas: Record<string, JsonSchema>;
+export type Setting = {
+    name: string;
+    value: Record<string, any>;
+    schema?: (JsonSchema | Record<string, any>);
 };

@@ -8,8 +8,8 @@ import type { FileResponse } from '../models/FileResponse';
 import type { JsonSchema } from '../models/JsonSchema';
 import type { Plugin } from '../models/Plugin';
 import type { PluginsList } from '../models/PluginsList';
-import type { PluginsSettingsResponse } from '../models/PluginsSettingsResponse';
-import type { SettingResponse } from '../models/SettingResponse';
+import type { Setting } from '../models/Setting';
+import type { SettingsResponse } from '../models/SettingsResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
@@ -62,7 +62,6 @@ formData: BodyInstallPlugin,
     public togglePlugin(
 pluginId: string,
 ): CancelablePromise<{
-status: string;
 info: string;
 }> {
         return this.httpRequest.request({
@@ -81,15 +80,12 @@ info: string;
      * Get Plugin Details
      * Returns information on a single plugin
      * @param pluginId 
-     * @returns any Successful Response
+     * @returns Plugin Successful Response
      * @throws ApiError
      */
     public getPluginDetails(
 pluginId: string,
-): CancelablePromise<{
-status: string;
-data: Plugin;
-}> {
+): CancelablePromise<Plugin> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/plugins/{plugin_id}',
@@ -127,10 +123,10 @@ pluginId: string,
     /**
      * Get Plugins Settings
      * Returns the settings of all the plugins
-     * @returns PluginsSettingsResponse Successful Response
+     * @returns SettingsResponse Successful Response
      * @throws ApiError
      */
-    public getPluginsSettings(): CancelablePromise<PluginsSettingsResponse> {
+    public getPluginsSettings(): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/plugins/settings/',
@@ -146,7 +142,7 @@ pluginId: string,
      */
     public getPluginSettings(
 pluginId: string,
-): CancelablePromise<(SettingResponse & {
+): CancelablePromise<(Setting & {
 schema: JsonSchema;
 })> {
         return this.httpRequest.request({
@@ -166,13 +162,13 @@ schema: JsonSchema;
      * Updates the settings of a specific plugin
      * @param pluginId 
      * @param requestBody 
-     * @returns SettingResponse Successful Response
+     * @returns Setting Successful Response
      * @throws ApiError
      */
     public upsertPluginSettings(
 pluginId: string,
 requestBody: Record<string, any>,
-): CancelablePromise<SettingResponse> {
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/plugins/settings/{plugin_id}',
