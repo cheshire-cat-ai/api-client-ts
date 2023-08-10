@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BodyInstallPlugin } from '../models/BodyInstallPlugin';
+import type { BodyUploadUrl } from '../models/BodyUploadUrl';
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { FileResponse } from '../models/FileResponse';
 import type { JsonSchema } from '../models/JsonSchema';
@@ -44,6 +45,27 @@ formData: BodyInstallPlugin,
         return this.httpRequest.request({
             method: 'POST',
             url: '/plugins/upload/',
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Install Plugin From Registry
+     * Install a new plugin from external repository
+     * @param formData 
+     * @returns FileResponse Successful Response
+     * @throws ApiError
+     */
+    public installPluginFromRegistry(
+formData: BodyUploadUrl,
+): CancelablePromise<FileResponse> {
+        return this.httpRequest.request({
+            method: 'POST',
+            url: '/plugins/upload/registry',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {

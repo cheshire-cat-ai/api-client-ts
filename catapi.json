@@ -589,6 +589,49 @@
                 "security": []
             }
         },
+        "/plugins/upload/registry": {
+            "post": {
+                "tags": [
+                    "Plugins"
+                ],
+                "summary": "Install Plugin From Registry",
+                "description": "Install a new plugin from external repository",
+                "operationId": "install_plugin_from_registry",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BodyUploadUrl"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
         "/plugins/toggle/{plugin_id}": {
             "put": {
                 "tags": [
@@ -1272,12 +1315,6 @@
                         "type": "integer",
                         "description": "Chunk overlap (in characters)",
                         "default": 100
-                    },
-                    "summary": {
-                        "title": "Summary",
-                        "type": "boolean",
-                        "description": "Enables call to summary hook for this file",
-                        "default": false
                     }
                 }
             },
@@ -1318,12 +1355,6 @@
                         "type": "integer",
                         "description": "Chunk overlap (in characters)",
                         "default": 100
-                    },
-                    "summary": {
-                        "title": "Summary",
-                        "type": "boolean",
-                        "description": "Enables call to summary hook for this file",
-                        "default": false
                     }
                 }
             },
