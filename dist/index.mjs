@@ -378,7 +378,7 @@ var EmbedderService = class {
   /**
    * Get Embedders Settings
    * Get the list of the Embedders
-   * @returns ModelsResponse Successful Response
+   * @returns SettingsResponse Successful Response
    * @throws ApiError
    */
   getEmbeddersSettings() {
@@ -411,7 +411,7 @@ var EmbedderService = class {
    * Upsert the Embedder setting
    * @param languageEmbedderName 
    * @param requestBody 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   upsertEmbedderSetting(languageEmbedderName, requestBody) {
@@ -438,7 +438,7 @@ var LargeLanguageModelService = class {
   /**
    * Get LLMs Settings
    * Get the list of the Large Language Models
-   * @returns ModelsResponse Successful Response
+   * @returns SettingsResponse Successful Response
    * @throws ApiError
    */
   getLlmsSettings() {
@@ -471,7 +471,7 @@ var LargeLanguageModelService = class {
    * Upsert the Large Language Model setting
    * @param languageModelName 
    * @param requestBody 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   upsertLlmSetting(languageModelName, requestBody) {
@@ -654,7 +654,7 @@ var PluginsService = class {
    * Get Plugin Details
    * Returns information on a single plugin
    * @param pluginId 
-   * @returns any Successful Response
+   * @returns Plugin Successful Response
    * @throws ApiError
    */
   getPluginDetails(pluginId) {
@@ -691,7 +691,7 @@ var PluginsService = class {
   /**
    * Get Plugins Settings
    * Returns the settings of all the plugins
-   * @returns PluginsSettingsResponse Successful Response
+   * @returns SettingsResponse Successful Response
    * @throws ApiError
    */
   getPluginsSettings() {
@@ -724,7 +724,7 @@ var PluginsService = class {
    * Updates the settings of a specific plugin
    * @param pluginId 
    * @param requestBody 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   upsertPluginSettings(pluginId, requestBody) {
@@ -833,7 +833,7 @@ var SettingsService = class {
    * Get Settings
    * Get the entire list of settings available in the database
    * @param search The setting to search
-   * @returns SettingsList Successful Response
+   * @returns SettingsResponse Successful Response
    * @throws ApiError
    */
   getSettings(search = "") {
@@ -852,7 +852,7 @@ var SettingsService = class {
    * Create Setting
    * Create a new setting in the database
    * @param requestBody 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   createSetting(requestBody) {
@@ -870,7 +870,7 @@ var SettingsService = class {
    * Get Setting
    * Get the a specific setting from the database
    * @param settingId 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   getSetting(settingId) {
@@ -909,7 +909,7 @@ var SettingsService = class {
    * Update a specific setting in the database if it exists
    * @param settingId 
    * @param requestBody 
-   * @returns SettingResponse Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   updateSetting(settingId, requestBody) {
