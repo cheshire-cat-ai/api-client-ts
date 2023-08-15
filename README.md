@@ -1,3 +1,16 @@
+<a href="https://github.com/cheshire-cat-ai/api-client-ts">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/cheshire-cat-ai/api-client-ts?logo=github&style=flat-square">
+</a>
+<a href="https://discord.gg/bHX5sNFCYU">
+  <img src="https://img.shields.io/discord/1092359754917089350?logo=discord&style=flat-square" alt="chat on Discord">
+</a>
+<a href="https://npmjs.com/package/ccat-api">
+  <img alt="NPM package version" src="https://img.shields.io/npm/v/ccat-api?logo=npm&style=flat-square">
+</a>
+<a href="https://npmjs.com/package/ccat-api">
+  <img alt="NPM package downloads" src="https://img.shields.io/npm/dw/ccat-api?logo=npm&style=flat-square">
+</a>
+
 # Cheshire Cat AI API Client
 
 API Client made in TypeScript to communicate with the [Cheshire Cat AI](https://github.com/cheshire-cat-ai/core).\
