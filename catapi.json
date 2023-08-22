@@ -1688,8 +1688,7 @@
                     "title",
                     "type",
                     "required",
-                    "properties",
-                    "humanReadableName"
+                    "properties"
                 ],
                 "type": "object",
                 "properties": {
@@ -1727,7 +1726,11 @@
                         "type": "object"
                     },
                     "humanReadableName": {
-                        "title": "humanReadableName",
+                        "title": "Human Readable Name",
+                        "type": "string"
+                    },
+                    "link": {
+                        "title": "Link",
                         "type": "string"
                     }
                 }
