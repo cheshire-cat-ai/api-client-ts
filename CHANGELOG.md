@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.7.1
+
+### Patch Changes
+
+- 16d1ae7: Added link property in JSON Schema
+
 ## 0.7.0
 
 ### Minor Changes
