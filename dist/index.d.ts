@@ -632,7 +632,7 @@ declare class CatClient {
      * @param message The message to pass
      * @param settings The prompt settings to pass
      */
-    send(message: string, settings?: Partial<PromptSettings>): CatClient;
+    send(message: string, userId?: string, settings?: Partial<PromptSettings>): CatClient;
     /**
      * Calls the handler when the WebSocket is connected
      * @param handler The function to call

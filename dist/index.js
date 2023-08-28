@@ -1191,7 +1191,7 @@ var CatClient = class {
    * @param message The message to pass
    * @param settings The prompt settings to pass
    */
-  send(message, settings) {
+  send(message, userId = "user", settings) {
     if (this.ws?.readyState !== import_isomorphic_ws.default.OPEN) {
       this.errorHandler?.({
         name: "SocketClosed",
@@ -1201,6 +1201,7 @@ var CatClient = class {
     }
     const jsonMessage = JSON.stringify({
       text: message,
+      user_id: userId,
       prompt_settings: settings
     });
     this.ws?.send(jsonMessage);
