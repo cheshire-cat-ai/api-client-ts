@@ -1274,6 +1274,39 @@
                 },
                 "security": []
             }
+        },
+        "/rabbithole/allowed-mimetypes/": {
+            "get": {
+                "tags": [
+                    "Rabbit Hole"
+                ],
+                "summary": "Get Allowed Mimetypes",
+                "description": "Retrieve the allowed mimetypes that can be ingested by the Rabbit Hole",
+                "operationId": "get_allowed_mimetypes",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Get Allowed Mimetypes",
+                                    "type": "object",
+                                    "properties": {
+                                        "allowed": {
+                                            "title": "Allowed",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
         }
     },
     "components": {
@@ -1717,8 +1750,12 @@
                     },
                     "additionalProperties": {
                         "oneOf": [
-                            { "type": "boolean" },
-                            { "type": "object" }
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "object"
+                            }
                         ]
                     },
                     "definitions": {

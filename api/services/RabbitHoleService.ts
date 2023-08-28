@@ -80,4 +80,19 @@ formData: BodyUploadMemory,
         });
     }
 
+    /**
+     * Get Allowed Mimetypes
+     * Retrieve the allowed mimetypes that can be ingested by the Rabbit Hole
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public getAllowedMimetypes(): CancelablePromise<{
+allowed?: Array<string>;
+}> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/rabbithole/allowed-mimetypes/',
+        });
+    }
+
 }

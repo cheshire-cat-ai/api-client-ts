@@ -30,7 +30,6 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // index.ts
 var api_client_ts_exports = {};
 __export(api_client_ts_exports, {
-  AcceptedFileTypes: () => AcceptedFileTypes,
   AcceptedMemoryTypes: () => AcceptedMemoryTypes,
   AcceptedPluginTypes: () => AcceptedPluginTypes,
   ApiError: () => ApiError,
@@ -885,6 +884,18 @@ var RabbitHoleService = class {
       }
     });
   }
+  /**
+   * Get Allowed Mimetypes
+   * Retrieve the allowed mimetypes that can be ingested by the Rabbit Hole
+   * @returns any Successful Response
+   * @throws ApiError
+   */
+  getAllowedMimetypes() {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/rabbithole/allowed-mimetypes/"
+    });
+  }
 };
 
 // api/services/SettingsService.ts
@@ -1045,11 +1056,6 @@ var CCatAPI = class {
 };
 
 // api/utils.ts
-var AcceptedFileTypes = [
-  "text/plain",
-  "text/markdown",
-  "application/pdf"
-];
 var AcceptedMemoryTypes = [
   "application/json"
 ];
@@ -1189,6 +1195,7 @@ var CatClient = class {
   /**
    * Sends a message via WebSocket to the Cat
    * @param message The message to pass
+   * @param userId The user ID to pass
    * @param settings The prompt settings to pass
    */
   send(message, userId = "user", settings) {
@@ -1255,7 +1262,6 @@ var CatClient = class {
 var api_client_ts_default = CatClient;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  AcceptedFileTypes,
   AcceptedMemoryTypes,
   AcceptedPluginTypes,
   ApiError,
