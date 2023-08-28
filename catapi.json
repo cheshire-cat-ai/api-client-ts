@@ -1305,7 +1305,7 @@
                         }
                     }
                 },
-                "security": null
+                "security": []
             }
         }
     },
