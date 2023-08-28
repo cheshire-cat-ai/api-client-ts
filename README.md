@@ -1,10 +1,26 @@
+<a href="https://github.com/cheshire-cat-ai/api-client-ts">
+  <img alt="GitHub Stars" src="https://img.shields.io/github/stars/cheshire-cat-ai/api-client-ts?logo=github&style=flat-square">
+</a>
+<a href="https://discord.gg/bHX5sNFCYU">
+  <img alt="Discord Server" src="https://img.shields.io/discord/1092359754917089350?logo=discord&style=flat-square">
+</a>
+<a href="https://npmjs.com/package/ccat-api">
+  <img alt="NPM Version" src="https://img.shields.io/npm/v/ccat-api?logo=npm&style=flat-square">
+</a>
+<a href="https://npmjs.com/package/ccat-api">
+  <img alt="NPM Downloads" src="https://img.shields.io/npm/dw/ccat-api?logo=npm&style=flat-square">
+</a>
+<a href="https://bundlephobia.com/package/ccat-api">
+  <img alt="Bundle Size" src="https://img.shields.io/bundlephobia/minzip/ccat-api?logo=npm&style=flat-square">
+</a>
+
 # Cheshire Cat AI API Client
 
 API Client made in TypeScript to communicate with the [Cheshire Cat AI](https://github.com/cheshire-cat-ai/core).\
-The package provides a class to interface with the Cheshire Cat Python Server.\
-It can be used both in Browser or NodeJS environment.
+The package provides a class to interface with the Cheshire Cat AI backend.\
+It can be used both in Browser and NodeJS environments.
 
-Every endpoint is a `CancelablePromise`, it means you can cancel the request if you want.
+Every endpoint is a `CancelablePromise`, which means you can cancel the request if you want.
 
 ## Installation
 
@@ -38,7 +54,7 @@ const cat = new CatClient({
 | **baseUrl**  | string   | **Required** | The same of **CORE_HOST**                                                        |
 | **authKey**  | string   | ''           | The same of **API_KEY**                                                          |
 | **port**     | number   | 1865         | The same of the **CORE_PORT**                                                    |
-| **instant**  | boolean  | true         | Instantly initialize the websocket and the API client, or later with **.init()** |
+| **instant**  | boolean  | true         | Instantly initialize the WebSocket and the API client, or later with **.init()** |
 | **secure**   | boolean  | false        | The same of the **CORE_USE_SECURE_PROTOCOLS**                                    |
 | **timeout**  | number   | 10000        | Timeout for the endpoints, in milliseconds                                       |
 | **ws**       | string   | undefined    | An object of type [WebSocketSettings](#websocket-settings)                       |
@@ -66,7 +82,7 @@ To send a message to the cat, you can:
 cat.send('Hello my friend!')
 ```
 
-You can listen to the websocket events:
+You can listen to the WebSocket events:
 
 ```ts
 cat.onConnected(() => {

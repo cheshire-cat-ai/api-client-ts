@@ -1,5 +1,27 @@
 # ccat-api
 
+## 0.7.2
+
+### Patch Changes
+
+- af856df: Added user id argument in send method
+
+## 0.7.1
+
+### Patch Changes
+
+- 16d1ae7: Added link property in JSON Schema
+
+## 0.7.0
+
+### Minor Changes
+
+- 65e0659: Sync with new ccat's endpoints
+
+  - Fixed typos
+  - Added generic to PromptSettings
+  - Improved endpoints response types
+
 ## 0.6.2
 
 ### Patch Changes

@@ -63,7 +63,8 @@ type JsonSchema = {
     required: Array<string>;
     additionalProperties?: (boolean | Record<string, any>);
     definitions?: Record<string, any>;
-    humanReadableName: string;
+    humanReadableName?: string;
+    link?: string;
 };
 
 type Setting = {
@@ -639,7 +640,7 @@ declare class CatClient {
      * @param userId The user ID to pass
      * @param settings The prompt settings to pass
      */
-    send(message: string, settings?: Partial<PromptSettings>): CatClient;
+    send(message: string, userId?: string, settings?: Partial<PromptSettings>): CatClient;
     /**
      * Calls the handler when the WebSocket is connected
      * @param handler The function to call

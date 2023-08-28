@@ -138,7 +138,7 @@ export class CatClient {
      * @param userId The user ID to pass
      * @param settings The prompt settings to pass
      */
-    send(message: string, settings?: Partial<PromptSettings>): CatClient {
+    send(message: string, userId = "user", settings?: Partial<PromptSettings>): CatClient {
         if (this.ws?.readyState !== WebSocket.OPEN) {
             this.errorHandler?.({
                 name: 'SocketClosed',
@@ -147,7 +147,8 @@ export class CatClient {
             return this
         }
         const jsonMessage = JSON.stringify({ 
-            text: message, 
+            text: message,
+            user_id: userId,
             prompt_settings: settings
         })
         this.ws?.send(jsonMessage)
