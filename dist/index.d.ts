@@ -422,6 +422,15 @@ declare class RabbitHoleService {
      * @throws ApiError
      */
     uploadMemory(formData: BodyUploadMemory): CancelablePromise<Record<string, any>>;
+    /**
+     * Get Allowed Mimetypes
+     * Retrieve the allowed mimetypes that can be ingested by the Rabbit Hole
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    getAllowedMimetypes(): CancelablePromise<{
+        allowed?: Array<string>;
+    }>;
 }
 
 type SettingBody = {
@@ -561,8 +570,6 @@ interface CatSettings {
     /** An object of type {@link WebSocketSettings} */
     ws?: WebSocketSettings;
 }
-declare const AcceptedFileTypes: readonly ["text/plain", "text/markdown", "application/pdf"];
-type AcceptedFileType = typeof AcceptedFileTypes[number];
 declare const AcceptedMemoryTypes: readonly ["application/json"];
 type AcceptedMemoryType = typeof AcceptedMemoryTypes[number];
 declare const AcceptedPluginTypes: readonly ["application/zip", "application/x-tar"];
@@ -629,6 +636,7 @@ declare class CatClient {
     /**
      * Sends a message via WebSocket to the Cat
      * @param message The message to pass
+     * @param userId The user ID to pass
      * @param settings The prompt settings to pass
      */
     send(message: string, settings?: Partial<PromptSettings>): CatClient;
@@ -682,4 +690,4 @@ type HTTPValidationError = {
     };
 };
 
-export { AcceptedFileType, AcceptedFileTypes, AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginsList, PromptSettings, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginsList, PromptSettings, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
