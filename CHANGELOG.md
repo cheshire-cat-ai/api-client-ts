@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.7.2
+
+### Patch Changes
+
+- af856df: Added user id argument in send method
+
 ## 0.7.1
 
 ### Patch Changes
