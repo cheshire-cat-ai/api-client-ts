@@ -57,14 +57,6 @@ export interface CatSettings {
     ws?: WebSocketSettings
 }
 
-export const AcceptedFileTypes = [
-    'text/plain', 
-    'text/markdown', 
-    'application/pdf'
-] as const
-
-export type AcceptedFileType = typeof AcceptedFileTypes[number]
-
 export const AcceptedMemoryTypes = [
     'application/json'
 ] as const

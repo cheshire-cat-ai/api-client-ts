@@ -135,6 +135,7 @@ export class CatClient {
     /**
      * Sends a message via WebSocket to the Cat
      * @param message The message to pass
+     * @param userId The user ID to pass
      * @param settings The prompt settings to pass
      */
     send(message: string, settings?: Partial<PromptSettings>): CatClient {
