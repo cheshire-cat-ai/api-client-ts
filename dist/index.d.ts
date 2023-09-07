@@ -258,7 +258,7 @@ type FileResponse = {
 };
 
 type Plugin = {
-    id?: string;
+    id: string;
     name: string;
     description: string;
     author_name: string;
