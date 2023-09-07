@@ -529,8 +529,19 @@
                     "Plugins"
                 ],
                 "summary": "List Available Plugins",
-                "description": "List available plugins",
+                "description": "List both installed and registry plugins",
                 "operationId": "list_available_plugins",
+                "parameters": [
+                    {
+                        "required": false,
+                        "schema": {
+                            "title": "Query",
+                            "type": "string"
+                        },
+                        "name": "query",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -1547,7 +1558,6 @@
             "Plugin": {
                 "title": "Plugin",
                 "required": [
-                    "id",
                     "name",
                     "description",
                     "author_name",
@@ -1576,11 +1586,11 @@
                         "type": "string"
                     },
                     "author_url": {
-                        "title": "Author Url",
+                        "title": "Author URL",
                         "type": "string"
                     },
                     "plugin_url": {
-                        "title": "Plugin Url",
+                        "title": "Plugin URL",
                         "type": "string"
                     },
                     "tags": {
@@ -1598,17 +1608,34 @@
                     "active": {
                         "title": "Active",
                         "type": "boolean"
+                    },
+                    "url": {
+                        "title": "Install URL",
+                        "type": "string"
                     }
                 }
             },
             "PluginsList": {
                 "title": "PluginsList",
                 "required": [
+                    "filters",
                     "installed",
                     "registry"
                 ],
                 "type": "object",
                 "properties": {
+                    "filters": {
+                        "title": "Filters",
+                        "type": "object",
+                        "required": [],
+                        "properties": {
+                            "query": {
+                                "title": "Query",
+                                "nullable": "true",
+                                "type": "string"
+                            }
+                        }
+                    },
                     "installed": {
                         "title": "Installed",
                         "type": "array",
@@ -1788,7 +1815,6 @@
                     },
                     "selected_configuration": {
                         "title": "SelectedConfiguration",
-                        "nullable": "true",
                         "type": "string"
                     }
                 }

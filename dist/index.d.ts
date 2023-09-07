@@ -258,7 +258,7 @@ type FileResponse = {
 };
 
 type Plugin = {
-    id: string;
+    id?: string;
     name: string;
     description: string;
     author_name: string;
@@ -268,9 +268,13 @@ type Plugin = {
     thumb: string;
     version: string;
     active?: boolean;
+    url?: string;
 };
 
 type PluginsList = {
+    filters: {
+        query?: string;
+    };
     installed: Array<Plugin>;
     registry: Array<Plugin>;
 };
@@ -280,11 +284,12 @@ declare class PluginsService {
     constructor(httpRequest: BaseHttpRequest);
     /**
      * List Available Plugins
-     * List available plugins
+     * List both installed and registry plugins
+     * @param query
      * @returns PluginsList Successful Response
      * @throws ApiError
      */
-    listAvailablePlugins(): CancelablePromise<PluginsList>;
+    listAvailablePlugins(query?: string): CancelablePromise<PluginsList>;
     /**
      * Install Plugin
      * Install a new plugin from a zip file

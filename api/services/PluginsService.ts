@@ -21,14 +21,20 @@ export class PluginsService {
 
     /**
      * List Available Plugins
-     * List available plugins
+     * List both installed and registry plugins
+     * @param query 
      * @returns PluginsList Successful Response
      * @throws ApiError
      */
-    public listAvailablePlugins(): CancelablePromise<PluginsList> {
+    public listAvailablePlugins(
+query?: string,
+): CancelablePromise<PluginsList> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/plugins/',
+            query: {
+                'query': query,
+            },
         });
     }
 

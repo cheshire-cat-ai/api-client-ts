@@ -603,14 +603,18 @@ var PluginsService = class {
   }
   /**
    * List Available Plugins
-   * List available plugins
+   * List both installed and registry plugins
+   * @param query 
    * @returns PluginsList Successful Response
    * @throws ApiError
    */
-  listAvailablePlugins() {
+  listAvailablePlugins(query) {
     return this.httpRequest.request({
       method: "GET",
-      url: "/plugins/"
+      url: "/plugins/",
+      query: {
+        "query": query
+      }
     });
   }
   /**
@@ -1215,7 +1219,7 @@ var CatClient = class {
 };
 
 // index.ts
-var api_client_ts_default = CatClient;
+var ccat_api_default = CatClient;
 export {
   AcceptedMemoryTypes,
   AcceptedPluginTypes,
@@ -1224,6 +1228,6 @@ export {
   CancelablePromise,
   CatClient,
   WebSocketState,
-  api_client_ts_default as default,
+  ccat_api_default as default,
   isMessageResponse
 };
