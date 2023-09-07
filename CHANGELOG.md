@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.7.3
+
+### Patch Changes
+
+- 34f7752: Added endpoint for allowed mimetypes
+
 ## 0.7.2
 
 ### Patch Changes
