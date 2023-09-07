@@ -412,8 +412,8 @@ declare class RabbitHoleService {
      */
     uploadFile(formData: BodyUploadFile): CancelablePromise<FileResponse>;
     /**
-     * Upload Url
-     * Upload a url. Website content will be extracted and segmented into chunks.
+     * Upload URL
+     * Upload a URL. Website content will be extracted and segmented into chunks.
  * Chunks will be then vectorized and stored into documents memory.
      * @param requestBody
      * @returns WebResponse Successful Response
