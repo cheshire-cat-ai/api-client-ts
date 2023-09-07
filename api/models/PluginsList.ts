@@ -7,8 +7,8 @@ import type { Plugin } from './Plugin';
 
 export type PluginsList = {
     filters: {
-        query?: string;
-    };
+query?: string;
+};
     installed: Array<Plugin>;
     registry: Array<Plugin>;
 };

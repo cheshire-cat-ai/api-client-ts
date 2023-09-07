@@ -1204,8 +1204,8 @@
                 "tags": [
                     "Rabbit Hole"
                 ],
-                "summary": "Upload Url",
-                "description": "Upload a url. Website content will be extracted and segmented into chunks.\nChunks will be then vectorized and stored into documents memory.",
+                "summary": "Upload URL",
+                "description": "Upload a URL. Website content will be extracted and segmented into chunks.\nChunks will be then vectorized and stored into documents memory.",
                 "operationId": "upload_url",
                 "requestBody": {
                     "content": {
@@ -1384,7 +1384,7 @@
                 "type": "object",
                 "properties": {
                     "url": {
-                        "title": "Url",
+                        "title": "URL",
                         "type": "string",
                         "description": "URL of the website to which you want to save the content"
                     },
@@ -1627,7 +1627,6 @@
                     "filters": {
                         "title": "Filters",
                         "type": "object",
-                        "required": [],
                         "properties": {
                             "query": {
                                 "title": "Query",
@@ -1852,7 +1851,7 @@
                 "type": "object",
                 "properties": {
                     "url": {
-                        "title": "Url",
+                        "title": "URL",
                         "type": "string"
                     },
                     "info": {
