@@ -655,7 +655,7 @@
                     {
                         "required": true,
                         "schema": {
-                            "title": "Plugin Id",
+                            "title": "Plugin ID",
                             "type": "string"
                         },
                         "name": "plugin_id",
@@ -709,7 +709,7 @@
                     {
                         "required": true,
                         "schema": {
-                            "title": "Plugin Id",
+                            "title": "Plugin ID",
                             "type": "string"
                         },
                         "name": "plugin_id",
@@ -751,7 +751,7 @@
                     {
                         "required": true,
                         "schema": {
-                            "title": "Plugin Id",
+                            "title": "Plugin ID",
                             "type": "string"
                         },
                         "name": "plugin_id",
@@ -818,7 +818,7 @@
                     {
                         "required": true,
                         "schema": {
-                            "title": "Plugin Id",
+                            "title": "Plugin ID",
                             "type": "string"
                         },
                         "name": "plugin_id",
@@ -875,7 +875,7 @@
                     {
                         "required": true,
                         "schema": {
-                            "title": "Plugin Id",
+                            "title": "Plugin ID",
                             "type": "string"
                         },
                         "name": "plugin_id",
@@ -958,7 +958,7 @@
                         "description": "User id.",
                         "required": false,
                         "schema": {
-                            "title": "User Id",
+                            "title": "User ID",
                             "type": "string",
                             "description": "User id.",
                             "default": "user"
@@ -1048,7 +1048,7 @@
                     {
                         "required": true,
                         "schema": {
-                            "title": "Collection Id",
+                            "title": "Collection ID",
                             "type": "string"
                         },
                         "name": "collection_id",
@@ -1092,7 +1092,7 @@
                     {
                         "required": true,
                         "schema": {
-                            "title": "Collection Id",
+                            "title": "Collection ID",
                             "type": "string"
                         },
                         "name": "collection_id",
@@ -1101,7 +1101,7 @@
                     {
                         "required": true,
                         "schema": {
-                            "title": "Memory Id",
+                            "title": "Memory ID",
                             "type": "string"
                         },
                         "name": "memory_id",
@@ -1439,7 +1439,7 @@
                         "$ref": "#/components/schemas/MetaData"
                     },
                     "id": {
-                        "title": "Id",
+                        "title": "ID",
                         "type": "string"
                     },
                     "score": {
@@ -1558,6 +1558,7 @@
             "Plugin": {
                 "title": "Plugin",
                 "required": [
+                    "id",
                     "name",
                     "description",
                     "author_name",
@@ -1570,7 +1571,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "title": "Id",
+                        "title": "ID",
                         "type": "string"
                     },
                     "name": {
