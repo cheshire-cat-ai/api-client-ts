@@ -1,7 +1,3 @@
-import { DefaultPromptSettings } from './models/DefaultPromptSettings'
-
-export type PromptSettings<TSettings = unknown> = DefaultPromptSettings & Record<string, TSettings>
-
 export interface WebSocketSettings {
     /** 
      * Websocket path to use to communicate with the CCat 

@@ -10,7 +10,6 @@ import { EmbedderService } from './services/EmbedderService';
 import { LargeLanguageModelService } from './services/LargeLanguageModelService';
 import { MemoryService } from './services/MemoryService';
 import { PluginsService } from './services/PluginsService';
-import { PromptService } from './services/PromptService';
 import { RabbitHoleService } from './services/RabbitHoleService';
 import { SettingsService } from './services/SettingsService';
 import { StatusService } from './services/StatusService';
@@ -23,7 +22,6 @@ export class CCatAPI {
     public readonly largeLanguageModel: LargeLanguageModelService;
     public readonly memory: MemoryService;
     public readonly plugins: PluginsService;
-    public readonly prompt: PromptService;
     public readonly rabbitHole: RabbitHoleService;
     public readonly settings: SettingsService;
     public readonly status: StatusService;
@@ -47,7 +45,6 @@ export class CCatAPI {
         this.largeLanguageModel = new LargeLanguageModelService(this.request);
         this.memory = new MemoryService(this.request);
         this.plugins = new PluginsService(this.request);
-        this.prompt = new PromptService(this.request);
         this.rabbitHole = new RabbitHoleService(this.request);
         this.settings = new SettingsService(this.request);
         this.status = new StatusService(this.request);

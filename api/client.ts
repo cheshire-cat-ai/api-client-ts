@@ -2,7 +2,7 @@ import WebSocket from 'isomorphic-ws'
 import { CCatAPI } from './CCatAPI'
 import { 
     SocketResponse, SocketError, WebSocketState,
-    WebSocketSettings, PromptSettings,
+    WebSocketSettings,
     isMessageResponse,
     CatSettings,
 } from './utils'
@@ -136,9 +136,8 @@ export class CatClient {
      * Sends a message via WebSocket to the Cat
      * @param message The message to pass
      * @param userId The user ID to pass
-     * @param settings The prompt settings to pass
      */
-    send(message: string, userId = "user", settings?: Partial<PromptSettings>): CatClient {
+    send(message: string, userId = "user"): CatClient {
         if (this.ws?.readyState !== WebSocket.OPEN) {
             this.errorHandler?.({
                 name: 'SocketClosed',
@@ -148,8 +147,7 @@ export class CatClient {
         }
         const jsonMessage = JSON.stringify({ 
             text: message,
-            user_id: userId,
-            prompt_settings: settings
+            user_id: userId
         })
         this.ws?.send(jsonMessage)
         return this

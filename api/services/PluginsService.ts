@@ -62,18 +62,18 @@ formData: BodyInstallPlugin,
     /**
      * Install Plugin From Registry
      * Install a new plugin from external repository
-     * @param formData 
+     * @param requestBody 
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
     public installPluginFromRegistry(
-formData: BodyUploadUrl,
+requestBody: BodyUploadUrl,
 ): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/plugins/upload/registry',
-            formData: formData,
-            mediaType: 'multipart/form-data',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

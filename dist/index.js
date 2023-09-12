@@ -28,8 +28,8 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // index.ts
-var api_client_ts_exports = {};
-__export(api_client_ts_exports, {
+var ccat_api_exports = {};
+__export(ccat_api_exports, {
   AcceptedMemoryTypes: () => AcceptedMemoryTypes,
   AcceptedPluginTypes: () => AcceptedPluginTypes,
   ApiError: () => ApiError,
@@ -37,10 +37,10 @@ __export(api_client_ts_exports, {
   CancelablePromise: () => CancelablePromise,
   CatClient: () => CatClient,
   WebSocketState: () => WebSocketState,
-  default: () => api_client_ts_default,
+  default: () => ccat_api_default,
   isMessageResponse: () => isMessageResponse
 });
-module.exports = __toCommonJS(api_client_ts_exports);
+module.exports = __toCommonJS(ccat_api_exports);
 
 // api/client.ts
 var import_isomorphic_ws = __toESM(require("isomorphic-ws"));
@@ -682,16 +682,16 @@ var PluginsService = class {
   /**
    * Install Plugin From Registry
    * Install a new plugin from external repository
-   * @param formData 
+   * @param requestBody 
    * @returns FileResponse Successful Response
    * @throws ApiError
    */
-  installPluginFromRegistry(formData) {
+  installPluginFromRegistry(requestBody) {
     return this.httpRequest.request({
       method: "POST",
       url: "/plugins/upload/registry",
-      formData,
-      mediaType: "multipart/form-data",
+      body: requestBody,
+      mediaType: "application/json",
       errors: {
         422: `Validation Error`
       }
@@ -805,24 +805,6 @@ var PluginsService = class {
       errors: {
         422: `Validation Error`
       }
-    });
-  }
-};
-
-// api/services/PromptService.ts
-var PromptService = class {
-  constructor(httpRequest) {
-    this.httpRequest = httpRequest;
-  }
-  /**
-   * Get Default Prompt Settings
-   * @returns DefaultPromptSettings Successful Response
-   * @throws ApiError
-   */
-  getDefaultPromptSettings() {
-    return this.httpRequest.request({
-      method: "GET",
-      url: "/prompt/settings/"
     });
   }
 };
@@ -1031,7 +1013,6 @@ var CCatAPI = class {
   largeLanguageModel;
   memory;
   plugins;
-  prompt;
   rabbitHole;
   settings;
   status;
@@ -1052,7 +1033,6 @@ var CCatAPI = class {
     this.largeLanguageModel = new LargeLanguageModelService(this.request);
     this.memory = new MemoryService(this.request);
     this.plugins = new PluginsService(this.request);
-    this.prompt = new PromptService(this.request);
     this.rabbitHole = new RabbitHoleService(this.request);
     this.settings = new SettingsService(this.request);
     this.status = new StatusService(this.request);
@@ -1200,9 +1180,8 @@ var CatClient = class {
    * Sends a message via WebSocket to the Cat
    * @param message The message to pass
    * @param userId The user ID to pass
-   * @param settings The prompt settings to pass
    */
-  send(message, userId = "user", settings) {
+  send(message, userId = "user") {
     if (this.ws?.readyState !== import_isomorphic_ws.default.OPEN) {
       this.errorHandler?.({
         name: "SocketClosed",
@@ -1212,8 +1191,7 @@ var CatClient = class {
     }
     const jsonMessage = JSON.stringify({
       text: message,
-      user_id: userId,
-      prompt_settings: settings
+      user_id: userId
     });
     this.ws?.send(jsonMessage);
     return this;
@@ -1263,7 +1241,7 @@ var CatClient = class {
 };
 
 // index.ts
-var api_client_ts_default = CatClient;
+var ccat_api_default = CatClient;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AcceptedMemoryTypes,

@@ -255,28 +255,6 @@
                 "security": []
             }
         },
-        "/prompt/settings/": {
-            "get": {
-                "tags": [
-                    "Prompt"
-                ],
-                "summary": "Get Default Prompt Settings",
-                "operationId": "get_default_prompt_settings",
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/DefaultPromptSettings"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": []
-            }
-        },
         "/llm/settings/": {
             "get": {
                 "tags": [
@@ -610,7 +588,7 @@
                 "operationId": "install_plugin_from_registry",
                 "requestBody": {
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/BodyUploadUrl"
                             }
@@ -1347,18 +1325,6 @@
                         "title": "File",
                         "type": "string",
                         "format": "binary"
-                    },
-                    "chunk_size": {
-                        "title": "Chunk Size",
-                        "type": "integer",
-                        "description": "Maximum length of each chunk after the document is split (in characters)",
-                        "default": 400
-                    },
-                    "chunk_overlap": {
-                        "title": "Chunk Overlap",
-                        "type": "integer",
-                        "description": "Chunk overlap (in characters)",
-                        "default": 100
                     }
                 }
             },
@@ -1387,18 +1353,6 @@
                         "title": "URL",
                         "type": "string",
                         "description": "URL of the website to which you want to save the content"
-                    },
-                    "chunk_size": {
-                        "title": "Chunk Size",
-                        "type": "integer",
-                        "description": "Maximum length of each chunk after the document is split (in characters)",
-                        "default": 400
-                    },
-                    "chunk_overlap": {
-                        "title": "Chunk Overlap",
-                        "type": "integer",
-                        "description": "Chunk overlap (in characters)",
-                        "default": 100
                     }
                 }
             },
@@ -1649,34 +1603,6 @@
                         "items": {
                             "$ref": "#/components/schemas/Plugin"
                         }
-                    }
-                }
-            },
-            "DefaultPromptSettings": {
-                "title": "DefaultPromptSettings",
-                "required": [
-                    "prefix",
-                    "use_episodic_memory",
-                    "use_declarative_memory",
-                    "use_procedural_memory"
-                ],
-                "type": "object",
-                "properties": {
-                    "prefix": {
-                        "title": "Prefix",
-                        "type": "string"
-                    },
-                    "use_episodic_memory": {
-                        "title": "Use Episodic Memory",
-                        "type": "boolean"
-                    },
-                    "use_declarative_memory": {
-                        "title": "Use Declarative Memory",
-                        "type": "boolean"
-                    },
-                    "use_procedural_memory": {
-                        "title": "Use Procedural Memory",
-                        "type": "boolean"
                     }
                 }
             },

@@ -241,14 +241,6 @@ type BodyUploadUrl = {
      * URL of the website to which you want to save the content
      */
     url: string;
-    /**
-     * Maximum length of each chunk after the document is split (in characters)
-     */
-    chunk_size?: number;
-    /**
-     * Chunk overlap (in characters)
-     */
-    chunk_overlap?: number;
 };
 
 type FileResponse = {
@@ -301,11 +293,11 @@ declare class PluginsService {
     /**
      * Install Plugin From Registry
      * Install a new plugin from external repository
-     * @param formData
+     * @param requestBody
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
-    installPluginFromRegistry(formData: BodyUploadUrl): CancelablePromise<FileResponse>;
+    installPluginFromRegistry(requestBody: BodyUploadUrl): CancelablePromise<FileResponse>;
     /**
      * Toggle Plugin
      * Enable or disable a single plugin
@@ -360,34 +352,8 @@ declare class PluginsService {
     upsertPluginSettings(pluginId: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
 }
 
-type DefaultPromptSettings = {
-    prefix: string;
-    use_episodic_memory: boolean;
-    use_declarative_memory: boolean;
-    use_procedural_memory: boolean;
-};
-
-declare class PromptService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get Default Prompt Settings
-     * @returns DefaultPromptSettings Successful Response
-     * @throws ApiError
-     */
-    getDefaultPromptSettings(): CancelablePromise<DefaultPromptSettings>;
-}
-
 type BodyUploadFile = {
     file: Blob;
-    /**
-     * Maximum length of each chunk after the document is split (in characters)
-     */
-    chunk_size?: number;
-    /**
-     * Chunk overlap (in characters)
-     */
-    chunk_overlap?: number;
 };
 
 type BodyUploadMemory = {
@@ -514,7 +480,6 @@ declare class CCatAPI {
     readonly largeLanguageModel: LargeLanguageModelService;
     readonly memory: MemoryService;
     readonly plugins: PluginsService;
-    readonly prompt: PromptService;
     readonly rabbitHole: RabbitHoleService;
     readonly settings: SettingsService;
     readonly status: StatusService;
@@ -522,7 +487,6 @@ declare class CCatAPI {
     constructor(config?: Partial<OpenAPIConfig>, HttpRequest?: HttpRequestConstructor);
 }
 
-type PromptSettings<TSettings = unknown> = DefaultPromptSettings & Record<string, TSettings>;
 interface WebSocketSettings {
     /**
      * Websocket path to use to communicate with the CCat
@@ -643,9 +607,8 @@ declare class CatClient {
      * Sends a message via WebSocket to the Cat
      * @param message The message to pass
      * @param userId The user ID to pass
-     * @param settings The prompt settings to pass
      */
-    send(message: string, userId?: string, settings?: Partial<PromptSettings>): CatClient;
+    send(message: string, userId?: string): CatClient;
     /**
      * Calls the handler when the WebSocket is connected
      * @param handler The function to call
@@ -696,4 +659,4 @@ type HTTPValidationError = {
     };
 };
 
-export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginsList, PromptSettings, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginsList, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
