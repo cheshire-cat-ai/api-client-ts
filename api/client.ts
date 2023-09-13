@@ -114,6 +114,7 @@ export class CatClient {
      */
     set authKey(key: string) {
         this.config.authKey = key
+        this.reset().init()
     }
 
     /**
