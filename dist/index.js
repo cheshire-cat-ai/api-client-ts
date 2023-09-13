@@ -1161,6 +1161,7 @@ var CatClient = class {
    */
   set authKey(key) {
     this.config.authKey = key;
+    this.reset().init();
   }
   /**
    * Closes the WebSocket connection
