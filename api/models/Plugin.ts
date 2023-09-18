@@ -15,4 +15,11 @@ export type Plugin = {
     version: string;
     active?: boolean;
     url?: string;
+    used_hooks?: Array<{
+name: string;
+priority: number;
+}>;
+    used_tools?: Array<{
+name: string;
+}>;
 };

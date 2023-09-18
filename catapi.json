@@ -1567,6 +1567,43 @@
                     "url": {
                         "title": "Install URL",
                         "type": "string"
+                    },
+                    "used_hooks": {
+                        "title": "Used Hooks",
+                        "type": "array",
+                        "items": {
+                            "required": [
+                                "name",
+                                "priority"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "title": "Name",
+                                    "type": "string"
+                                },
+                                "priority": {
+                                    "title": "Priority",
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    },
+                    "used_tools": {
+                        "title": "Used Tools",
+                        "type": "array",
+                        "items": {
+                            "required": [
+                                "name"
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "title": "Name",
+                                    "type": "string"
+                                }
+                            }
+                        }
                     }
                 }
             },
