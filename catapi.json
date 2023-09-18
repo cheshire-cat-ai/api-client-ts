@@ -1568,8 +1568,8 @@
                         "title": "Install URL",
                         "type": "string"
                     },
-                    "used_hooks": {
-                        "title": "Used Hooks",
+                    "hooks": {
+                        "title": "Hooks",
                         "type": "array",
                         "items": {
                             "required": [
@@ -1589,8 +1589,8 @@
                             }
                         }
                     },
-                    "used_tools": {
-                        "title": "Used Tools",
+                    "tools": {
+                        "title": "Tools",
                         "type": "array",
                         "items": {
                             "required": [
