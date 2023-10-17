@@ -71,7 +71,7 @@ export enum WebSocketState {
 }
 
 export interface SocketResponse {
-    type: 'notification' | 'chat'
+    type: 'notification' | 'chat' | 'chat_token'
     content: string
     why?: unknown
 }
