@@ -606,14 +606,14 @@ var MemoryService = class {
     });
   }
   /**
-   * Delete Element In Memory
-   * Delete specific element in memory.
+   * Delete Point In Memory
+   * Delete specific point in memory
    * @param collectionId 
    * @param memoryId 
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
-  deleteElementInMemory(collectionId, memoryId) {
+  deletePointInMemory(collectionId, memoryId) {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/memory/collections/{collection_id}/points/{memory_id}/",
@@ -621,6 +621,28 @@ var MemoryService = class {
         "collection_id": collectionId,
         "memory_id": memoryId
       },
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Wipe Memory Points By Metadata
+   * Delete points in memory by filter
+   * @param collectionId 
+   * @param requestBody 
+   * @returns DeleteResponse Successful Response
+   * @throws ApiError
+   */
+  wipeMemoryPoints(collectionId, requestBody) {
+    return this.httpRequest.request({
+      method: "DELETE",
+      url: "/memory/collections/{collection_id}/points/",
+      path: {
+        "collection_id": collectionId
+      },
+      body: requestBody,
+      mediaType: "application/json",
       errors: {
         422: `Validation Error`
       }

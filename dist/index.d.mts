@@ -146,7 +146,7 @@ type CollectionsList = {
 };
 
 type DeleteResponse = {
-    deleted: (string | boolean | Record<string, any>);
+    deleted: (string | boolean | Record<string, any> | any[]);
 };
 
 type QueryData = {
@@ -215,14 +215,23 @@ declare class MemoryService {
      */
     wipeSingleCollection(collectionId: string): CancelablePromise<DeleteResponse>;
     /**
-     * Delete Element In Memory
-     * Delete specific element in memory.
+     * Delete Point In Memory
+     * Delete specific point in memory
      * @param collectionId
      * @param memoryId
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    deleteElementInMemory(collectionId: string, memoryId: string): CancelablePromise<DeleteResponse>;
+    deletePointInMemory(collectionId: string, memoryId: string): CancelablePromise<DeleteResponse>;
+    /**
+     * Wipe Memory Points By Metadata
+     * Delete points in memory by filter
+     * @param collectionId
+     * @param requestBody
+     * @returns DeleteResponse Successful Response
+     * @throws ApiError
+     */
+    wipeMemoryPoints(collectionId: string, requestBody?: Record<string, any>): CancelablePromise<DeleteResponse>;
     /**
      * Wipe Conversation History
      * Delete conversation history from working memory
