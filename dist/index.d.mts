@@ -558,7 +558,7 @@ declare enum WebSocketState {
     CLOSED = 3
 }
 interface SocketResponse {
-    type: 'notification' | 'chat';
+    type: 'notification' | 'chat' | 'chat_token';
     content: string;
     why?: unknown;
 }
