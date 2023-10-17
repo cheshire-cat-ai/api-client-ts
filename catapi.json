@@ -1063,9 +1063,9 @@
                 "tags": [
                     "Memory"
                 ],
-                "summary": "Delete Element In Memory",
-                "description": "Delete specific element in memory.",
-                "operationId": "delete_element_in_memory",
+                "summary": "Delete Point In Memory",
+                "description": "Delete specific point in memory",
+                "operationId": "delete_point_in_memory",
                 "parameters": [
                     {
                         "required": true,
@@ -1111,6 +1111,61 @@
                 "security": []
             }
         },
+        "/memory/collections/{collection_id}/points/": {
+			"delete": {
+				"tags": [
+					"Memory"
+				],
+				"summary": "Wipe Memory Points By Metadata",
+				"description": "Delete points in memory by filter",
+				"operationId": "wipe_memory_points",
+				"security": [],
+				"parameters": [
+					{
+						"name": "collection_id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"title": "Collection Id"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"default": {},
+								"title": "Metadata"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HTTPValidationError"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
         "/memory/conversation_history/": {
             "delete": {
                 "tags": [
@@ -1842,6 +1897,9 @@
                             },
                             {
                                 "type": "object"
+                            },
+                            {
+                                "type": "array"
                             }
                         ]
                     }
