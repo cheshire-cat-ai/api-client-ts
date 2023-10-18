@@ -820,7 +820,7 @@
                                             "type": "object",
                                             "properties": {
                                                 "schema": {
-                                                    "$ref": "#/components/schemas/JsonSchema"
+                                                    "type": "object"
                                                 }
                                             }
                                         }
@@ -1756,64 +1756,7 @@
                         "type": "object"
                     },
                     "schema": {
-                        "$ref": "#/components/schemas/JsonSchema"
-                    }
-                }
-            },
-            "JsonSchema": {
-                "title": "JsonSchema",
-                "required": [
-                    "title",
-                    "type",
-                    "required",
-                    "properties"
-                ],
-                "type": "object",
-                "properties": {
-                    "title": {
-                        "title": "Title",
-                        "type": "string"
-                    },
-                    "type": {
-                        "title": "Type",
-                        "type": "string"
-                    },
-                    "description": {
-                        "title": "Description",
-                        "type": "string"
-                    },
-                    "properties": {
-                        "title": "Properties",
                         "type": "object"
-                    },
-                    "required": {
-                        "title": "Required",
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "additionalProperties": {
-                        "oneOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "object"
-                            }
-                        ]
-                    },
-                    "definitions": {
-                        "title": "Definitions",
-                        "type": "object"
-                    },
-                    "humanReadableName": {
-                        "title": "Human Readable Name",
-                        "type": "string"
-                    },
-                    "link": {
-                        "title": "Link",
-                        "type": "string"
                     }
                 }
             },

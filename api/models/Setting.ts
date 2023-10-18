@@ -3,10 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { JsonSchema } from './JsonSchema';
-
 export type Setting = {
     name: string;
     value: Record<string, any>;
-    schema?: JsonSchema;
+    schema?: Record<string, any>;
 };

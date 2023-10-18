@@ -6,7 +6,6 @@ import type { BodyInstallPlugin } from '../models/BodyInstallPlugin';
 import type { BodyUploadUrl } from '../models/BodyUploadUrl';
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { FileResponse } from '../models/FileResponse';
-import type { JsonSchema } from '../models/JsonSchema';
 import type { Plugin } from '../models/Plugin';
 import type { PluginsList } from '../models/PluginsList';
 import type { Setting } from '../models/Setting';
@@ -171,7 +170,7 @@ pluginId: string,
     public getPluginSettings(
 pluginId: string,
 ): CancelablePromise<(Setting & {
-schema: JsonSchema;
+schema: Record<string, any>;
 })> {
         return this.httpRequest.request({
             method: 'GET',
