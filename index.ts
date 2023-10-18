@@ -18,7 +18,6 @@ export type { CollectionsList } from './api/models/CollectionsList';
 export type { DeleteResponse } from './api/models/DeleteResponse';
 export type { FileResponse } from './api/models/FileResponse';
 export type { HTTPValidationError } from './api/models/HTTPValidationError';
-export type { JsonSchema } from './api/models/JsonSchema';
 export type { MemoryRecall } from './api/models/MemoryRecall';
 export type { MetaData } from './api/models/MetaData';
 export type { Plugin } from './api/models/Plugin';

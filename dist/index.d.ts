@@ -55,22 +55,10 @@ declare abstract class BaseHttpRequest {
     abstract request<T>(options: ApiRequestOptions): CancelablePromise<T>;
 }
 
-type JsonSchema = {
-    title: string;
-    type: string;
-    description?: string;
-    properties: Record<string, any>;
-    required: Array<string>;
-    additionalProperties?: (boolean | Record<string, any>);
-    definitions?: Record<string, any>;
-    humanReadableName?: string;
-    link?: string;
-};
-
 type Setting = {
     name: string;
     value: Record<string, any>;
-    schema?: JsonSchema;
+    schema?: Record<string, any>;
 };
 
 type SettingsResponse = {
@@ -355,7 +343,7 @@ declare class PluginsService {
      * @throws ApiError
      */
     getPluginSettings(pluginId: string): CancelablePromise<(Setting & {
-        schema: JsonSchema;
+        schema: Record<string, any>;
     })>;
     /**
      * Upsert Plugin Settings
@@ -675,4 +663,4 @@ type HTTPValidationError = {
     };
 };
 
-export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginsList, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DeleteResponse, FileResponse, HTTPValidationError, MemoryRecall, MetaData, Plugin, PluginsList, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
