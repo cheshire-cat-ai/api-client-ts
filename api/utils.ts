@@ -30,6 +30,11 @@ export interface CatSettings {
     */
     authKey?: string
     /** 
+     * The user ID to use for Websocket connection
+     * @default 'user'
+    */
+    user?: string
+    /** 
      * The port to which connect to the Cat
      * @default 1865
     */

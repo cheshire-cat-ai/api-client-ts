@@ -522,6 +522,11 @@ interface CatSettings {
     */
     authKey?: string;
     /**
+     * The user ID to use for Websocket connection
+     * @default 'user'
+    */
+    user?: string;
+    /**
      * The port to which connect to the Cat
      * @default 1865
     */
@@ -584,60 +589,72 @@ declare class CatClient {
      */
     constructor(settings: CatSettings);
     private initWebSocket;
+    /**
+     * Resets the current `CatClient` instance.
+     * @returns The updated `CatClient` instance.
+     */
     reset(): CatClient;
     /**
      * Initialize the WebSocket and the API Client
-     * @throws An error saying that the client was already initialized
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     init(): CatClient;
+    /**
+     * Sends a message to the Cat through the WebSocket connection.
+     * @param message The message to send to the server.
+     * @param userId The ID of the user sending the message. Defaults to "user".
+     * @returns The `CatClient` instance.
+     */
+    send(message: string): CatClient;
     /**
      * @returns The API Client
      */
     get api(): CCatAPI | undefined;
     /**
-     * Changes the authentication key at runtime
+     * Setter for the authentication key used by the client. This will also reset the client.
+     * @param key The authentication key to be set.
      */
     set authKey(key: string);
     /**
-     * Closes the WebSocket connection
+     * Setter for the user ID used by the client. This will also reset the client.
+     * @param user The user ID to be set.
+     */
+    set userId(user: string);
+    /**
+     * Closes the WebSocket connection.
+     * @returns The `CatClient` instance.
      */
     close(): CatClient;
     /**
-     * Get the state of the WebSocket
+     * Returns the current state of the WebSocket connection.
+     * @returns The WebSocketState enum value representing the current state of the WebSocket connection.
      */
-    get readyState(): WebSocketState;
-    /**
-     * Sends a message via WebSocket to the Cat
-     * @param message The message to pass
-     * @param userId The user ID to pass
-     */
-    send(message: string, userId?: string): CatClient;
+    readyState(): WebSocketState;
     /**
      * Calls the handler when the WebSocket is connected
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onConnected(handler: () => void): CatClient;
     /**
      * Calls the handler when the WebSocket is disconnected
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onDisconnected(handler: () => void): CatClient;
     /**
      * Calls the handler when a new message arrives from the WebSocket
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onMessage(handler: (data: SocketResponse) => void): CatClient;
     /**
      * Calls the handler when the WebSocket catches an exception
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onError(handler: (error: SocketError, event?: WebSocket.ErrorEvent) => void): CatClient;
-    private get url();
+    private get protocol();
 }
 
 type ApiResult = {
