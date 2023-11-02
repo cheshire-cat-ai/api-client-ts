@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CollectionsList } from '../models/CollectionsList';
+import type { ConversationMessage } from '../models/ConversationMessage';
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { MemoryRecall } from '../models/MemoryRecall';
 
@@ -23,10 +24,10 @@ export class MemoryService {
      * @throws ApiError
      */
     public recallMemoriesFromText(
-text: string,
-k: number = 100,
-userId: string = 'user',
-): CancelablePromise<MemoryRecall> {
+        text: string,
+        k: number = 100,
+        userId: string = 'user',
+    ): CancelablePromise<MemoryRecall> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/memory/recall/',
@@ -70,13 +71,13 @@ userId: string = 'user',
     /**
      * Wipe Single Collection
      * Delete and recreate a collection
-     * @param collectionId 
+     * @param collectionId
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
     public wipeSingleCollection(
-collectionId: string,
-): CancelablePromise<DeleteResponse> {
+        collectionId: string,
+    ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/collections/{collection_id}/',
@@ -90,17 +91,17 @@ collectionId: string,
     }
 
     /**
-     * Delete Element In Memory
-     * Delete specific element in memory.
-     * @param collectionId 
-     * @param memoryId 
+     * Delete Point In Memory
+     * Delete specific point in memory
+     * @param collectionId
+     * @param memoryId
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    public deleteElementInMemory(
-collectionId: string,
-memoryId: string,
-): CancelablePromise<DeleteResponse> {
+    public deletePointInMemory(
+        collectionId: string,
+        memoryId: string,
+    ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/collections/{collection_id}/points/{memory_id}/',
@@ -115,8 +116,47 @@ memoryId: string,
     }
 
     /**
+     * Wipe Memory Points By Metadata
+     * Delete points in memory by filter
+     * @param collectionId
+     * @param requestBody
+     * @returns DeleteResponse Successful Response
+     * @throws ApiError
+     */
+    public wipeMemoryPoints(
+        collectionId: string,
+        requestBody?: Record<string, any>,
+    ): CancelablePromise<DeleteResponse> {
+        return this.httpRequest.request({
+            method: 'DELETE',
+            url: '/memory/collections/{collection_id}/points/',
+            path: {
+                'collection_id': collectionId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+
+    /**
+     * Get Conversation History
+     * Get the specified user's conversation history from working memory
+     * @returns ConversationMessage Successful Response
+     * @throws ApiError
+     */
+    public getConversationHistory(): CancelablePromise<Array<ConversationMessage>> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/memory/conversation_history/',
+        });
+    }
+
+    /**
      * Wipe Conversation History
-     * Delete conversation history from working memory
+     * Delete the specified user's conversation history from working memory
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */

@@ -1,10 +1,9 @@
 import WebSocket from 'isomorphic-ws'
 import { CCatAPI } from './CCatAPI'
 import { 
-    SocketResponse, SocketError, WebSocketState,
-    WebSocketSettings, PromptSettings,
-    isMessageResponse,
-    CatSettings,
+    SocketResponse, SocketError, 
+    WebSocketState, WebSocketSettings,
+    isMessageResponse, CatSettings,
 } from './utils'
 
 /**
@@ -31,19 +30,21 @@ export class CatClient {
             instant: true,
             timeout: 10000,
             port: 1865,
+            user: 'user',
             ...settings
         }
         if (this.config.instant) this.init()
     }
 
     private initWebSocket() {
-        const socketSettings = {
+        const socketSettings = this.config.ws = {
             delay: 3000,
             path: 'ws',
             retries: 3,
             ...this.config.ws
         } satisfies WebSocketSettings
-        this.ws = new WebSocket(`ws${this.url}/${socketSettings.path}`)
+        const user = this.config.user ?? 'user'
+        this.ws = new WebSocket(`ws${this.protocol}/${socketSettings.path}/${user}`)
         this.ws.onopen = () => {
             this.connectedHandler?.()
         }
@@ -76,6 +77,10 @@ export class CatClient {
         }
     }
 
+    /**
+     * Resets the current `CatClient` instance.
+     * @returns The updated `CatClient` instance.
+     */
     reset(): CatClient {
         this.retried = 0
         this.close()
@@ -86,59 +91,29 @@ export class CatClient {
 
     /**
      * Initialize the WebSocket and the API Client
-     * @throws An error saying that the client was already initialized
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     init(): CatClient {
         if (!this.ws && !this.apiClient) {
             this.initWebSocket()
             this.apiClient = new CCatAPI({
-                BASE: `http${this.url}`,
+                BASE: `http${this.protocol}`,
                 HEADERS: {
                     'access_token': this.config.authKey ?? '',
+                    'user_id': this.config.user ?? 'user'
                 }
             })
-            return this
-        } else throw new Error("The Cheshire Cat Client was already initialized")
-    }
-
-    /**
-     * @returns The API Client
-     */
-    get api(): CCatAPI | undefined {
-        return this.apiClient
-    }
-
-    /**
-     * Changes the authentication key at runtime
-     */
-    set authKey(key: string) {
-        this.config.authKey = key
-    }
-
-    /**
-     * Closes the WebSocket connection
-     */
-    close(): CatClient {
-        this.ws?.close()
-        this.explicitlyClosed = true
+        }
         return this
     }
 
     /**
-     * Get the state of the WebSocket
+     * Sends a message to the Cat through the WebSocket connection.
+     * @param message The message to send to the server.
+     * @param userId The ID of the user sending the message. Defaults to "user".
+     * @returns The `CatClient` instance.
      */
-    get readyState(): WebSocketState {
-        return this.ws?.readyState ?? WebSocketState.CLOSED
-    }
-
-    /**
-     * Sends a message via WebSocket to the Cat
-     * @param message The message to pass
-     * @param userId The user ID to pass
-     * @param settings The prompt settings to pass
-     */
-    send(message: string, userId = "user", settings?: Partial<PromptSettings>): CatClient {
+    send(message: string): CatClient {
         if (this.ws?.readyState !== WebSocket.OPEN) {
             this.errorHandler?.({
                 name: 'SocketClosed',
@@ -148,17 +123,59 @@ export class CatClient {
         }
         const jsonMessage = JSON.stringify({ 
             text: message,
-            user_id: userId,
-            prompt_settings: settings
+            user_id: this.config.user ?? 'user'
         })
-        this.ws?.send(jsonMessage)
+        this.ws.send(jsonMessage)
         return this
+    }
+
+    /**
+     * @returns The API Client
+     */
+    get api(): CCatAPI | undefined {
+        return this.apiClient
+    }
+    
+    /**
+     * Setter for the authentication key used by the client. This will also reset the client.
+     * @param key The authentication key to be set.
+     */
+    set authKey(key: string) {
+        this.config.authKey = key
+        this.reset().init()
+    }
+
+    /**
+     * Setter for the user ID used by the client. This will also reset the client.
+     * @param user The user ID to be set.
+     */
+    set userId(user: string) {
+        this.config.user = user
+        this.reset().init()
+    }
+
+    /**
+     * Closes the WebSocket connection.
+     * @returns The `CatClient` instance.
+     */
+    close(): CatClient {
+        this.ws?.close()
+        this.explicitlyClosed = true
+        return this
+    }
+
+    /**
+     * Returns the current state of the WebSocket connection.
+     * @returns The WebSocketState enum value representing the current state of the WebSocket connection.
+     */
+    readyState(): WebSocketState {
+        return this.ws?.readyState ?? WebSocketState.CLOSED
     }
 
     /**
      * Calls the handler when the WebSocket is connected 
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onConnected(handler: () => void): CatClient {
         this.connectedHandler = handler
@@ -168,7 +185,7 @@ export class CatClient {
     /**
      * Calls the handler when the WebSocket is disconnected
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onDisconnected(handler: () => void): CatClient {
         this.disconnectedHandler = handler
@@ -178,7 +195,7 @@ export class CatClient {
     /**
      * Calls the handler when a new message arrives from the WebSocket
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onMessage(handler: (data: SocketResponse) => void): CatClient {
         this.messageHandler = handler
@@ -188,14 +205,14 @@ export class CatClient {
     /**
      * Calls the handler when the WebSocket catches an exception
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onError(handler: (error: SocketError, event?: WebSocket.ErrorEvent) => void): CatClient {
         this.errorHandler = handler
         return this
     }
     
-    private get url() {
+    private get protocol() {
         return `${this.config.secure ? 's' : ''}://
             ${this.config.baseUrl}
             ${this.config.port ? `:${this.config.port}` : ''}

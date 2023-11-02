@@ -4,5 +4,6 @@
 /* eslint-disable */
 
 export type DeleteResponse = {
-    deleted: (string | boolean | Record<string, any>);
+    deleted: (string | boolean | Record<string, any> | any[]);
 };
+

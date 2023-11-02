@@ -55,22 +55,10 @@ declare abstract class BaseHttpRequest {
     abstract request<T>(options: ApiRequestOptions): CancelablePromise<T>;
 }
 
-type JsonSchema = {
-    title: string;
-    type: string;
-    description?: string;
-    properties: Record<string, any>;
-    required: Array<string>;
-    additionalProperties?: (boolean | Record<string, any>);
-    definitions?: Record<string, any>;
-    humanReadableName?: string;
-    link?: string;
-};
-
 type Setting = {
     name: string;
     value: Record<string, any>;
-    schema?: JsonSchema;
+    schema?: Record<string, any>;
 };
 
 type SettingsResponse = {
@@ -145,8 +133,13 @@ type CollectionsList = {
     collections: Array<Collection>;
 };
 
+type ConversationMessage = {
+    who: string;
+    message: string;
+};
+
 type DeleteResponse = {
-    deleted: (string | boolean | Record<string, any>);
+    deleted: (string | boolean | Record<string, any> | any[]);
 };
 
 type QueryData = {
@@ -215,17 +208,33 @@ declare class MemoryService {
      */
     wipeSingleCollection(collectionId: string): CancelablePromise<DeleteResponse>;
     /**
-     * Delete Element In Memory
-     * Delete specific element in memory.
+     * Delete Point In Memory
+     * Delete specific point in memory
      * @param collectionId
      * @param memoryId
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
-    deleteElementInMemory(collectionId: string, memoryId: string): CancelablePromise<DeleteResponse>;
+    deletePointInMemory(collectionId: string, memoryId: string): CancelablePromise<DeleteResponse>;
+    /**
+     * Wipe Memory Points By Metadata
+     * Delete points in memory by filter
+     * @param collectionId
+     * @param requestBody
+     * @returns DeleteResponse Successful Response
+     * @throws ApiError
+     */
+    wipeMemoryPoints(collectionId: string, requestBody?: Record<string, any>): CancelablePromise<DeleteResponse>;
+    /**
+     * Get Conversation History
+     * Get the specified user's conversation history from working memory
+     * @returns ConversationMessage Successful Response
+     * @throws ApiError
+     */
+    getConversationHistory(): CancelablePromise<Array<ConversationMessage>>;
     /**
      * Wipe Conversation History
-     * Delete conversation history from working memory
+     * Delete the specified user's conversation history from working memory
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
@@ -241,14 +250,6 @@ type BodyUploadUrl = {
      * URL of the website to which you want to save the content
      */
     url: string;
-    /**
-     * Maximum length of each chunk after the document is split (in characters)
-     */
-    chunk_size?: number;
-    /**
-     * Chunk overlap (in characters)
-     */
-    chunk_overlap?: number;
 };
 
 type FileResponse = {
@@ -268,9 +269,20 @@ type Plugin = {
     thumb: string;
     version: string;
     active?: boolean;
+    url?: string;
+    hooks?: Array<{
+        name: string;
+        priority: number;
+    }>;
+    tools?: Array<{
+        name: string;
+    }>;
 };
 
 type PluginsList = {
+    filters: {
+        query?: string;
+    };
     installed: Array<Plugin>;
     registry: Array<Plugin>;
 };
@@ -280,11 +292,12 @@ declare class PluginsService {
     constructor(httpRequest: BaseHttpRequest);
     /**
      * List Available Plugins
-     * List available plugins
+     * List both installed and registry plugins
+     * @param query
      * @returns PluginsList Successful Response
      * @throws ApiError
      */
-    listAvailablePlugins(): CancelablePromise<PluginsList>;
+    listAvailablePlugins(query?: string): CancelablePromise<PluginsList>;
     /**
      * Install Plugin
      * Install a new plugin from a zip file
@@ -296,11 +309,11 @@ declare class PluginsService {
     /**
      * Install Plugin From Registry
      * Install a new plugin from external repository
-     * @param formData
+     * @param requestBody
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
-    installPluginFromRegistry(formData: BodyUploadUrl): CancelablePromise<FileResponse>;
+    installPluginFromRegistry(requestBody: BodyUploadUrl): CancelablePromise<FileResponse>;
     /**
      * Toggle Plugin
      * Enable or disable a single plugin
@@ -342,7 +355,7 @@ declare class PluginsService {
      * @throws ApiError
      */
     getPluginSettings(pluginId: string): CancelablePromise<(Setting & {
-        schema: JsonSchema;
+        schema: Record<string, any>;
     })>;
     /**
      * Upsert Plugin Settings
@@ -355,34 +368,8 @@ declare class PluginsService {
     upsertPluginSettings(pluginId: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
 }
 
-type DefaultPromptSettings = {
-    prefix: string;
-    use_episodic_memory: boolean;
-    use_declarative_memory: boolean;
-    use_procedural_memory: boolean;
-};
-
-declare class PromptService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get Default Prompt Settings
-     * @returns DefaultPromptSettings Successful Response
-     * @throws ApiError
-     */
-    getDefaultPromptSettings(): CancelablePromise<DefaultPromptSettings>;
-}
-
 type BodyUploadFile = {
     file: Blob;
-    /**
-     * Maximum length of each chunk after the document is split (in characters)
-     */
-    chunk_size?: number;
-    /**
-     * Chunk overlap (in characters)
-     */
-    chunk_overlap?: number;
 };
 
 type BodyUploadMemory = {
@@ -400,16 +387,16 @@ declare class RabbitHoleService {
     /**
      * Upload File
      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
- * Chunks will be then vectorized and stored into documents memory.
+     * Chunks will be then vectorized and stored into documents memory.
      * @param formData
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
     uploadFile(formData: BodyUploadFile): CancelablePromise<FileResponse>;
     /**
-     * Upload Url
-     * Upload a url. Website content will be extracted and segmented into chunks.
- * Chunks will be then vectorized and stored into documents memory.
+     * Upload URL
+     * Upload a URL. Website content will be extracted and segmented into chunks.
+     * Chunks will be then vectorized and stored into documents memory.
      * @param requestBody
      * @returns WebResponse Successful Response
      * @throws ApiError
@@ -509,7 +496,6 @@ declare class CCatAPI {
     readonly largeLanguageModel: LargeLanguageModelService;
     readonly memory: MemoryService;
     readonly plugins: PluginsService;
-    readonly prompt: PromptService;
     readonly rabbitHole: RabbitHoleService;
     readonly settings: SettingsService;
     readonly status: StatusService;
@@ -517,7 +503,6 @@ declare class CCatAPI {
     constructor(config?: Partial<OpenAPIConfig>, HttpRequest?: HttpRequestConstructor);
 }
 
-type PromptSettings<TSettings = unknown> = DefaultPromptSettings & Record<string, TSettings>;
 interface WebSocketSettings {
     /**
      * Websocket path to use to communicate with the CCat
@@ -548,6 +533,11 @@ interface CatSettings {
      * @default ''
     */
     authKey?: string;
+    /**
+     * The user ID to use for Websocket connection
+     * @default 'user'
+    */
+    user?: string;
     /**
      * The port to which connect to the Cat
      * @default 1865
@@ -582,7 +572,7 @@ declare enum WebSocketState {
     CLOSED = 3
 }
 interface SocketResponse {
-    type: 'notification' | 'chat';
+    type: 'notification' | 'chat' | 'chat_token';
     content: string;
     why?: unknown;
 }
@@ -611,61 +601,72 @@ declare class CatClient {
      */
     constructor(settings: CatSettings);
     private initWebSocket;
+    /**
+     * Resets the current `CatClient` instance.
+     * @returns The updated `CatClient` instance.
+     */
     reset(): CatClient;
     /**
      * Initialize the WebSocket and the API Client
-     * @throws An error saying that the client was already initialized
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     init(): CatClient;
+    /**
+     * Sends a message to the Cat through the WebSocket connection.
+     * @param message The message to send to the server.
+     * @param userId The ID of the user sending the message. Defaults to "user".
+     * @returns The `CatClient` instance.
+     */
+    send(message: string): CatClient;
     /**
      * @returns The API Client
      */
     get api(): CCatAPI | undefined;
     /**
-     * Changes the authentication key at runtime
+     * Setter for the authentication key used by the client. This will also reset the client.
+     * @param key The authentication key to be set.
      */
     set authKey(key: string);
     /**
-     * Closes the WebSocket connection
+     * Setter for the user ID used by the client. This will also reset the client.
+     * @param user The user ID to be set.
+     */
+    set userId(user: string);
+    /**
+     * Closes the WebSocket connection.
+     * @returns The `CatClient` instance.
      */
     close(): CatClient;
     /**
-     * Get the state of the WebSocket
+     * Returns the current state of the WebSocket connection.
+     * @returns The WebSocketState enum value representing the current state of the WebSocket connection.
      */
-    get readyState(): WebSocketState;
-    /**
-     * Sends a message via WebSocket to the Cat
-     * @param message The message to pass
-     * @param userId The user ID to pass
-     * @param settings The prompt settings to pass
-     */
-    send(message: string, userId?: string, settings?: Partial<PromptSettings>): CatClient;
+    readyState(): WebSocketState;
     /**
      * Calls the handler when the WebSocket is connected
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onConnected(handler: () => void): CatClient;
     /**
      * Calls the handler when the WebSocket is disconnected
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onDisconnected(handler: () => void): CatClient;
     /**
      * Calls the handler when a new message arrives from the WebSocket
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onMessage(handler: (data: SocketResponse) => void): CatClient;
     /**
      * Calls the handler when the WebSocket catches an exception
      * @param handler The function to call
-     * @returns the current {@link CatClient} class instance
+     * @returns The current `CatClient` class instance
      */
     onError(handler: (error: SocketError, event?: WebSocket.ErrorEvent) => void): CatClient;
-    private get url();
+    private get protocol();
 }
 
 type ApiResult = {
@@ -691,4 +692,4 @@ type HTTPValidationError = {
     };
 };
 
-export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DefaultPromptSettings, DeleteResponse, FileResponse, HTTPValidationError, JsonSchema, MemoryRecall, MetaData, Plugin, PluginsList, PromptSettings, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, ConversationMessage, DeleteResponse, FileResponse, HTTPValidationError, MemoryRecall, MetaData, Plugin, PluginsList, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };

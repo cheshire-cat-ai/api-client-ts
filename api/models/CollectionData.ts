@@ -12,3 +12,4 @@ export type CollectionData = {
     score: number;
     vector: Array<number>;
 };
+

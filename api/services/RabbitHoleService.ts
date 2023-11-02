@@ -18,14 +18,14 @@ export class RabbitHoleService {
     /**
      * Upload File
      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
- * Chunks will be then vectorized and stored into documents memory.
-     * @param formData 
+     * Chunks will be then vectorized and stored into documents memory.
+     * @param formData
      * @returns FileResponse Successful Response
      * @throws ApiError
      */
     public uploadFile(
-formData: BodyUploadFile,
-): CancelablePromise<FileResponse> {
+        formData: BodyUploadFile,
+    ): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/rabbithole/',
@@ -38,16 +38,16 @@ formData: BodyUploadFile,
     }
 
     /**
-     * Upload Url
-     * Upload a url. Website content will be extracted and segmented into chunks.
- * Chunks will be then vectorized and stored into documents memory.
-     * @param requestBody 
+     * Upload URL
+     * Upload a URL. Website content will be extracted and segmented into chunks.
+     * Chunks will be then vectorized and stored into documents memory.
+     * @param requestBody
      * @returns WebResponse Successful Response
      * @throws ApiError
      */
     public uploadUrl(
-requestBody: BodyUploadUrl,
-): CancelablePromise<WebResponse> {
+        requestBody: BodyUploadUrl,
+    ): CancelablePromise<WebResponse> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/rabbithole/web/',
@@ -62,13 +62,13 @@ requestBody: BodyUploadUrl,
     /**
      * Upload Memory
      * Upload a memory json file to the cat memory
-     * @param formData 
+     * @param formData
      * @returns any Successful Response
      * @throws ApiError
      */
     public uploadMemory(
-formData: BodyUploadMemory,
-): CancelablePromise<Record<string, any>> {
+        formData: BodyUploadMemory,
+    ): CancelablePromise<Record<string, any>> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/rabbithole/memory/',
@@ -87,8 +87,8 @@ formData: BodyUploadMemory,
      * @throws ApiError
      */
     public getAllowedMimetypes(): CancelablePromise<{
-allowed?: Array<string>;
-}> {
+        allowed?: Array<string>;
+    }> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/rabbithole/allowed-mimetypes/',

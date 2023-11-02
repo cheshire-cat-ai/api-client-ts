@@ -434,7 +434,7 @@ var EmbedderService = class {
   /**
    * Get Embedder Settings
    * Get settings and schema of the specified Embedder
-   * @param languageEmbedderName 
+   * @param languageEmbedderName
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -453,8 +453,8 @@ var EmbedderService = class {
   /**
    * Upsert Embedder Setting
    * Upsert the Embedder setting
-   * @param languageEmbedderName 
-   * @param requestBody 
+   * @param languageEmbedderName
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -494,7 +494,7 @@ var LargeLanguageModelService = class {
   /**
    * Get Llm Settings
    * Get settings and schema of the specified Large Language Model
-   * @param languageModelName 
+   * @param languageModelName
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -513,8 +513,8 @@ var LargeLanguageModelService = class {
   /**
    * Upsert LLM Setting
    * Upsert the Large Language Model setting
-   * @param languageModelName 
-   * @param requestBody 
+   * @param languageModelName
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -589,7 +589,7 @@ var MemoryService = class {
   /**
    * Wipe Single Collection
    * Delete and recreate a collection
-   * @param collectionId 
+   * @param collectionId
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
@@ -606,14 +606,14 @@ var MemoryService = class {
     });
   }
   /**
-   * Delete Element In Memory
-   * Delete specific element in memory.
-   * @param collectionId 
-   * @param memoryId 
+   * Delete Point In Memory
+   * Delete specific point in memory
+   * @param collectionId
+   * @param memoryId
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
-  deleteElementInMemory(collectionId, memoryId) {
+  deletePointInMemory(collectionId, memoryId) {
     return this.httpRequest.request({
       method: "DELETE",
       url: "/memory/collections/{collection_id}/points/{memory_id}/",
@@ -627,8 +627,42 @@ var MemoryService = class {
     });
   }
   /**
+   * Wipe Memory Points By Metadata
+   * Delete points in memory by filter
+   * @param collectionId
+   * @param requestBody
+   * @returns DeleteResponse Successful Response
+   * @throws ApiError
+   */
+  wipeMemoryPoints(collectionId, requestBody) {
+    return this.httpRequest.request({
+      method: "DELETE",
+      url: "/memory/collections/{collection_id}/points/",
+      path: {
+        "collection_id": collectionId
+      },
+      body: requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Get Conversation History
+   * Get the specified user's conversation history from working memory
+   * @returns ConversationMessage Successful Response
+   * @throws ApiError
+   */
+  getConversationHistory() {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/memory/conversation_history/"
+    });
+  }
+  /**
    * Wipe Conversation History
-   * Delete conversation history from working memory
+   * Delete the specified user's conversation history from working memory
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
@@ -647,20 +681,24 @@ var PluginsService = class {
   }
   /**
    * List Available Plugins
-   * List available plugins
+   * List both installed and registry plugins
+   * @param query
    * @returns PluginsList Successful Response
    * @throws ApiError
    */
-  listAvailablePlugins() {
+  listAvailablePlugins(query) {
     return this.httpRequest.request({
       method: "GET",
-      url: "/plugins/"
+      url: "/plugins/",
+      query: {
+        "query": query
+      }
     });
   }
   /**
    * Install Plugin
    * Install a new plugin from a zip file
-   * @param formData 
+   * @param formData
    * @returns FileResponse Successful Response
    * @throws ApiError
    */
@@ -678,16 +716,16 @@ var PluginsService = class {
   /**
    * Install Plugin From Registry
    * Install a new plugin from external repository
-   * @param formData 
+   * @param requestBody
    * @returns FileResponse Successful Response
    * @throws ApiError
    */
-  installPluginFromRegistry(formData) {
+  installPluginFromRegistry(requestBody) {
     return this.httpRequest.request({
       method: "POST",
       url: "/plugins/upload/registry",
-      formData,
-      mediaType: "multipart/form-data",
+      body: requestBody,
+      mediaType: "application/json",
       errors: {
         422: `Validation Error`
       }
@@ -696,7 +734,7 @@ var PluginsService = class {
   /**
    * Toggle Plugin
    * Enable or disable a single plugin
-   * @param pluginId 
+   * @param pluginId
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -715,7 +753,7 @@ var PluginsService = class {
   /**
    * Get Plugin Details
    * Returns information on a single plugin
-   * @param pluginId 
+   * @param pluginId
    * @returns Plugin Successful Response
    * @throws ApiError
    */
@@ -734,7 +772,7 @@ var PluginsService = class {
   /**
    * Delete Plugin
    * Physically remove a plugin
-   * @param pluginId 
+   * @param pluginId
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
@@ -765,7 +803,7 @@ var PluginsService = class {
   /**
    * Get Plugin Settings
    * Returns the settings of a specific plugin
-   * @param pluginId 
+   * @param pluginId
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -784,8 +822,8 @@ var PluginsService = class {
   /**
    * Upsert Plugin Settings
    * Updates the settings of a specific plugin
-   * @param pluginId 
-   * @param requestBody 
+   * @param pluginId
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -805,37 +843,19 @@ var PluginsService = class {
   }
 };
 
-// api/services/PromptService.ts
-var PromptService = class {
-  constructor(httpRequest) {
-    this.httpRequest = httpRequest;
-  }
-  /**
-   * Get Default Prompt Settings
-   * @returns DefaultPromptSettings Successful Response
-   * @throws ApiError
-   */
-  getDefaultPromptSettings() {
-    return this.httpRequest.request({
-      method: "GET",
-      url: "/prompt/settings/"
-    });
-  }
-};
-
 // api/services/RabbitHoleService.ts
 var RabbitHoleService = class {
   constructor(httpRequest) {
     this.httpRequest = httpRequest;
   }
   /**
-      * Upload File
-      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
-  * Chunks will be then vectorized and stored into documents memory.
-      * @param formData 
-      * @returns FileResponse Successful Response
-      * @throws ApiError
-      */
+   * Upload File
+   * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
+   * Chunks will be then vectorized and stored into documents memory.
+   * @param formData
+   * @returns FileResponse Successful Response
+   * @throws ApiError
+   */
   uploadFile(formData) {
     return this.httpRequest.request({
       method: "POST",
@@ -848,13 +868,13 @@ var RabbitHoleService = class {
     });
   }
   /**
-      * Upload Url
-      * Upload a url. Website content will be extracted and segmented into chunks.
-  * Chunks will be then vectorized and stored into documents memory.
-      * @param requestBody 
-      * @returns WebResponse Successful Response
-      * @throws ApiError
-      */
+   * Upload URL
+   * Upload a URL. Website content will be extracted and segmented into chunks.
+   * Chunks will be then vectorized and stored into documents memory.
+   * @param requestBody
+   * @returns WebResponse Successful Response
+   * @throws ApiError
+   */
   uploadUrl(requestBody) {
     return this.httpRequest.request({
       method: "POST",
@@ -869,7 +889,7 @@ var RabbitHoleService = class {
   /**
    * Upload Memory
    * Upload a memory json file to the cat memory
-   * @param formData 
+   * @param formData
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -925,7 +945,7 @@ var SettingsService = class {
   /**
    * Create Setting
    * Create a new setting in the database
-   * @param requestBody 
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -943,7 +963,7 @@ var SettingsService = class {
   /**
    * Get Setting
    * Get the a specific setting from the database
-   * @param settingId 
+   * @param settingId
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -962,7 +982,7 @@ var SettingsService = class {
   /**
    * Delete Setting
    * Delete a specific setting in the database
-   * @param settingId 
+   * @param settingId
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -981,8 +1001,8 @@ var SettingsService = class {
   /**
    * Update Setting
    * Update a specific setting in the database if it exists
-   * @param settingId 
-   * @param requestBody 
+   * @param settingId
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -1027,7 +1047,6 @@ var CCatAPI = class {
   largeLanguageModel;
   memory;
   plugins;
-  prompt;
   rabbitHole;
   settings;
   status;
@@ -1048,7 +1067,6 @@ var CCatAPI = class {
     this.largeLanguageModel = new LargeLanguageModelService(this.request);
     this.memory = new MemoryService(this.request);
     this.plugins = new PluginsService(this.request);
-    this.prompt = new PromptService(this.request);
     this.rabbitHole = new RabbitHoleService(this.request);
     this.settings = new SettingsService(this.request);
     this.status = new StatusService(this.request);
@@ -1095,19 +1113,21 @@ var CatClient = class {
       instant: true,
       timeout: 1e4,
       port: 1865,
+      user: "user",
       ...settings
     };
     if (this.config.instant)
       this.init();
   }
   initWebSocket() {
-    const socketSettings = {
+    const socketSettings = this.config.ws = {
       delay: 3e3,
       path: "ws",
       retries: 3,
       ...this.config.ws
     };
-    this.ws = new import_isomorphic_ws.default(`ws${this.url}/${socketSettings.path}`);
+    const user = this.config.user ?? "user";
+    this.ws = new import_isomorphic_ws.default(`ws${this.protocol}/${socketSettings.path}/${user}`);
     this.ws.onopen = () => {
       this.connectedHandler?.();
     };
@@ -1141,6 +1161,10 @@ var CatClient = class {
       }, event);
     };
   }
+  /**
+   * Resets the current `CatClient` instance.
+   * @returns The updated `CatClient` instance.
+   */
   reset() {
     this.retried = 0;
     this.close();
@@ -1150,55 +1174,28 @@ var CatClient = class {
   }
   /**
    * Initialize the WebSocket and the API Client
-   * @throws An error saying that the client was already initialized
-   * @returns the current {@link CatClient} class instance
+   * @returns The current `CatClient` class instance
    */
   init() {
     if (!this.ws && !this.apiClient) {
       this.initWebSocket();
       this.apiClient = new CCatAPI({
-        BASE: `http${this.url}`,
+        BASE: `http${this.protocol}`,
         HEADERS: {
-          "access_token": this.config.authKey ?? ""
+          "access_token": this.config.authKey ?? "",
+          "user_id": this.config.user ?? "user"
         }
       });
-      return this;
-    } else
-      throw new Error("The Cheshire Cat Client was already initialized");
-  }
-  /**
-   * @returns The API Client
-   */
-  get api() {
-    return this.apiClient;
-  }
-  /**
-   * Changes the authentication key at runtime
-   */
-  set authKey(key) {
-    this.config.authKey = key;
-  }
-  /**
-   * Closes the WebSocket connection
-   */
-  close() {
-    this.ws?.close();
-    this.explicitlyClosed = true;
+    }
     return this;
   }
   /**
-   * Get the state of the WebSocket
+   * Sends a message to the Cat through the WebSocket connection.
+   * @param message The message to send to the server.
+   * @param userId The ID of the user sending the message. Defaults to "user".
+   * @returns The `CatClient` instance.
    */
-  get readyState() {
-    return this.ws?.readyState ?? 3 /* CLOSED */;
-  }
-  /**
-   * Sends a message via WebSocket to the Cat
-   * @param message The message to pass
-   * @param userId The user ID to pass
-   * @param settings The prompt settings to pass
-   */
-  send(message, userId = "user", settings) {
+  send(message) {
     if (this.ws?.readyState !== import_isomorphic_ws.default.OPEN) {
       this.errorHandler?.({
         name: "SocketClosed",
@@ -1208,16 +1205,53 @@ var CatClient = class {
     }
     const jsonMessage = JSON.stringify({
       text: message,
-      user_id: userId,
-      prompt_settings: settings
+      user_id: this.config.user ?? "user"
     });
-    this.ws?.send(jsonMessage);
+    this.ws.send(jsonMessage);
     return this;
+  }
+  /**
+   * @returns The API Client
+   */
+  get api() {
+    return this.apiClient;
+  }
+  /**
+   * Setter for the authentication key used by the client. This will also reset the client.
+   * @param key The authentication key to be set.
+   */
+  set authKey(key) {
+    this.config.authKey = key;
+    this.reset().init();
+  }
+  /**
+   * Setter for the user ID used by the client. This will also reset the client.
+   * @param user The user ID to be set.
+   */
+  set userId(user) {
+    this.config.user = user;
+    this.reset().init();
+  }
+  /**
+   * Closes the WebSocket connection.
+   * @returns The `CatClient` instance.
+   */
+  close() {
+    this.ws?.close();
+    this.explicitlyClosed = true;
+    return this;
+  }
+  /**
+   * Returns the current state of the WebSocket connection.
+   * @returns The WebSocketState enum value representing the current state of the WebSocket connection.
+   */
+  readyState() {
+    return this.ws?.readyState ?? 3 /* CLOSED */;
   }
   /**
    * Calls the handler when the WebSocket is connected 
    * @param handler The function to call
-   * @returns the current {@link CatClient} class instance
+   * @returns The current `CatClient` class instance
    */
   onConnected(handler) {
     this.connectedHandler = handler;
@@ -1226,7 +1260,7 @@ var CatClient = class {
   /**
    * Calls the handler when the WebSocket is disconnected
    * @param handler The function to call
-   * @returns the current {@link CatClient} class instance
+   * @returns The current `CatClient` class instance
    */
   onDisconnected(handler) {
     this.disconnectedHandler = handler;
@@ -1235,7 +1269,7 @@ var CatClient = class {
   /**
    * Calls the handler when a new message arrives from the WebSocket
    * @param handler The function to call
-   * @returns the current {@link CatClient} class instance
+   * @returns The current `CatClient` class instance
    */
   onMessage(handler) {
     this.messageHandler = handler;
@@ -1244,13 +1278,13 @@ var CatClient = class {
   /**
    * Calls the handler when the WebSocket catches an exception
    * @param handler The function to call
-   * @returns the current {@link CatClient} class instance
+   * @returns The current `CatClient` class instance
    */
   onError(handler) {
     this.errorHandler = handler;
     return this;
   }
-  get url() {
+  get protocol() {
     return `${this.config.secure ? "s" : ""}://
             ${this.config.baseUrl}
             ${this.config.port ? `:${this.config.port}` : ""}

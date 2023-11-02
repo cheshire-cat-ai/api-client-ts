@@ -1,7 +1,3 @@
-import { DefaultPromptSettings } from './models/DefaultPromptSettings'
-
-export type PromptSettings<TSettings = unknown> = DefaultPromptSettings & Record<string, TSettings>
-
 export interface WebSocketSettings {
     /** 
      * Websocket path to use to communicate with the CCat 
@@ -33,6 +29,11 @@ export interface CatSettings {
      * @default ''
     */
     authKey?: string
+    /** 
+     * The user ID to use for Websocket connection
+     * @default 'user'
+    */
+    user?: string
     /** 
      * The port to which connect to the Cat
      * @default 1865
@@ -75,7 +76,7 @@ export enum WebSocketState {
 }
 
 export interface SocketResponse {
-    type: 'notification' | 'chat'
+    type: 'notification' | 'chat' | 'chat_token'
     content: string
     why?: unknown
 }

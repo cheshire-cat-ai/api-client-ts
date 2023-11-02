@@ -14,4 +14,13 @@ export type Plugin = {
     thumb: string;
     version: string;
     active?: boolean;
+    url?: string;
+    hooks?: Array<{
+        name: string;
+        priority: number;
+    }>;
+    tools?: Array<{
+        name: string;
+    }>;
 };
+

@@ -9,3 +9,4 @@ export type SettingsResponse = {
     settings: Array<Setting>;
     selected_configuration?: string;
 };
+
