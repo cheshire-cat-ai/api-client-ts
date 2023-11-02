@@ -10,3 +10,4 @@ export type MemoryRecall = {
     query: QueryData;
     vectors: VectorsData;
 };
+

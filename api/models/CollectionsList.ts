@@ -8,3 +8,4 @@ import type { Collection } from './Collection';
 export type CollectionsList = {
     collections: Array<Collection>;
 };
+

@@ -16,10 +16,11 @@ export type Plugin = {
     active?: boolean;
     url?: string;
     hooks?: Array<{
-name: string;
-priority: number;
-}>;
+        name: string;
+        priority: number;
+    }>;
     tools?: Array<{
-name: string;
-}>;
+        name: string;
+    }>;
 };
+

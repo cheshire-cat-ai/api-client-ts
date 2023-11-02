@@ -17,6 +17,7 @@ export type { CollectionData } from './api/models/CollectionData';
 export type { CollectionsList } from './api/models/CollectionsList';
 export type { DeleteResponse } from './api/models/DeleteResponse';
 export type { FileResponse } from './api/models/FileResponse';
+export type { ConversationMessage } from './api/models/ConversationMessage';
 export type { HTTPValidationError } from './api/models/HTTPValidationError';
 export type { MemoryRecall } from './api/models/MemoryRecall';
 export type { MetaData } from './api/models/MetaData';

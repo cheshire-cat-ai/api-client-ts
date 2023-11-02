@@ -8,3 +8,4 @@ export type Setting = {
     value: Record<string, any>;
     schema?: Record<string, any>;
 };
+

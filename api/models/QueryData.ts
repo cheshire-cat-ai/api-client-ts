@@ -7,3 +7,4 @@ export type QueryData = {
     text: string;
     vector: Array<number>;
 };
+

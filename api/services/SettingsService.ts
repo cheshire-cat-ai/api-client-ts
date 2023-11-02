@@ -21,8 +21,8 @@ export class SettingsService {
      * @throws ApiError
      */
     public getSettings(
-search: string = '',
-): CancelablePromise<SettingsResponse> {
+        search: string = '',
+    ): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/',
@@ -38,13 +38,13 @@ search: string = '',
     /**
      * Create Setting
      * Create a new setting in the database
-     * @param requestBody 
+     * @param requestBody
      * @returns Setting Successful Response
      * @throws ApiError
      */
     public createSetting(
-requestBody: SettingBody,
-): CancelablePromise<Setting> {
+        requestBody: SettingBody,
+    ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'POST',
             url: '/settings/',
@@ -59,13 +59,13 @@ requestBody: SettingBody,
     /**
      * Get Setting
      * Get the a specific setting from the database
-     * @param settingId 
+     * @param settingId
      * @returns Setting Successful Response
      * @throws ApiError
      */
     public getSetting(
-settingId: string,
-): CancelablePromise<Setting> {
+        settingId: string,
+    ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/settings/{settingId}/',
@@ -81,13 +81,13 @@ settingId: string,
     /**
      * Delete Setting
      * Delete a specific setting in the database
-     * @param settingId 
+     * @param settingId
      * @returns any Successful Response
      * @throws ApiError
      */
     public deleteSetting(
-settingId: string,
-): CancelablePromise<any> {
+        settingId: string,
+    ): CancelablePromise<any> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/settings/{settingId}/',
@@ -103,15 +103,15 @@ settingId: string,
     /**
      * Update Setting
      * Update a specific setting in the database if it exists
-     * @param settingId 
-     * @param requestBody 
+     * @param settingId
+     * @param requestBody
      * @returns Setting Successful Response
      * @throws ApiError
      */
     public updateSetting(
-settingId: string,
-requestBody: SettingBody,
-): CancelablePromise<Setting> {
+        settingId: string,
+        requestBody: SettingBody,
+    ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/settings/{settingId}/',
