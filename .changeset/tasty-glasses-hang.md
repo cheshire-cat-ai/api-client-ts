@@ -1,5 +1,5 @@
 ---
-"ccat-api": patch
+"ccat-api": minor
 ---
 
 Added endpoint to install from registry.
