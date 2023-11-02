@@ -4,12 +4,13 @@
 
 ### Minor Changes
 
-- 90d2696: Added endpoint to install from registry.
-  Removed everything related to prompt settings.
-  Fixed authKey change behaviour.
-  Added hooks and tools in plugins schema
-  Added endpoint to get conversation history.
-  Added endpoint to wipe memory points by metadata.
+- 90d2696: 
+  - Added endpoint to install from registry.
+  - Removed everything related to prompt settings.
+  - Fixed authKey change behaviour.
+  - Added hooks and tools in plugins schema
+  - Added endpoint to get conversation history.
+  - Added endpoint to wipe memory points by metadata.
 
 ## 0.7.3
 
