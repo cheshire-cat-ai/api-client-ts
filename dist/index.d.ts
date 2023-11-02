@@ -133,6 +133,11 @@ type CollectionsList = {
     collections: Array<Collection>;
 };
 
+type ConversationMessage = {
+    who: string;
+    message: string;
+};
+
 type DeleteResponse = {
     deleted: (string | boolean | Record<string, any> | any[]);
 };
@@ -221,8 +226,15 @@ declare class MemoryService {
      */
     wipeMemoryPoints(collectionId: string, requestBody?: Record<string, any>): CancelablePromise<DeleteResponse>;
     /**
+     * Get Conversation History
+     * Get the specified user's conversation history from working memory
+     * @returns ConversationMessage Successful Response
+     * @throws ApiError
+     */
+    getConversationHistory(): CancelablePromise<Array<ConversationMessage>>;
+    /**
      * Wipe Conversation History
-     * Delete conversation history from working memory
+     * Delete the specified user's conversation history from working memory
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
@@ -375,7 +387,7 @@ declare class RabbitHoleService {
     /**
      * Upload File
      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
- * Chunks will be then vectorized and stored into documents memory.
+     * Chunks will be then vectorized and stored into documents memory.
      * @param formData
      * @returns FileResponse Successful Response
      * @throws ApiError
@@ -384,7 +396,7 @@ declare class RabbitHoleService {
     /**
      * Upload URL
      * Upload a URL. Website content will be extracted and segmented into chunks.
- * Chunks will be then vectorized and stored into documents memory.
+     * Chunks will be then vectorized and stored into documents memory.
      * @param requestBody
      * @returns WebResponse Successful Response
      * @throws ApiError
@@ -680,4 +692,4 @@ type HTTPValidationError = {
     };
 };
 
-export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, DeleteResponse, FileResponse, HTTPValidationError, MemoryRecall, MetaData, Plugin, PluginsList, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, ConversationMessage, DeleteResponse, FileResponse, HTTPValidationError, MemoryRecall, MetaData, Plugin, PluginsList, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
