@@ -144,10 +144,12 @@ export class MemoryService {
     /**
      * Get Conversation History
      * Get the specified user's conversation history from working memory
-     * @returns ConversationMessage Successful Response
+     * @returns any Successful Response
      * @throws ApiError
      */
-    public getConversationHistory(): CancelablePromise<Array<ConversationMessage>> {
+    public getConversationHistory(): CancelablePromise<{
+        history: Array<ConversationMessage>;
+    }> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/memory/conversation_history/',

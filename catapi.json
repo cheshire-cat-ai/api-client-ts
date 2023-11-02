@@ -1180,9 +1180,19 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ConversationMessage"
+                                    "title": "ConversationHistory",
+                                    "type": "object",
+                                    "required": [
+                                        "history"
+                                    ],
+                                    "properties": {
+                                        "history": {
+                                            "title": "History",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ConversationMessage"
+                                            }
+                                        }
                                     }
                                 }
                             }
