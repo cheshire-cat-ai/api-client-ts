@@ -228,10 +228,12 @@ declare class MemoryService {
     /**
      * Get Conversation History
      * Get the specified user's conversation history from working memory
-     * @returns ConversationMessage Successful Response
+     * @returns any Successful Response
      * @throws ApiError
      */
-    getConversationHistory(): CancelablePromise<Array<ConversationMessage>>;
+    getConversationHistory(): CancelablePromise<{
+        history: Array<ConversationMessage>;
+    }>;
     /**
      * Wipe Conversation History
      * Delete the specified user's conversation history from working memory

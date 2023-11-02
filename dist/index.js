@@ -651,7 +651,7 @@ var MemoryService = class {
   /**
    * Get Conversation History
    * Get the specified user's conversation history from working memory
-   * @returns ConversationMessage Successful Response
+   * @returns any Successful Response
    * @throws ApiError
    */
   getConversationHistory() {
