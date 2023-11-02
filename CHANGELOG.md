@@ -1,10 +1,16 @@
 # ccat-api
 
+## 0.8.1
+
+### Patch Changes
+
+- b195a49: Fixed response of conversation history endpoint
+
 ## 0.8.0
 
 ### Minor Changes
 
-- 90d2696: 
+- 90d2696:
   - Added endpoint to install from registry.
   - Removed everything related to prompt settings.
   - Fixed authKey change behaviour.
