@@ -6,4 +6,3 @@
 export type BodyUploadFile = {
     file: Blob;
 };
-

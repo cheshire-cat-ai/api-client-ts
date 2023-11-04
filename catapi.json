@@ -1552,6 +1552,10 @@
                     "message": {
                         "title": "Message",
                         "type": "string"
+                    },
+                    "why": {
+                        "title": "Why",
+                        "type": "object"
                     }
                 }
             },

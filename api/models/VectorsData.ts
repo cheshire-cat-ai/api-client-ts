@@ -9,4 +9,3 @@ export type VectorsData = {
     embedder: string;
     collections: Record<string, Array<CollectionData>>;
 };
-

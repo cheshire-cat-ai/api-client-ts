@@ -6,4 +6,3 @@
 export type DeleteResponse = {
     deleted: (string | boolean | Record<string, any> | any[]);
 };
-
