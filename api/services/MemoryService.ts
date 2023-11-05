@@ -19,14 +19,12 @@ export class MemoryService {
      * Search k memories similar to given text.
      * @param text Find memories similar to this text.
      * @param k How many memories to return.
-     * @param userId User id.
      * @returns MemoryRecall Successful Response
      * @throws ApiError
      */
     public recallMemoriesFromText(
 text: string,
 k: number = 100,
-userId: string = 'user',
 ): CancelablePromise<MemoryRecall> {
         return this.httpRequest.request({
             method: 'GET',
@@ -34,7 +32,6 @@ userId: string = 'user',
             query: {
                 'text': text,
                 'k': k,
-                'user_id': userId,
             },
             errors: {
                 422: `Validation Error`,
