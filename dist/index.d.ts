@@ -181,11 +181,10 @@ declare class MemoryService {
      * Search k memories similar to given text.
      * @param text Find memories similar to this text.
      * @param k How many memories to return.
-     * @param userId User id.
      * @returns MemoryRecall Successful Response
      * @throws ApiError
      */
-    recallMemoriesFromText(text: string, k?: number, userId?: string): CancelablePromise<MemoryRecall>;
+    recallMemoriesFromText(text: string, k?: number): CancelablePromise<MemoryRecall>;
     /**
      * Get Collections
      * Get list of available collections

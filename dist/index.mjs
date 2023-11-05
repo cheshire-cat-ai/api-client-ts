@@ -500,18 +500,16 @@ var MemoryService = class {
    * Search k memories similar to given text.
    * @param text Find memories similar to this text.
    * @param k How many memories to return.
-   * @param userId User id.
    * @returns MemoryRecall Successful Response
    * @throws ApiError
    */
-  recallMemoriesFromText(text, k = 100, userId = "user") {
+  recallMemoriesFromText(text, k = 100) {
     return this.httpRequest.request({
       method: "GET",
       url: "/memory/recall/",
       query: {
         "text": text,
-        "k": k,
-        "user_id": userId
+        "k": k
       },
       errors: {
         422: `Validation Error`
