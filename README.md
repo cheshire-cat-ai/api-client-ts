@@ -41,8 +41,15 @@ import { CatClient } from 'ccat-api'
 
 const cat = new CatClient({
     baseUrl: 'localhost',
+    user: 'user'.
     //... other settings
 })
+
+cat.send('Hello from a user!') // this will send a message to the /ws/user
+
+cat.userId = 'new_user'
+
+cat.send('Hello from a new user!') // this will send a message to the /ws/new_user
 ```
 
 ## Client settings
@@ -54,8 +61,9 @@ const cat = new CatClient({
 | **baseUrl**  | string   | **Required** | The same of **CORE_HOST**                                                        |
 | **authKey**  | string   | ''           | The same of **API_KEY**                                                          |
 | **port**     | number   | 1865         | The same of the **CORE_PORT**                                                    |
-| **instant**  | boolean  | true         | Instantly initialize the WebSocket and the API client, or later with **.init()** |
 | **secure**   | boolean  | false        | The same of the **CORE_USE_SECURE_PROTOCOLS**                                    |
+| **user**     | string   | 'user'       | The user ID to use for the WebSocket and the API client                          |
+| **instant**  | boolean  | true         | Instantly initialize the WebSocket and the API client, or later with **.init()** |
 | **timeout**  | number   | 10000        | Timeout for the endpoints, in milliseconds                                       |
 | **ws**       | string   | undefined    | An object of type [WebSocketSettings](#websocket-settings)                       |
 
