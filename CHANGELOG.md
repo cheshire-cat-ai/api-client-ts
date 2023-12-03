@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.9.0
+
+### Minor Changes
+
+- ebc7f00: Update to work with Cat v1.4.0
+
 ## 0.8.1
 
 ### Patch Changes
