@@ -6,4 +6,3 @@
 export type BodyInstallPlugin = {
     file: Blob;
 };
-

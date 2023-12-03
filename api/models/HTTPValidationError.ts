@@ -5,7 +5,6 @@
 
 export type HTTPValidationError = {
     detail?: {
-        error: string;
-    };
+error: string;
 };
-
+};

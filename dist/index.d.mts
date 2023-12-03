@@ -67,7 +67,7 @@ type SettingsResponse = {
 };
 
 declare class EmbedderService {
-    private readonly httpRequest;
+    readonly httpRequest: BaseHttpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Get Embedders Settings
@@ -96,7 +96,7 @@ declare class EmbedderService {
 }
 
 declare class LargeLanguageModelService {
-    private readonly httpRequest;
+    readonly httpRequest: BaseHttpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Get LLMs Settings
@@ -136,6 +136,7 @@ type CollectionsList = {
 type ConversationMessage = {
     who: string;
     message: string;
+    why?: Record<string, any>;
 };
 
 type DeleteResponse = {
@@ -173,18 +174,17 @@ type MemoryRecall = {
 };
 
 declare class MemoryService {
-    private readonly httpRequest;
+    readonly httpRequest: BaseHttpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Recall Memories From Text
      * Search k memories similar to given text.
      * @param text Find memories similar to this text.
      * @param k How many memories to return.
-     * @param userId User id.
      * @returns MemoryRecall Successful Response
      * @throws ApiError
      */
-    recallMemoriesFromText(text: string, k?: number, userId?: string): CancelablePromise<MemoryRecall>;
+    recallMemoriesFromText(text: string, k?: number): CancelablePromise<MemoryRecall>;
     /**
      * Get Collections
      * Get list of available collections
@@ -290,7 +290,7 @@ type PluginsList = {
 };
 
 declare class PluginsService {
-    private readonly httpRequest;
+    readonly httpRequest: BaseHttpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * List Available Plugins
@@ -384,12 +384,12 @@ type WebResponse = {
 };
 
 declare class RabbitHoleService {
-    private readonly httpRequest;
+    readonly httpRequest: BaseHttpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Upload File
      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
-     * Chunks will be then vectorized and stored into documents memory.
+ * Chunks will be then vectorized and stored into documents memory.
      * @param formData
      * @returns FileResponse Successful Response
      * @throws ApiError
@@ -398,7 +398,7 @@ declare class RabbitHoleService {
     /**
      * Upload URL
      * Upload a URL. Website content will be extracted and segmented into chunks.
-     * Chunks will be then vectorized and stored into documents memory.
+ * Chunks will be then vectorized and stored into documents memory.
      * @param requestBody
      * @returns WebResponse Successful Response
      * @throws ApiError
@@ -430,7 +430,7 @@ type SettingBody = {
 };
 
 declare class SettingsService {
-    private readonly httpRequest;
+    readonly httpRequest: BaseHttpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Get Settings
@@ -481,7 +481,7 @@ type Status = {
 };
 
 declare class StatusService {
-    private readonly httpRequest;
+    readonly httpRequest: BaseHttpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Home

@@ -9,4 +9,3 @@ export type BodyUploadUrl = {
      */
     url: string;
 };
-

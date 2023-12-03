@@ -8,4 +8,3 @@ export type FileResponse = {
     content_type: string;
     info: string;
 };
-

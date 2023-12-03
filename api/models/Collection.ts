@@ -7,4 +7,3 @@ export type Collection = {
     name: string;
     vectors_count: number;
 };
-

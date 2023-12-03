@@ -10,7 +10,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class LargeLanguageModelService {
 
-    constructor(private readonly httpRequest: BaseHttpRequest) {}
+    constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get LLMs Settings
@@ -28,13 +28,13 @@ export class LargeLanguageModelService {
     /**
      * Get Llm Settings
      * Get settings and schema of the specified Large Language Model
-     * @param languageModelName
+     * @param languageModelName 
      * @returns Setting Successful Response
      * @throws ApiError
      */
     public getLlmSettings(
-        languageModelName: string,
-    ): CancelablePromise<Setting> {
+languageModelName: string,
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/llm/settings/{languageModelName}/',
@@ -50,15 +50,15 @@ export class LargeLanguageModelService {
     /**
      * Upsert LLM Setting
      * Upsert the Large Language Model setting
-     * @param languageModelName
-     * @param requestBody
+     * @param languageModelName 
+     * @param requestBody 
      * @returns Setting Successful Response
      * @throws ApiError
      */
     public upsertLlmSetting(
-        languageModelName: string,
-        requestBody: Record<string, any>,
-    ): CancelablePromise<Setting> {
+languageModelName: string,
+requestBody: Record<string, any>,
+): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/llm/settings/{languageModelName}/',

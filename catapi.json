@@ -931,18 +931,6 @@
                         },
                         "name": "k",
                         "in": "query"
-                    },
-                    {
-                        "description": "User id.",
-                        "required": false,
-                        "schema": {
-                            "title": "User ID",
-                            "type": "string",
-                            "description": "User id.",
-                            "default": "user"
-                        },
-                        "name": "user_id",
-                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1552,6 +1540,10 @@
                     "message": {
                         "title": "Message",
                         "type": "string"
+                    },
+                    "why": {
+                        "title": "Why",
+                        "type": "object"
                     }
                 }
             },

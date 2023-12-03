@@ -7,4 +7,3 @@ export type WebResponse = {
     url: string;
     info: string;
 };
-

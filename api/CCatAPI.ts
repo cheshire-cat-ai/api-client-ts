@@ -50,4 +50,3 @@ export class CCatAPI {
         this.status = new StatusService(this.request);
     }
 }
-

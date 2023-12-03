@@ -7,4 +7,3 @@ export type Status = {
     status: string;
     version: string;
 };
-

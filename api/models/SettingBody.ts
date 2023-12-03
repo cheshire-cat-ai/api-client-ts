@@ -8,4 +8,3 @@ export type SettingBody = {
     value: Record<string, any>;
     category?: string;
 };
-
