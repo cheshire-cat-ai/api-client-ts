@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.9.1
+
+### Patch Changes
+
+- a38c6df: Re-added custom data object in websocket message
+
 ## 0.9.0
 
 ### Minor Changes
