@@ -109,11 +109,13 @@ export class CatClient {
 
     /**
      * Sends a message to the Cat through the WebSocket connection.
-     * @param message The message to send to the server.
+     * @param message The message to send to the Cat.
+     * @param data The custom data to send to the Cat.
      * @param userId The ID of the user sending the message. Defaults to "user".
      * @returns The `CatClient` instance.
      */
-    send(message: string): CatClient {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    send(message: string, data?: Record<string, any>, userId?: string): CatClient {
         if (this.ws?.readyState !== WebSocket.OPEN) {
             this.errorHandler?.({
                 name: 'SocketClosed',
@@ -121,9 +123,13 @@ export class CatClient {
             })
             return this
         }
+        if (data && ('text' in data || 'user_id' in data)) {
+            throw new Error('The data object should not have a "text" or a "user_id" property')
+        }
         const jsonMessage = JSON.stringify({ 
             text: message,
-            user_id: this.config.user ?? 'user'
+            user_id: userId ?? (this.config.user ?? 'user'),
+            ...data
         })
         this.ws.send(jsonMessage)
         return this
