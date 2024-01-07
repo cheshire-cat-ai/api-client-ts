@@ -615,11 +615,12 @@ declare class CatClient {
     init(): CatClient;
     /**
      * Sends a message to the Cat through the WebSocket connection.
-     * @param message The message to send to the server.
+     * @param message The message to send to the Cat.
+     * @param data The custom data to send to the Cat.
      * @param userId The ID of the user sending the message. Defaults to "user".
      * @returns The `CatClient` instance.
      */
-    send(message: string): CatClient;
+    send(message: string, data?: Record<string, any>, userId?: string): CatClient;
     /**
      * @returns The API Client
      */
