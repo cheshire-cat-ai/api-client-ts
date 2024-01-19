@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.9.2
+
+### Patch Changes
+
+- 0564669: remove trailing slashes in endpoints
+
 ## 0.9.1
 
 ### Patch Changes
