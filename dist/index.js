@@ -28,8 +28,8 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // index.ts
-var ccat_api_exports = {};
-__export(ccat_api_exports, {
+var api_client_ts_exports = {};
+__export(api_client_ts_exports, {
   AcceptedMemoryTypes: () => AcceptedMemoryTypes,
   AcceptedPluginTypes: () => AcceptedPluginTypes,
   ApiError: () => ApiError,
@@ -37,10 +37,10 @@ __export(ccat_api_exports, {
   CancelablePromise: () => CancelablePromise,
   CatClient: () => CatClient,
   WebSocketState: () => WebSocketState,
-  default: () => ccat_api_default,
+  default: () => api_client_ts_default,
   isMessageResponse: () => isMessageResponse
 });
-module.exports = __toCommonJS(ccat_api_exports);
+module.exports = __toCommonJS(api_client_ts_exports);
 
 // api/client.ts
 var import_isomorphic_ws = __toESM(require("isomorphic-ws"));
@@ -1297,7 +1297,7 @@ var CatClient = class {
 };
 
 // index.ts
-var ccat_api_default = CatClient;
+var api_client_ts_default = CatClient;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AcceptedMemoryTypes,
