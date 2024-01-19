@@ -12,7 +12,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class MemoryService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Recall Memories From Text
@@ -28,7 +28,7 @@ k: number = 100,
 ): CancelablePromise<MemoryRecall> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/memory/recall/',
+            url: '/memory/recall',
             query: {
                 'text': text,
                 'k': k,
@@ -48,7 +48,7 @@ k: number = 100,
     public getCollections(): CancelablePromise<CollectionsList> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/memory/collections/',
+            url: '/memory/collections',
         });
     }
 
@@ -61,7 +61,7 @@ k: number = 100,
     public wipeCollections(): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/collections/',
+            url: '/memory/collections',
         });
     }
 
@@ -77,7 +77,7 @@ collectionId: string,
 ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/collections/{collection_id}/',
+            url: '/memory/collections/{collection_id}',
             path: {
                 'collection_id': collectionId,
             },
@@ -101,7 +101,7 @@ memoryId: string,
 ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/collections/{collection_id}/points/{memory_id}/',
+            url: '/memory/collections/{collection_id}/points/{memory_id}',
             path: {
                 'collection_id': collectionId,
                 'memory_id': memoryId,
@@ -126,7 +126,7 @@ requestBody?: Record<string, any>,
 ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/collections/{collection_id}/points/',
+            url: '/memory/collections/{collection_id}/points',
             path: {
                 'collection_id': collectionId,
             },
@@ -149,7 +149,7 @@ history: Array<ConversationMessage>;
 }> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/memory/conversation_history/',
+            url: '/memory/conversation_history',
         });
     }
 
@@ -162,7 +162,7 @@ history: Array<ConversationMessage>;
     public wipeConversationHistory(): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/memory/conversation_history/',
+            url: '/memory/conversation_history',
         });
     }
 

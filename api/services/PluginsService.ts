@@ -16,7 +16,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class PluginsService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * List Available Plugins
@@ -30,7 +30,7 @@ query?: string,
 ): CancelablePromise<PluginsList> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/plugins/',
+            url: '/plugins',
             query: {
                 'query': query,
             },
@@ -49,7 +49,7 @@ formData: BodyInstallPlugin,
 ): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/plugins/upload/',
+            url: '/plugins/upload',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
@@ -156,7 +156,7 @@ pluginId: string,
     public getPluginsSettings(): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/plugins/settings/',
+            url: '/plugins/settings',
         });
     }
 

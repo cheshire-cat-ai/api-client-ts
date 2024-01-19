@@ -384,7 +384,7 @@ var EmbedderService = class {
   getEmbeddersSettings() {
     return this.httpRequest.request({
       method: "GET",
-      url: "/embedder/settings/"
+      url: "/embedder/settings"
     });
   }
   /**
@@ -397,7 +397,7 @@ var EmbedderService = class {
   getEmbedderSettings(languageEmbedderName) {
     return this.httpRequest.request({
       method: "GET",
-      url: "/embedder/settings/{languageEmbedderName}/",
+      url: "/embedder/settings/{languageEmbedderName}",
       path: {
         "languageEmbedderName": languageEmbedderName
       },
@@ -417,7 +417,7 @@ var EmbedderService = class {
   upsertEmbedderSetting(languageEmbedderName, requestBody) {
     return this.httpRequest.request({
       method: "PUT",
-      url: "/embedder/settings/{languageEmbedderName}/",
+      url: "/embedder/settings/{languageEmbedderName}",
       path: {
         "languageEmbedderName": languageEmbedderName
       },
@@ -444,7 +444,7 @@ var LargeLanguageModelService = class {
   getLlmsSettings() {
     return this.httpRequest.request({
       method: "GET",
-      url: "/llm/settings/"
+      url: "/llm/settings"
     });
   }
   /**
@@ -457,7 +457,7 @@ var LargeLanguageModelService = class {
   getLlmSettings(languageModelName) {
     return this.httpRequest.request({
       method: "GET",
-      url: "/llm/settings/{languageModelName}/",
+      url: "/llm/settings/{languageModelName}",
       path: {
         "languageModelName": languageModelName
       },
@@ -477,7 +477,7 @@ var LargeLanguageModelService = class {
   upsertLlmSetting(languageModelName, requestBody) {
     return this.httpRequest.request({
       method: "PUT",
-      url: "/llm/settings/{languageModelName}/",
+      url: "/llm/settings/{languageModelName}",
       path: {
         "languageModelName": languageModelName
       },
@@ -506,7 +506,7 @@ var MemoryService = class {
   recallMemoriesFromText(text, k = 100) {
     return this.httpRequest.request({
       method: "GET",
-      url: "/memory/recall/",
+      url: "/memory/recall",
       query: {
         "text": text,
         "k": k
@@ -525,7 +525,7 @@ var MemoryService = class {
   getCollections() {
     return this.httpRequest.request({
       method: "GET",
-      url: "/memory/collections/"
+      url: "/memory/collections"
     });
   }
   /**
@@ -537,7 +537,7 @@ var MemoryService = class {
   wipeCollections() {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/memory/collections/"
+      url: "/memory/collections"
     });
   }
   /**
@@ -550,7 +550,7 @@ var MemoryService = class {
   wipeSingleCollection(collectionId) {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/memory/collections/{collection_id}/",
+      url: "/memory/collections/{collection_id}",
       path: {
         "collection_id": collectionId
       },
@@ -570,7 +570,7 @@ var MemoryService = class {
   deletePointInMemory(collectionId, memoryId) {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/memory/collections/{collection_id}/points/{memory_id}/",
+      url: "/memory/collections/{collection_id}/points/{memory_id}",
       path: {
         "collection_id": collectionId,
         "memory_id": memoryId
@@ -591,7 +591,7 @@ var MemoryService = class {
   wipeMemoryPoints(collectionId, requestBody) {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/memory/collections/{collection_id}/points/",
+      url: "/memory/collections/{collection_id}/points",
       path: {
         "collection_id": collectionId
       },
@@ -611,7 +611,7 @@ var MemoryService = class {
   getConversationHistory() {
     return this.httpRequest.request({
       method: "GET",
-      url: "/memory/conversation_history/"
+      url: "/memory/conversation_history"
     });
   }
   /**
@@ -623,7 +623,7 @@ var MemoryService = class {
   wipeConversationHistory() {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/memory/conversation_history/"
+      url: "/memory/conversation_history"
     });
   }
 };
@@ -643,7 +643,7 @@ var PluginsService = class {
   listAvailablePlugins(query) {
     return this.httpRequest.request({
       method: "GET",
-      url: "/plugins/",
+      url: "/plugins",
       query: {
         "query": query
       }
@@ -659,7 +659,7 @@ var PluginsService = class {
   installPlugin(formData) {
     return this.httpRequest.request({
       method: "POST",
-      url: "/plugins/upload/",
+      url: "/plugins/upload",
       formData,
       mediaType: "multipart/form-data",
       errors: {
@@ -751,7 +751,7 @@ var PluginsService = class {
   getPluginsSettings() {
     return this.httpRequest.request({
       method: "GET",
-      url: "/plugins/settings/"
+      url: "/plugins/settings"
     });
   }
   /**
@@ -813,7 +813,7 @@ var RabbitHoleService = class {
   uploadFile(formData) {
     return this.httpRequest.request({
       method: "POST",
-      url: "/rabbithole/",
+      url: "/rabbithole",
       formData,
       mediaType: "multipart/form-data",
       errors: {
@@ -832,7 +832,7 @@ var RabbitHoleService = class {
   uploadUrl(requestBody) {
     return this.httpRequest.request({
       method: "POST",
-      url: "/rabbithole/web/",
+      url: "/rabbithole/web",
       body: requestBody,
       mediaType: "application/json",
       errors: {
@@ -850,7 +850,7 @@ var RabbitHoleService = class {
   uploadMemory(formData) {
     return this.httpRequest.request({
       method: "POST",
-      url: "/rabbithole/memory/",
+      url: "/rabbithole/memory",
       formData,
       mediaType: "multipart/form-data",
       errors: {
@@ -867,7 +867,7 @@ var RabbitHoleService = class {
   getAllowedMimetypes() {
     return this.httpRequest.request({
       method: "GET",
-      url: "/rabbithole/allowed-mimetypes/"
+      url: "/rabbithole/allowed-mimetypes"
     });
   }
 };
@@ -887,7 +887,7 @@ var SettingsService = class {
   getSettings(search = "") {
     return this.httpRequest.request({
       method: "GET",
-      url: "/settings/",
+      url: "/settings",
       query: {
         "search": search
       },
@@ -906,7 +906,7 @@ var SettingsService = class {
   createSetting(requestBody) {
     return this.httpRequest.request({
       method: "POST",
-      url: "/settings/",
+      url: "/settings",
       body: requestBody,
       mediaType: "application/json",
       errors: {
@@ -924,7 +924,7 @@ var SettingsService = class {
   getSetting(settingId) {
     return this.httpRequest.request({
       method: "GET",
-      url: "/settings/{settingId}/",
+      url: "/settings/{settingId}",
       path: {
         "settingId": settingId
       },
@@ -943,7 +943,7 @@ var SettingsService = class {
   deleteSetting(settingId) {
     return this.httpRequest.request({
       method: "DELETE",
-      url: "/settings/{settingId}/",
+      url: "/settings/{settingId}",
       path: {
         "settingId": settingId
       },
@@ -963,7 +963,7 @@ var SettingsService = class {
   updateSetting(settingId, requestBody) {
     return this.httpRequest.request({
       method: "PUT",
-      url: "/settings/{settingId}/",
+      url: "/settings/{settingId}",
       path: {
         "settingId": settingId
       },
@@ -1253,7 +1253,7 @@ var CatClient = class {
 };
 
 // index.ts
-var api_client_ts_default = CatClient;
+var ccat_api_default = CatClient;
 export {
   AcceptedMemoryTypes,
   AcceptedPluginTypes,
@@ -1262,6 +1262,6 @@ export {
   CancelablePromise,
   CatClient,
   WebSocketState,
-  api_client_ts_default as default,
+  ccat_api_default as default,
   isMessageResponse
 };

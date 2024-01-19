@@ -13,7 +13,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class RabbitHoleService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Upload File
@@ -28,7 +28,7 @@ formData: BodyUploadFile,
 ): CancelablePromise<FileResponse> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/rabbithole/',
+            url: '/rabbithole',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
@@ -50,7 +50,7 @@ requestBody: BodyUploadUrl,
 ): CancelablePromise<WebResponse> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/rabbithole/web/',
+            url: '/rabbithole/web',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -71,7 +71,7 @@ formData: BodyUploadMemory,
 ): CancelablePromise<Record<string, any>> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/rabbithole/memory/',
+            url: '/rabbithole/memory',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
@@ -91,7 +91,7 @@ allowed?: Array<string>;
 }> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/rabbithole/allowed-mimetypes/',
+            url: '/rabbithole/allowed-mimetypes',
         });
     }
 

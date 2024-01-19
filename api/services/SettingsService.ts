@@ -11,7 +11,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class SettingsService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get Settings
@@ -25,7 +25,7 @@ search: string = '',
 ): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/settings/',
+            url: '/settings',
             query: {
                 'search': search,
             },
@@ -47,7 +47,7 @@ requestBody: SettingBody,
 ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'POST',
-            url: '/settings/',
+            url: '/settings',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -68,7 +68,7 @@ settingId: string,
 ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/settings/{settingId}/',
+            url: '/settings/{settingId}',
             path: {
                 'settingId': settingId,
             },
@@ -90,7 +90,7 @@ settingId: string,
 ): CancelablePromise<any> {
         return this.httpRequest.request({
             method: 'DELETE',
-            url: '/settings/{settingId}/',
+            url: '/settings/{settingId}',
             path: {
                 'settingId': settingId,
             },
@@ -114,7 +114,7 @@ requestBody: SettingBody,
 ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/settings/{settingId}/',
+            url: '/settings/{settingId}',
             path: {
                 'settingId': settingId,
             },

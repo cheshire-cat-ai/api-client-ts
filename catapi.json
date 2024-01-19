@@ -32,7 +32,7 @@
                 "security": []
             }
         },
-        "/settings/": {
+        "/settings": {
             "get": {
                 "tags": [
                     "Settings"
@@ -119,7 +119,7 @@
                 "security": []
             }
         },
-        "/settings/{settingId}/": {
+        "/settings/{settingId}": {
             "get": {
                 "tags": [
                     "Settings"
@@ -255,7 +255,7 @@
                 "security": []
             }
         },
-        "/llm/settings/": {
+        "/llm/settings": {
             "get": {
                 "tags": [
                     "Large Language Model"
@@ -278,7 +278,7 @@
                 "security": []
             }
         },
-        "/llm/settings/{languageModelName}/": {
+        "/llm/settings/{languageModelName}": {
             "get": {
                 "tags": [
                     "Large Language Model"
@@ -378,7 +378,7 @@
                 "security": []
             }
         },
-        "/embedder/settings/": {
+        "/embedder/settings": {
             "get": {
                 "tags": [
                     "Embedder"
@@ -401,7 +401,7 @@
                 "security": []
             }
         },
-        "/embedder/settings/{languageEmbedderName}/": {
+        "/embedder/settings/{languageEmbedderName}": {
             "get": {
                 "tags": [
                     "Embedder"
@@ -501,7 +501,7 @@
                 "security": []
             }
         },
-        "/plugins/": {
+        "/plugins": {
             "get": {
                 "tags": [
                     "Plugins"
@@ -535,7 +535,7 @@
                 "security": []
             }
         },
-        "/plugins/upload/": {
+        "/plugins/upload": {
             "post": {
                 "tags": [
                     "Plugins"
@@ -761,7 +761,7 @@
                 "security": []
             }
         },
-        "/plugins/settings/": {
+        "/plugins/settings": {
             "get": {
                 "tags": [
                     "Plugins"
@@ -900,7 +900,7 @@
                 "security": []
             }
         },
-        "/memory/recall/": {
+        "/memory/recall": {
             "get": {
                 "tags": [
                     "Memory"
@@ -958,7 +958,7 @@
                 "security": []
             }
         },
-        "/memory/collections/": {
+        "/memory/collections": {
             "get": {
                 "tags": [
                     "Memory"
@@ -1002,7 +1002,7 @@
                 "security": []
             }
         },
-        "/memory/collections/{collection_id}/": {
+        "/memory/collections/{collection_id}": {
             "delete": {
                 "tags": [
                     "Memory"
@@ -1046,7 +1046,7 @@
                 "security": []
             }
         },
-        "/memory/collections/{collection_id}/points/{memory_id}/": {
+        "/memory/collections/{collection_id}/points/{memory_id}": {
             "delete": {
                 "tags": [
                     "Memory"
@@ -1099,7 +1099,7 @@
                 "security": []
             }
         },
-        "/memory/collections/{collection_id}/points/": {
+        "/memory/collections/{collection_id}/points": {
 			"delete": {
 				"tags": [
 					"Memory"
@@ -1154,7 +1154,7 @@
 				}
 			}
 		},
-        "/memory/conversation_history/": {
+        "/memory/conversation_history": {
             "get": {
                 "tags": [
                     "Memory"
@@ -1211,7 +1211,7 @@
                 "security": []
             }
         },
-        "/rabbithole/": {
+        "/rabbithole": {
             "post": {
                 "tags": [
                     "Rabbit Hole"
@@ -1254,7 +1254,7 @@
                 "security": []
             }
         },
-        "/rabbithole/web/": {
+        "/rabbithole/web": {
             "post": {
                 "tags": [
                     "Rabbit Hole"
@@ -1297,7 +1297,7 @@
                 "security": []
             }
         },
-        "/rabbithole/memory/": {
+        "/rabbithole/memory": {
             "post": {
                 "tags": [
                     "Rabbit Hole"
@@ -1341,7 +1341,7 @@
                 "security": []
             }
         },
-        "/rabbithole/allowed-mimetypes/": {
+        "/rabbithole/allowed-mimetypes": {
             "get": {
                 "tags": [
                     "Rabbit Hole"

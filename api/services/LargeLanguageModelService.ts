@@ -10,7 +10,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class LargeLanguageModelService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get LLMs Settings
@@ -21,7 +21,7 @@ export class LargeLanguageModelService {
     public getLlmsSettings(): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/llm/settings/',
+            url: '/llm/settings',
         });
     }
 
@@ -37,7 +37,7 @@ languageModelName: string,
 ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/llm/settings/{languageModelName}/',
+            url: '/llm/settings/{languageModelName}',
             path: {
                 'languageModelName': languageModelName,
             },
@@ -61,7 +61,7 @@ requestBody: Record<string, any>,
 ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/llm/settings/{languageModelName}/',
+            url: '/llm/settings/{languageModelName}',
             path: {
                 'languageModelName': languageModelName,
             },

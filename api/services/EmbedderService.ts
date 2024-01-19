@@ -21,7 +21,7 @@ export class EmbedderService {
     public getEmbeddersSettings(): CancelablePromise<SettingsResponse> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/embedder/settings/',
+            url: '/embedder/settings',
         });
     }
 
@@ -37,7 +37,7 @@ languageEmbedderName: string,
 ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
-            url: '/embedder/settings/{languageEmbedderName}/',
+            url: '/embedder/settings/{languageEmbedderName}',
             path: {
                 'languageEmbedderName': languageEmbedderName,
             },
@@ -61,7 +61,7 @@ requestBody: Record<string, any>,
 ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
-            url: '/embedder/settings/{languageEmbedderName}/',
+            url: '/embedder/settings/{languageEmbedderName}',
             path: {
                 'languageEmbedderName': languageEmbedderName,
             },

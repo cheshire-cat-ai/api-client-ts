@@ -96,7 +96,7 @@ declare class EmbedderService {
 }
 
 declare class LargeLanguageModelService {
-    readonly httpRequest: BaseHttpRequest;
+    private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Get LLMs Settings
@@ -174,7 +174,7 @@ type MemoryRecall = {
 };
 
 declare class MemoryService {
-    readonly httpRequest: BaseHttpRequest;
+    private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Recall Memories From Text
@@ -290,7 +290,7 @@ type PluginsList = {
 };
 
 declare class PluginsService {
-    readonly httpRequest: BaseHttpRequest;
+    private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * List Available Plugins
@@ -384,7 +384,7 @@ type WebResponse = {
 };
 
 declare class RabbitHoleService {
-    readonly httpRequest: BaseHttpRequest;
+    private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Upload File
@@ -430,7 +430,7 @@ type SettingBody = {
 };
 
 declare class SettingsService {
-    readonly httpRequest: BaseHttpRequest;
+    private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Get Settings
@@ -481,7 +481,7 @@ type Status = {
 };
 
 declare class StatusService {
-    readonly httpRequest: BaseHttpRequest;
+    private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Home
