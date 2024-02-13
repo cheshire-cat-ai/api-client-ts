@@ -1667,6 +1667,10 @@
                         "title": "Install URL",
                         "type": "string"
                     },
+                    "upgrade": {
+                        "title": "Upgrade",
+                        "type": "string"
+                    },
                     "hooks": {
                         "title": "Hooks",
                         "type": "array",
