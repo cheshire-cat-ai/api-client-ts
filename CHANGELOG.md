@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.9.3
+
+### Patch Changes
+
+- aa0729b: Add upgrade key to plugins
+
 ## 0.9.2
 
 ### Patch Changes
