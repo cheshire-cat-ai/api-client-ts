@@ -272,6 +272,7 @@ type Plugin = {
     version: string;
     active?: boolean;
     url?: string;
+    upgrade?: string;
     hooks?: Array<{
         name: string;
         priority: number;
