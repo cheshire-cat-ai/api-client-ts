@@ -585,7 +585,7 @@ interface SocketResponse {
     why?: unknown;
 }
 interface SocketError {
-    name: string;
+    name: 'SocketError' | 'FailedRetry' | 'SocketClosed';
     description: string;
 }
 declare const isMessageResponse: (value: unknown) => value is SocketResponse;

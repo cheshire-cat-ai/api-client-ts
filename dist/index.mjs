@@ -1110,7 +1110,7 @@ var CatClient = class {
     };
     this.ws.onerror = (event) => {
       this.errorHandler?.({
-        name: "WebSocketConnectionError",
+        name: "SocketError",
         description: "Something went wrong while connecting to the server"
       }, event);
     };
