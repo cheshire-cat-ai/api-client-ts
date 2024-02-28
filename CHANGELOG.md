@@ -1,5 +1,17 @@
 # ccat-api
 
+## 0.10.0
+
+### Minor Changes
+
+- 312facd: 
+  - Fix code formatting
+  - Add `query` parameter setting to the `WebSocketSettings`
+  - Change `readyState` to be a getter and renamed to `socketState`
+  - Rename `MetaData` interface to `Metadata`
+  - Update dependencies
+  - Add union type of strings for `SocketError` name
+
 ## 0.9.3
 
 ### Patch Changes
