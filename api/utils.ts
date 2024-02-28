@@ -5,6 +5,11 @@ export interface WebSocketSettings {
     */
     path?: string
     /** 
+     * The query to append to the URL. It should start with a question mark.
+     * @default ''
+    */
+    query?: string
+    /** 
      * The maximum number of retries before calling {@link WebSocketSettings.onFailed}
      * @default 3
     */
@@ -82,7 +87,7 @@ export interface SocketResponse {
 }
 
 export interface SocketError {
-    name: string
+    name: 'SocketError' | 'FailedRetry' | 'SocketClosed'
     description: string
 }
 

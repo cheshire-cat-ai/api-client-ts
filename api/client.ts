@@ -44,7 +44,7 @@ export class CatClient {
             ...this.config.ws
         } satisfies WebSocketSettings
         const user = this.config.user ?? 'user'
-        this.ws = new WebSocket(`ws${this.protocol}/${socketSettings.path}/${user}`)
+        this.ws = new WebSocket(`${this.url}/${socketSettings.path}/${user}${socketSettings.query}`)
         this.ws.onopen = () => {
             this.connectedHandler?.()
         }
@@ -71,7 +71,7 @@ export class CatClient {
         }
         this.ws.onerror = (event) => {
             this.errorHandler?.({
-                name: 'WebSocketConnectionError',
+                name: 'SocketError',
                 description: 'Something went wrong while connecting to the server'
             }, event)
         }
@@ -97,7 +97,7 @@ export class CatClient {
         if (!this.ws && !this.apiClient) {
             this.initWebSocket()
             this.apiClient = new CCatAPI({
-                BASE: `http${this.protocol}`,
+                BASE: `${this.url}`,
                 HEADERS: {
                     'access_token': this.config.authKey ?? '',
                     'user_id': this.config.user ?? 'user'
@@ -174,7 +174,7 @@ export class CatClient {
      * Returns the current state of the WebSocket connection.
      * @returns The WebSocketState enum value representing the current state of the WebSocket connection.
      */
-    readyState(): WebSocketState {
+    get socketState(): WebSocketState {
         return this.ws?.readyState ?? WebSocketState.CLOSED
     }
 
@@ -218,8 +218,8 @@ export class CatClient {
         return this
     }
     
-    private get protocol() {
-        return `${this.config.secure ? 's' : ''}://
+    private get url() {
+        return `http${this.config.secure ? 's' : ''}://
             ${this.config.baseUrl}
             ${this.config.port ? `:${this.config.port}` : ''}
             `.replace(/\s/g, '')

@@ -17,10 +17,11 @@ export type Plugin = {
     url?: string;
     upgrade?: string;
     hooks?: Array<{
-name: string;
-priority: number;
-}>;
+        name: string;
+        priority: number;
+    }>;
     tools?: Array<{
-name: string;
-}>;
+        name: string;
+    }>;
 };
+

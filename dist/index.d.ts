@@ -67,7 +67,7 @@ type SettingsResponse = {
 };
 
 declare class EmbedderService {
-    readonly httpRequest: BaseHttpRequest;
+    private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
      * Get Embedders Settings
@@ -148,7 +148,7 @@ type QueryData = {
     vector: Array<number>;
 };
 
-type MetaData = {
+type Metadata = {
     source: string;
     when: number;
     docstring?: string;
@@ -157,7 +157,7 @@ type MetaData = {
 
 type CollectionData = {
     page_content: string;
-    metadata: MetaData;
+    metadata: Metadata;
     id: string;
     score: number;
     vector: Array<number>;
@@ -284,7 +284,7 @@ type Plugin = {
 
 type PluginsList = {
     filters: {
-        query?: string;
+        query?: string | null;
     };
     installed: Array<Plugin>;
     registry: Array<Plugin>;
@@ -390,7 +390,7 @@ declare class RabbitHoleService {
     /**
      * Upload File
      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
- * Chunks will be then vectorized and stored into documents memory.
+     * Chunks will be then vectorized and stored into documents memory.
      * @param formData
      * @returns FileResponse Successful Response
      * @throws ApiError
@@ -399,7 +399,7 @@ declare class RabbitHoleService {
     /**
      * Upload URL
      * Upload a URL. Website content will be extracted and segmented into chunks.
- * Chunks will be then vectorized and stored into documents memory.
+     * Chunks will be then vectorized and stored into documents memory.
      * @param requestBody
      * @returns WebResponse Successful Response
      * @throws ApiError
@@ -512,6 +512,11 @@ interface WebSocketSettings {
      * @default 'ws'
     */
     path?: string;
+    /**
+     * The query to append to the URL. It should start with a question mark.
+     * @default ''
+    */
+    query?: string;
     /**
      * The maximum number of retries before calling {@link WebSocketSettings.onFailed}
      * @default 3
@@ -645,7 +650,7 @@ declare class CatClient {
      * Returns the current state of the WebSocket connection.
      * @returns The WebSocketState enum value representing the current state of the WebSocket connection.
      */
-    readyState(): WebSocketState;
+    get socketState(): WebSocketState;
     /**
      * Calls the handler when the WebSocket is connected
      * @param handler The function to call
@@ -670,7 +675,7 @@ declare class CatClient {
      * @returns The current `CatClient` class instance
      */
     onError(handler: (error: SocketError, event?: WebSocket.ErrorEvent) => void): CatClient;
-    private get protocol();
+    private get url();
 }
 
 type ApiResult = {
@@ -696,4 +701,4 @@ type HTTPValidationError = {
     };
 };
 
-export { AcceptedMemoryType, AcceptedMemoryTypes, AcceptedPluginType, AcceptedPluginTypes, ApiError, BodyInstallPlugin, BodyUploadFile, BodyUploadMemory, BodyUploadUrl, CancelError, CancelablePromise, CatClient, CatSettings, Collection, CollectionData, CollectionsList, ConversationMessage, DeleteResponse, FileResponse, HTTPValidationError, MemoryRecall, MetaData, Plugin, PluginsList, QueryData, Setting, SettingBody, SettingsResponse, SocketError, SocketResponse, Status, VectorsData, WebResponse, WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { type AcceptedMemoryType, AcceptedMemoryTypes, type AcceptedPluginType, AcceptedPluginTypes, ApiError, type BodyInstallPlugin, type BodyUploadFile, type BodyUploadMemory, type BodyUploadUrl, CancelError, CancelablePromise, CatClient, type CatSettings, type Collection, type CollectionData, type CollectionsList, type ConversationMessage, type DeleteResponse, type FileResponse, type HTTPValidationError, type MemoryRecall, type Metadata, type Plugin, type PluginsList, type QueryData, type Setting, type SettingBody, type SettingsResponse, type SocketError, type SocketResponse, type Status, type VectorsData, type WebResponse, type WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };

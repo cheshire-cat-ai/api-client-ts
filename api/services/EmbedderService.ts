@@ -10,7 +10,7 @@ import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class EmbedderService {
 
-    constructor(public readonly httpRequest: BaseHttpRequest) {}
+    constructor(private readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * Get Embedders Settings
@@ -28,13 +28,13 @@ export class EmbedderService {
     /**
      * Get Embedder Settings
      * Get settings and schema of the specified Embedder
-     * @param languageEmbedderName 
+     * @param languageEmbedderName
      * @returns Setting Successful Response
      * @throws ApiError
      */
     public getEmbedderSettings(
-languageEmbedderName: string,
-): CancelablePromise<Setting> {
+        languageEmbedderName: string,
+    ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/embedder/settings/{languageEmbedderName}',
@@ -50,15 +50,15 @@ languageEmbedderName: string,
     /**
      * Upsert Embedder Setting
      * Upsert the Embedder setting
-     * @param languageEmbedderName 
-     * @param requestBody 
+     * @param languageEmbedderName
+     * @param requestBody
      * @returns Setting Successful Response
      * @throws ApiError
      */
     public upsertEmbedderSetting(
-languageEmbedderName: string,
-requestBody: Record<string, any>,
-): CancelablePromise<Setting> {
+        languageEmbedderName: string,
+        requestBody: Record<string, any>,
+    ): CancelablePromise<Setting> {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/embedder/settings/{languageEmbedderName}',

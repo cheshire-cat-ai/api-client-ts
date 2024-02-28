@@ -20,7 +20,7 @@ export type { FileResponse } from './api/models/FileResponse';
 export type { ConversationMessage } from './api/models/ConversationMessage';
 export type { HTTPValidationError } from './api/models/HTTPValidationError';
 export type { MemoryRecall } from './api/models/MemoryRecall';
-export type { MetaData } from './api/models/MetaData';
+export type { Metadata } from './api/models/Metadata';
 export type { Plugin } from './api/models/Plugin';
 export type { PluginsList } from './api/models/PluginsList';
 export type { QueryData } from './api/models/QueryData';

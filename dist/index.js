@@ -434,7 +434,7 @@ var EmbedderService = class {
   /**
    * Get Embedder Settings
    * Get settings and schema of the specified Embedder
-   * @param languageEmbedderName 
+   * @param languageEmbedderName
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -453,8 +453,8 @@ var EmbedderService = class {
   /**
    * Upsert Embedder Setting
    * Upsert the Embedder setting
-   * @param languageEmbedderName 
-   * @param requestBody 
+   * @param languageEmbedderName
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -494,7 +494,7 @@ var LargeLanguageModelService = class {
   /**
    * Get Llm Settings
    * Get settings and schema of the specified Large Language Model
-   * @param languageModelName 
+   * @param languageModelName
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -513,8 +513,8 @@ var LargeLanguageModelService = class {
   /**
    * Upsert LLM Setting
    * Upsert the Large Language Model setting
-   * @param languageModelName 
-   * @param requestBody 
+   * @param languageModelName
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -587,7 +587,7 @@ var MemoryService = class {
   /**
    * Wipe Single Collection
    * Delete and recreate a collection
-   * @param collectionId 
+   * @param collectionId
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
@@ -606,8 +606,8 @@ var MemoryService = class {
   /**
    * Delete Point In Memory
    * Delete specific point in memory
-   * @param collectionId 
-   * @param memoryId 
+   * @param collectionId
+   * @param memoryId
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
@@ -627,8 +627,8 @@ var MemoryService = class {
   /**
    * Wipe Memory Points By Metadata
    * Delete points in memory by filter
-   * @param collectionId 
-   * @param requestBody 
+   * @param collectionId
+   * @param requestBody
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
@@ -680,7 +680,7 @@ var PluginsService = class {
   /**
    * List Available Plugins
    * List both installed and registry plugins
-   * @param query 
+   * @param query
    * @returns PluginsList Successful Response
    * @throws ApiError
    */
@@ -696,7 +696,7 @@ var PluginsService = class {
   /**
    * Install Plugin
    * Install a new plugin from a zip file
-   * @param formData 
+   * @param formData
    * @returns FileResponse Successful Response
    * @throws ApiError
    */
@@ -714,7 +714,7 @@ var PluginsService = class {
   /**
    * Install Plugin From Registry
    * Install a new plugin from external repository
-   * @param requestBody 
+   * @param requestBody
    * @returns FileResponse Successful Response
    * @throws ApiError
    */
@@ -732,7 +732,7 @@ var PluginsService = class {
   /**
    * Toggle Plugin
    * Enable or disable a single plugin
-   * @param pluginId 
+   * @param pluginId
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -751,7 +751,7 @@ var PluginsService = class {
   /**
    * Get Plugin Details
    * Returns information on a single plugin
-   * @param pluginId 
+   * @param pluginId
    * @returns Plugin Successful Response
    * @throws ApiError
    */
@@ -770,7 +770,7 @@ var PluginsService = class {
   /**
    * Delete Plugin
    * Physically remove a plugin
-   * @param pluginId 
+   * @param pluginId
    * @returns DeleteResponse Successful Response
    * @throws ApiError
    */
@@ -801,7 +801,7 @@ var PluginsService = class {
   /**
    * Get Plugin Settings
    * Returns the settings of a specific plugin
-   * @param pluginId 
+   * @param pluginId
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -820,8 +820,8 @@ var PluginsService = class {
   /**
    * Upsert Plugin Settings
    * Updates the settings of a specific plugin
-   * @param pluginId 
-   * @param requestBody 
+   * @param pluginId
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -847,13 +847,13 @@ var RabbitHoleService = class {
     this.httpRequest = httpRequest;
   }
   /**
-      * Upload File
-      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
-  * Chunks will be then vectorized and stored into documents memory.
-      * @param formData 
-      * @returns FileResponse Successful Response
-      * @throws ApiError
-      */
+   * Upload File
+   * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
+   * Chunks will be then vectorized and stored into documents memory.
+   * @param formData
+   * @returns FileResponse Successful Response
+   * @throws ApiError
+   */
   uploadFile(formData) {
     return this.httpRequest.request({
       method: "POST",
@@ -866,13 +866,13 @@ var RabbitHoleService = class {
     });
   }
   /**
-      * Upload URL
-      * Upload a URL. Website content will be extracted and segmented into chunks.
-  * Chunks will be then vectorized and stored into documents memory.
-      * @param requestBody 
-      * @returns WebResponse Successful Response
-      * @throws ApiError
-      */
+   * Upload URL
+   * Upload a URL. Website content will be extracted and segmented into chunks.
+   * Chunks will be then vectorized and stored into documents memory.
+   * @param requestBody
+   * @returns WebResponse Successful Response
+   * @throws ApiError
+   */
   uploadUrl(requestBody) {
     return this.httpRequest.request({
       method: "POST",
@@ -887,7 +887,7 @@ var RabbitHoleService = class {
   /**
    * Upload Memory
    * Upload a memory json file to the cat memory
-   * @param formData 
+   * @param formData
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -943,7 +943,7 @@ var SettingsService = class {
   /**
    * Create Setting
    * Create a new setting in the database
-   * @param requestBody 
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -961,7 +961,7 @@ var SettingsService = class {
   /**
    * Get Setting
    * Get the a specific setting from the database
-   * @param settingId 
+   * @param settingId
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -980,7 +980,7 @@ var SettingsService = class {
   /**
    * Delete Setting
    * Delete a specific setting in the database
-   * @param settingId 
+   * @param settingId
    * @returns any Successful Response
    * @throws ApiError
    */
@@ -999,8 +999,8 @@ var SettingsService = class {
   /**
    * Update Setting
    * Update a specific setting in the database if it exists
-   * @param settingId 
-   * @param requestBody 
+   * @param settingId
+   * @param requestBody
    * @returns Setting Successful Response
    * @throws ApiError
    */
@@ -1125,7 +1125,7 @@ var CatClient = class {
       ...this.config.ws
     };
     const user = this.config.user ?? "user";
-    this.ws = new import_isomorphic_ws.default(`ws${this.protocol}/${socketSettings.path}/${user}`);
+    this.ws = new import_isomorphic_ws.default(`${this.url}/${socketSettings.path}/${user}${socketSettings.query}`);
     this.ws.onopen = () => {
       this.connectedHandler?.();
     };
@@ -1178,7 +1178,7 @@ var CatClient = class {
     if (!this.ws && !this.apiClient) {
       this.initWebSocket();
       this.apiClient = new CCatAPI({
-        BASE: `http${this.protocol}`,
+        BASE: `${this.url}`,
         HEADERS: {
           "access_token": this.config.authKey ?? "",
           "user_id": this.config.user ?? "user"
@@ -1249,7 +1249,7 @@ var CatClient = class {
    * Returns the current state of the WebSocket connection.
    * @returns The WebSocketState enum value representing the current state of the WebSocket connection.
    */
-  readyState() {
+  get socketState() {
     return this.ws?.readyState ?? 3 /* CLOSED */;
   }
   /**
@@ -1288,8 +1288,8 @@ var CatClient = class {
     this.errorHandler = handler;
     return this;
   }
-  get protocol() {
-    return `${this.config.secure ? "s" : ""}://
+  get url() {
+    return `http${this.config.secure ? "s" : ""}://
             ${this.config.baseUrl}
             ${this.config.port ? `:${this.config.port}` : ""}
             `.replace(/\s/g, "");

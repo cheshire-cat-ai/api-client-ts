@@ -3,12 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { MetaData } from './MetaData';
+import type { Metadata } from './Metadata';
 
 export type CollectionData = {
     page_content: string;
-    metadata: MetaData;
+    metadata: Metadata;
     id: string;
     score: number;
     vector: Array<number>;
 };
+

@@ -1467,7 +1467,7 @@
                         "type": "string"
                     },
                     "metadata": {
-                        "$ref": "#/components/schemas/MetaData"
+                        "$ref": "#/components/schemas/Metadata"
                     },
                     "id": {
                         "title": "ID",
@@ -1582,8 +1582,8 @@
                     }
                 }
             },
-            "MetaData": {
-                "title": "MetaData",
+            "Metadata": {
+                "title": "Metadata",
                 "required": [
                     "source",
                     "when"
@@ -1725,7 +1725,7 @@
                         "properties": {
                             "query": {
                                 "title": "Query",
-                                "nullable": "true",
+                                "nullable": true,
                                 "type": "string"
                             }
                         }

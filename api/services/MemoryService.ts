@@ -23,9 +23,9 @@ export class MemoryService {
      * @throws ApiError
      */
     public recallMemoriesFromText(
-text: string,
-k: number = 100,
-): CancelablePromise<MemoryRecall> {
+        text: string,
+        k: number = 100,
+    ): CancelablePromise<MemoryRecall> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/memory/recall',
@@ -68,13 +68,13 @@ k: number = 100,
     /**
      * Wipe Single Collection
      * Delete and recreate a collection
-     * @param collectionId 
+     * @param collectionId
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
     public wipeSingleCollection(
-collectionId: string,
-): CancelablePromise<DeleteResponse> {
+        collectionId: string,
+    ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/collections/{collection_id}',
@@ -90,15 +90,15 @@ collectionId: string,
     /**
      * Delete Point In Memory
      * Delete specific point in memory
-     * @param collectionId 
-     * @param memoryId 
+     * @param collectionId
+     * @param memoryId
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
     public deletePointInMemory(
-collectionId: string,
-memoryId: string,
-): CancelablePromise<DeleteResponse> {
+        collectionId: string,
+        memoryId: string,
+    ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/collections/{collection_id}/points/{memory_id}',
@@ -115,15 +115,15 @@ memoryId: string,
     /**
      * Wipe Memory Points By Metadata
      * Delete points in memory by filter
-     * @param collectionId 
-     * @param requestBody 
+     * @param collectionId
+     * @param requestBody
      * @returns DeleteResponse Successful Response
      * @throws ApiError
      */
     public wipeMemoryPoints(
-collectionId: string,
-requestBody?: Record<string, any>,
-): CancelablePromise<DeleteResponse> {
+        collectionId: string,
+        requestBody?: Record<string, any>,
+    ): CancelablePromise<DeleteResponse> {
         return this.httpRequest.request({
             method: 'DELETE',
             url: '/memory/collections/{collection_id}/points',
@@ -145,8 +145,8 @@ requestBody?: Record<string, any>,
      * @throws ApiError
      */
     public getConversationHistory(): CancelablePromise<{
-history: Array<ConversationMessage>;
-}> {
+        history: Array<ConversationMessage>;
+    }> {
         return this.httpRequest.request({
             method: 'GET',
             url: '/memory/conversation_history',

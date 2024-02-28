@@ -3,9 +3,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type MetaData = {
+export type Metadata = {
     source: string;
     when: number;
     docstring?: string;
     name?: string;
 };
+
