@@ -4,7 +4,8 @@
 
 ### Minor Changes
 
-- 312facd: - Fix code formatting
+- 312facd: 
+  - Fix code formatting
   - Add `query` parameter setting to the `WebSocketSettings`
   - Change `readyState` to be a getter and renamed to `socketState`
   - Rename `MetaData` interface to `Metadata`
