@@ -509,7 +509,7 @@ declare class CCatAPI {
 interface WebSocketSettings {
     /**
      * Websocket path to use to communicate with the CCat
-     * @default 'ws'
+     * @default '/ws'
     */
     path?: string;
     /**

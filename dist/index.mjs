@@ -1076,12 +1076,13 @@ var CatClient = class {
   initWebSocket() {
     const socketSettings = this.config.ws = {
       delay: 3e3,
-      path: "ws",
+      path: "/ws",
       retries: 3,
+      query: "",
       ...this.config.ws
     };
     const user = this.config.user ?? "user";
-    this.ws = new WebSocket(`${this.url}/${socketSettings.path}/${user}${socketSettings.query}`);
+    this.ws = new WebSocket(`${this.url}${socketSettings.path}/${user}${socketSettings.query ?? ""}`);
     this.ws.onopen = () => {
       this.connectedHandler?.();
     };

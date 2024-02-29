@@ -37,25 +37,26 @@ export class CatClient {
     }
 
     private initWebSocket() {
-        const socketSettings = this.config.ws = {
+        const wsConfig = this.config.ws = {
             delay: 3000,
-            path: 'ws',
+            path: '/ws',
             retries: 3,
+            query: '',
             ...this.config.ws
         } satisfies WebSocketSettings
         const user = this.config.user ?? 'user'
-        this.ws = new WebSocket(`${this.url}/${socketSettings.path}/${user}${socketSettings.query}`)
+        this.ws = new WebSocket(`${this.url}${wsConfig.path}/${user}${wsConfig.query}`)
         this.ws.onopen = () => {
             this.connectedHandler?.()
         }
         this.ws.onclose = () => {
             if (!this.explicitlyClosed) {
                 this.retried += 1
-                if (socketSettings.retries < 0 || this.retried < socketSettings.retries) {
-                    setTimeout(() => this.initWebSocket(), socketSettings.delay)
-                } else socketSettings.onFailed?.({
+                if (wsConfig.retries < 0 || this.retried < wsConfig.retries) {
+                    setTimeout(() => this.initWebSocket(), wsConfig.delay)
+                } else wsConfig.onFailed?.({
                     name: 'FailedRetry',
-                    description: `Failed to connect WebSocket after ${socketSettings.retries} retries.`
+                    description: `Failed to connect WebSocket after ${wsConfig.retries} retries.`
                 })
             }
             this.disconnectedHandler?.()
