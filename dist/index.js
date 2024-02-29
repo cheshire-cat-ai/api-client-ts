@@ -1118,7 +1118,7 @@ var CatClient = class {
       this.init();
   }
   initWebSocket() {
-    const socketSettings = this.config.ws = {
+    const wsConfig = this.config.ws = {
       delay: 3e3,
       path: "/ws",
       retries: 3,
@@ -1126,19 +1126,19 @@ var CatClient = class {
       ...this.config.ws
     };
     const user = this.config.user ?? "user";
-    this.ws = new import_isomorphic_ws.default(`${this.url}${socketSettings.path}/${user}${socketSettings.query ?? ""}`);
+    this.ws = new import_isomorphic_ws.default(`${this.url}${wsConfig.path}/${user}${wsConfig.query}`);
     this.ws.onopen = () => {
       this.connectedHandler?.();
     };
     this.ws.onclose = () => {
       if (!this.explicitlyClosed) {
         this.retried += 1;
-        if (socketSettings.retries < 0 || this.retried < socketSettings.retries) {
-          setTimeout(() => this.initWebSocket(), socketSettings.delay);
+        if (wsConfig.retries < 0 || this.retried < wsConfig.retries) {
+          setTimeout(() => this.initWebSocket(), wsConfig.delay);
         } else
-          socketSettings.onFailed?.({
+          wsConfig.onFailed?.({
             name: "FailedRetry",
-            description: `Failed to connect WebSocket after ${socketSettings.retries} retries.`
+            description: `Failed to connect WebSocket after ${wsConfig.retries} retries.`
           });
       }
       this.disconnectedHandler?.();

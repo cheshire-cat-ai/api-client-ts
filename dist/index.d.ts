@@ -514,6 +514,7 @@ interface WebSocketSettings {
     path?: string;
     /**
      * The query to append to the URL. It should start with a question mark.
+     * @example '?token=123'
      * @default ''
     */
     query?: string;
@@ -534,7 +535,9 @@ interface WebSocketSettings {
     onFailed?: (error: SocketError) => void;
 }
 interface CatSettings {
-    /** The URL to which connect to the Cat */
+    /** The URL to which connect to the Cat
+     * @example 'localhost'
+    */
     baseUrl: string;
     /**
      * The key to authenticate the Cat endpoints
