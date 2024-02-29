@@ -1,10 +1,16 @@
 # ccat-api
 
+## 0.10.1
+
+### Patch Changes
+
+- 648db68: Fix websocket default values
+
 ## 0.10.0
 
 ### Minor Changes
 
-- 312facd: 
+- 312facd:
   - Fix code formatting
   - Add `query` parameter setting to the `WebSocketSettings`
   - Change `readyState` to be a getter and renamed to `socketState`
