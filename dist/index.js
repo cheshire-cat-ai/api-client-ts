@@ -1112,6 +1112,7 @@ var CatClient = class {
       timeout: 1e4,
       port: 1865,
       user: "user",
+      headers: {},
       ...settings
     };
     if (this.config.instant)
@@ -1182,7 +1183,8 @@ var CatClient = class {
         BASE: `${this.url}`,
         HEADERS: {
           "access_token": this.config.authKey ?? "",
-          "user_id": this.config.user ?? "user"
+          "user_id": this.config.user ?? "user",
+          ...this.config.headers
         }
       });
     }

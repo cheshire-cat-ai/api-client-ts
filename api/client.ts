@@ -31,6 +31,7 @@ export class CatClient {
             timeout: 10000,
             port: 1865,
             user: 'user',
+            headers: {},
             ...settings
         }
         if (this.config.instant) this.init()
@@ -101,7 +102,8 @@ export class CatClient {
                 BASE: `${this.url}`,
                 HEADERS: {
                     'access_token': this.config.authKey ?? '',
-                    'user_id': this.config.user ?? 'user'
+                    'user_id': this.config.user ?? 'user',
+                    ...this.config.headers
                 }
             })
         }

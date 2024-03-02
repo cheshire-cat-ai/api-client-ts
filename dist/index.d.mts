@@ -569,6 +569,10 @@ interface CatSettings {
      * @default 10000
     */
     timeout?: number;
+    /**
+     * The headers to pass to the API Client on initialization
+     */
+    headers?: Record<string, any>;
     /** An object of type {@link WebSocketSettings} */
     ws?: WebSocketSettings;
 }
