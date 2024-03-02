@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.10.2
+
+### Patch Changes
+
+- 00c4b3d: Add custom headers
+
 ## 0.10.1
 
 ### Patch Changes
