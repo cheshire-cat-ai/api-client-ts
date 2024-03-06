@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.10.3
+
+### Patch Changes
+
+- 36d3183: Fix websocket scheme not supported in the browser
+
 ## 0.10.2
 
 ### Patch Changes
