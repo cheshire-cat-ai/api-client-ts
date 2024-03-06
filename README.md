@@ -65,6 +65,7 @@ cat.send('Hello from a new user!') // this will send a message to the /ws/new_us
 | **user**     | string   | 'user'       | The user ID to use for the WebSocket and the API client                          |
 | **instant**  | boolean  | true         | Instantly initialize the WebSocket and the API client, or later with **.init()** |
 | **timeout**  | number   | 10000        | Timeout for the endpoints, in milliseconds                                       |
+| **headers**  | object   | {}           | The headers to send with the API requests                                        |
 | **ws**       | string   | undefined    | An object of type [WebSocketSettings](#websocket-settings)                       |
 
 ### WebSocket settings
@@ -73,6 +74,7 @@ cat.send('Hello from a new user!') // this will send a message to the /ws/new_us
 |:------------:|:-------------------:|:------------:|:---------------------------------------------------------:|
 | **path**     | string              | 'ws'         | Websocket path to use to communicate with the CCat        |
 | **retries**  | number              | 3            | The maximum number of retries before calling **onFailed** |
+| **query**    | string              | ''           | The query to send with the WebSocket connection           |
 | **delay**    | number              | 3000         | The delay for reconnect, in milliseconds                  |
 | **onFailed** | (ErrorCode) => void | undefined    | The function to call after failing all the retries        |
 
