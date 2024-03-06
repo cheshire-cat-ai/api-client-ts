@@ -1127,7 +1127,8 @@ var CatClient = class {
       ...this.config.ws
     };
     const user = this.config.user ?? "user";
-    this.ws = new import_isomorphic_ws.default(`${this.url}${wsConfig.path}/${user}${wsConfig.query}`);
+    const url = this.url.replace(/http/g, "ws");
+    this.ws = new import_isomorphic_ws.default(`${url}${wsConfig.path}/${user}${wsConfig.query}`);
     this.ws.onopen = () => {
       this.connectedHandler?.();
     };

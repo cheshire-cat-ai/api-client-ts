@@ -1083,7 +1083,8 @@ var CatClient = class {
       ...this.config.ws
     };
     const user = this.config.user ?? "user";
-    this.ws = new WebSocket(`${this.url}${wsConfig.path}/${user}${wsConfig.query}`);
+    const url = this.url.replace(/http/g, "ws");
+    this.ws = new WebSocket(`${url}${wsConfig.path}/${user}${wsConfig.query}`);
     this.ws.onopen = () => {
       this.connectedHandler?.();
     };
