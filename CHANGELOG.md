@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.10.5
+
+### Patch Changes
+
+- 6cf38ba: Add `when` in chat history, update deps
+
 ## 0.10.4
 
 ### Patch Changes
