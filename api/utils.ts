@@ -1,15 +1,15 @@
 export interface WebSocketSettings {
     /** 
-     * Websocket path to use to communicate with the CCat 
+     * Websocket path to use to communicate with the Cat. It should start with a slash.
      * @default '/ws'
     */
-    path?: string
+    path?: `/${string}`
     /** 
      * The query to append to the URL. It should start with a question mark.
      * @example '?token=123'
-     * @default ''
+     * @default undefined
     */
-    query?: string
+    query?: `?${string}`
     /** 
      * The maximum number of retries before calling {@link WebSocketSettings.onFailed}
      * @default 3
@@ -41,7 +41,7 @@ export interface CatSettings {
      * The user ID to use for Websocket connection
      * @default 'user'
     */
-    user?: string
+    userId?: string
     /** 
      * The port to which connect to the Cat
      * @default 1865

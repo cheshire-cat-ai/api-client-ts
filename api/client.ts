@@ -30,7 +30,7 @@ export class CatClient {
             instant: true,
             timeout: 10000,
             port: 1865,
-            user: 'user',
+            userId: 'user',
             headers: {},
             ...settings
         }
@@ -42,12 +42,11 @@ export class CatClient {
             delay: 3000,
             path: '/ws',
             retries: 3,
-            query: '',
             ...this.config.ws
         } satisfies WebSocketSettings
-        const user = this.config.user ?? 'user'
+        const userId = this.config.userId ?? 'user'
         const url = this.url.replace(/http/g, 'ws')
-        this.ws = new WebSocket(`${url}${wsConfig.path}/${user}${wsConfig.query}`)
+        this.ws = new WebSocket(`${url}${wsConfig.path}/${userId}${wsConfig.query ?? ''}`)
         this.ws.onopen = () => {
             this.connectedHandler?.()
         }
@@ -103,7 +102,7 @@ export class CatClient {
                 BASE: `${this.url}`,
                 HEADERS: {
                     'access_token': this.config.authKey ?? '',
-                    'user_id': this.config.user ?? 'user',
+                    'user_id': this.config.userId ?? 'user',
                     ...this.config.headers
                 }
             })
@@ -132,7 +131,7 @@ export class CatClient {
         }
         const jsonMessage = JSON.stringify({ 
             text: message,
-            user_id: userId ?? (this.config.user ?? 'user'),
+            user_id: userId ?? (this.config.userId ?? 'user'),
             ...data
         })
         this.ws.send(jsonMessage)
@@ -160,7 +159,7 @@ export class CatClient {
      * @param user The user ID to be set.
      */
     set userId(user: string) {
-        this.config.user = user
+        this.config.userId = user
         this.reset().init()
     }
 
