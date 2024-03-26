@@ -1,7 +1,6 @@
 {
   "name": "ccat-api",
   "description": "API Client to communicate with the Cheshire Cat AI",
-  "type": "module",
   "license": "MIT",
   "version": "0.10.5",
   "author": "zAlweNy26",

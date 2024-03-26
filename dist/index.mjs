@@ -1,49 +1,5 @@
-"use strict";
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-
-// index.ts
-var api_client_ts_exports = {};
-__export(api_client_ts_exports, {
-  AcceptedMemoryTypes: () => AcceptedMemoryTypes,
-  AcceptedPluginTypes: () => AcceptedPluginTypes,
-  ApiError: () => ApiError,
-  CancelError: () => CancelError,
-  CancelablePromise: () => CancelablePromise,
-  CatClient: () => CatClient,
-  WebSocketState: () => WebSocketState,
-  default: () => api_client_ts_default,
-  isMessageResponse: () => isMessageResponse
-});
-module.exports = __toCommonJS(api_client_ts_exports);
-
 // api/client.ts
-var import_isomorphic_ws = __toESM(require("isomorphic-ws"), 1);
+import WebSocket from "isomorphic-ws";
 
 // api/core/BaseHttpRequest.ts
 var BaseHttpRequest = class {
@@ -53,8 +9,8 @@ var BaseHttpRequest = class {
 };
 
 // api/core/request.ts
-var import_axios = __toESM(require("axios"), 1);
-var import_form_data = __toESM(require("form-data"), 1);
+import axios from "axios";
+import FormData from "form-data";
 
 // api/core/ApiError.ts
 var ApiError = class extends Error {
@@ -184,7 +140,7 @@ var isBlob = (value) => {
   return typeof value === "object" && typeof value.type === "string" && typeof value.stream === "function" && typeof value.arrayBuffer === "function" && typeof value.constructor === "function" && typeof value.constructor.name === "string" && /^(Blob|File)$/.test(value.constructor.name) && /^(Blob|File)$/.test(value[Symbol.toStringTag]);
 };
 var isFormData = (value) => {
-  return value instanceof import_form_data.default;
+  return value instanceof FormData;
 };
 var isSuccess = (status) => {
   return status >= 200 && status < 300;
@@ -240,7 +196,7 @@ var getUrl = (config, options) => {
 };
 var getFormData = (options) => {
   if (options.formData) {
-    const formData = new import_form_data.default();
+    const formData = new FormData();
     const process = (key, value) => {
       if (isString(value) || isBlob(value)) {
         formData.append(key, value);
@@ -309,7 +265,7 @@ var getRequestBody = (options) => {
   return void 0;
 };
 var sendRequest = async (config, options, url, body, formData, headers, onCancel, axiosClient) => {
-  const source = import_axios.default.CancelToken.source();
+  const source = axios.CancelToken.source();
   const requestConfig = {
     url,
     headers,
@@ -377,7 +333,7 @@ var catchErrorCodes = (options, result) => {
     );
   }
 };
-var request = (config, options, axiosClient = import_axios.default) => {
+var request = (config, options, axiosClient = axios) => {
   return new CancelablePromise(async (resolve2, reject, onCancel) => {
     try {
       const url = getUrl(config, options);
@@ -1133,7 +1089,7 @@ var CatClient = class {
     };
     const userId = this.config.userId ?? "user";
     const url = this.url.replace(/http/g, "ws");
-    this.ws = new import_isomorphic_ws.default(`${url}${wsConfig.path}/${userId}${wsConfig.query ?? ""}`);
+    this.ws = new WebSocket(`${url}${wsConfig.path}/${userId}${wsConfig.query ?? ""}`);
     this.ws.onopen = () => {
       this.connectedHandler?.();
     };
@@ -1205,7 +1161,7 @@ var CatClient = class {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send(message, data, userId) {
-    if (this.ws?.readyState !== import_isomorphic_ws.default.OPEN) {
+    if (this.ws?.readyState !== WebSocket.OPEN) {
       this.errorHandler?.({
         name: "SocketClosed",
         description: "The connection to the server was closed"
@@ -1307,8 +1263,7 @@ var CatClient = class {
 
 // index.ts
 var api_client_ts_default = CatClient;
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
+export {
   AcceptedMemoryTypes,
   AcceptedPluginTypes,
   ApiError,
@@ -1316,5 +1271,6 @@ var api_client_ts_default = CatClient;
   CancelablePromise,
   CatClient,
   WebSocketState,
+  api_client_ts_default as default,
   isMessageResponse
-});
+};
