@@ -1067,7 +1067,7 @@ var CatClient = class {
       instant: true,
       timeout: 1e4,
       port: 1865,
-      user: "user",
+      userId: "user",
       headers: {},
       ...settings
     };
@@ -1079,12 +1079,11 @@ var CatClient = class {
       delay: 3e3,
       path: "/ws",
       retries: 3,
-      query: "",
       ...this.config.ws
     };
-    const user = this.config.user ?? "user";
+    const userId = this.config.userId ?? "user";
     const url = this.url.replace(/http/g, "ws");
-    this.ws = new WebSocket(`${url}${wsConfig.path}/${user}${wsConfig.query}`);
+    this.ws = new WebSocket(`${url}${wsConfig.path}/${userId}${wsConfig.query ?? ""}`);
     this.ws.onopen = () => {
       this.connectedHandler?.();
     };
@@ -1140,7 +1139,7 @@ var CatClient = class {
         BASE: `${this.url}`,
         HEADERS: {
           "access_token": this.config.authKey ?? "",
-          "user_id": this.config.user ?? "user",
+          "user_id": this.config.userId ?? "user",
           ...this.config.headers
         }
       });
@@ -1168,7 +1167,7 @@ var CatClient = class {
     }
     const jsonMessage = JSON.stringify({
       text: message,
-      user_id: userId ?? (this.config.user ?? "user"),
+      user_id: userId ?? (this.config.userId ?? "user"),
       ...data
     });
     this.ws.send(jsonMessage);
@@ -1193,7 +1192,7 @@ var CatClient = class {
    * @param user The user ID to be set.
    */
   set userId(user) {
-    this.config.user = user;
+    this.config.userId = user;
     this.reset().init();
   }
   /**
