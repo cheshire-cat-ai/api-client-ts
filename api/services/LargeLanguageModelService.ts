@@ -1,17 +1,13 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Setting } from '../models/Setting';
 import type { SettingsResponse } from '../models/SettingsResponse';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
-
 export class LargeLanguageModelService {
-
     constructor(private readonly httpRequest: BaseHttpRequest) {}
-
     /**
      * Get LLMs Settings
      * Get the list of the Large Language Models
@@ -24,7 +20,6 @@ export class LargeLanguageModelService {
             url: '/llm/settings',
         });
     }
-
     /**
      * Get Llm Settings
      * Get settings and schema of the specified Large Language Model
@@ -46,7 +41,6 @@ export class LargeLanguageModelService {
             },
         });
     }
-
     /**
      * Upsert LLM Setting
      * Upsert the Large Language Model setting
@@ -72,5 +66,4 @@ export class LargeLanguageModelService {
             },
         });
     }
-
 }

@@ -1,6 +1,7 @@
 {
   "name": "ccat-api",
   "description": "API Client to communicate with the Cheshire Cat AI",
+  "type": "module",
   "license": "MIT",
   "version": "0.10.4",
   "author": "zAlweNy26",
@@ -33,24 +34,24 @@
   "scripts": {
     "build": "tsup index.ts --format cjs,esm --dts",
     "release": "pnpm run build && changeset publish",
-    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint": "eslint . --ext .js,.ts --fix --ignore-path .gitignore",
     "start": "ts-node index.ts",
     "generate": "openapi --input ./catapi.json --output ./api --client axios --name CCatAPI --useUnionTypes"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
-    "@types/node": "^20.11.21",
-    "@typescript-eslint/eslint-plugin": "^7.1.0",
-    "@typescript-eslint/parser": "^7.1.0",
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
     "eslint": "^8.57.0",
-    "openapi-typescript-codegen": "^0.27.0",
+    "openapi-typescript-codegen": "^0.28.0",
     "ts-node": "^10.9.2",
     "tsup": "^8.0.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "dependencies": {
     "@types/ws": "^8.5.10",
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "form-data": "^4.0.0",
     "isomorphic-ws": "^5.0.0",
     "ws": "^8.16.0"

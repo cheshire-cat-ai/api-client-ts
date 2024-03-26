@@ -1,17 +1,13 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Setting } from '../models/Setting';
 import type { SettingsResponse } from '../models/SettingsResponse';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
-
 export class EmbedderService {
-
     constructor(private readonly httpRequest: BaseHttpRequest) {}
-
     /**
      * Get Embedders Settings
      * Get the list of the Embedders
@@ -24,7 +20,6 @@ export class EmbedderService {
             url: '/embedder/settings',
         });
     }
-
     /**
      * Get Embedder Settings
      * Get settings and schema of the specified Embedder
@@ -46,7 +41,6 @@ export class EmbedderService {
             },
         });
     }
-
     /**
      * Upsert Embedder Setting
      * Upsert the Embedder setting
@@ -72,5 +66,4 @@ export class EmbedderService {
             },
         });
     }
-
 }

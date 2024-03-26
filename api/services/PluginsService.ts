@@ -1,4 +1,4 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -10,14 +10,10 @@ import type { Plugin } from '../models/Plugin';
 import type { PluginsList } from '../models/PluginsList';
 import type { Setting } from '../models/Setting';
 import type { SettingsResponse } from '../models/SettingsResponse';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
-
 export class PluginsService {
-
     constructor(private readonly httpRequest: BaseHttpRequest) {}
-
     /**
      * List Available Plugins
      * List both installed and registry plugins
@@ -36,7 +32,6 @@ export class PluginsService {
             },
         });
     }
-
     /**
      * Install Plugin
      * Install a new plugin from a zip file
@@ -57,7 +52,6 @@ export class PluginsService {
             },
         });
     }
-
     /**
      * Install Plugin From Registry
      * Install a new plugin from external repository
@@ -78,7 +72,6 @@ export class PluginsService {
             },
         });
     }
-
     /**
      * Toggle Plugin
      * Enable or disable a single plugin
@@ -102,7 +95,6 @@ export class PluginsService {
             },
         });
     }
-
     /**
      * Get Plugin Details
      * Returns information on a single plugin
@@ -124,7 +116,6 @@ export class PluginsService {
             },
         });
     }
-
     /**
      * Delete Plugin
      * Physically remove a plugin
@@ -146,7 +137,6 @@ export class PluginsService {
             },
         });
     }
-
     /**
      * Get Plugins Settings
      * Returns the settings of all the plugins
@@ -159,7 +149,6 @@ export class PluginsService {
             url: '/plugins/settings',
         });
     }
-
     /**
      * Get Plugin Settings
      * Returns the settings of a specific plugin
@@ -183,7 +172,6 @@ export class PluginsService {
             },
         });
     }
-
     /**
      * Upsert Plugin Settings
      * Updates the settings of a specific plugin
@@ -209,5 +197,4 @@ export class PluginsService {
             },
         });
     }
-
 }

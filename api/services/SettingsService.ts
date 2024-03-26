@@ -1,18 +1,14 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
 import type { Setting } from '../models/Setting';
 import type { SettingBody } from '../models/SettingBody';
 import type { SettingsResponse } from '../models/SettingsResponse';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
-
 export class SettingsService {
-
     constructor(private readonly httpRequest: BaseHttpRequest) {}
-
     /**
      * Get Settings
      * Get the entire list of settings available in the database
@@ -34,7 +30,6 @@ export class SettingsService {
             },
         });
     }
-
     /**
      * Create Setting
      * Create a new setting in the database
@@ -55,7 +50,6 @@ export class SettingsService {
             },
         });
     }
-
     /**
      * Get Setting
      * Get the a specific setting from the database
@@ -77,7 +71,6 @@ export class SettingsService {
             },
         });
     }
-
     /**
      * Delete Setting
      * Delete a specific setting in the database
@@ -99,7 +92,6 @@ export class SettingsService {
             },
         });
     }
-
     /**
      * Update Setting
      * Update a specific setting in the database if it exists
@@ -125,5 +117,4 @@ export class SettingsService {
             },
         });
     }
-
 }

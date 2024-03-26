@@ -74,7 +74,7 @@ cat.send('Hello from a new user!') // this will send a message to the /ws/new_us
 |:------------:|:--------:|:-----------:|:--------------------------------------------------------:|
 | **path**     | string   | 'ws'        | Websocket path to use to communicate with the CCat        |
 | **retries**  | number   | 3           | The maximum number of retries before calling **onFailed** |
-| **query**    | string   | ''          | The query to send with the WebSocket connection           |
+| **query**    | string   | undefined   | The query to send with the WebSocket connection           |
 | **delay**    | number   | 3000        | The delay for reconnect, in milliseconds                  |
 | **onFailed** | function | undefined   | The function to call after failing all the retries        |
 

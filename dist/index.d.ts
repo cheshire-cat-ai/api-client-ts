@@ -137,6 +137,7 @@ type ConversationMessage = {
     who: string;
     message: string;
     why?: Record<string, any>;
+    when: number;
 };
 
 type DeleteResponse = {

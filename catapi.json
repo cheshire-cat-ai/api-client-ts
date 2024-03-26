@@ -1529,6 +1529,7 @@
                 "title": "ConversationMessage",
                 "required": [
                     "who",
+                    "when",
                     "message"
                 ],
                 "type": "object",
@@ -1544,6 +1545,10 @@
                     "why": {
                         "title": "Why",
                         "type": "object"
+                    },
+                    "when": {
+                        "title": "When",
+                        "type": "integer"
                     }
                 }
             },

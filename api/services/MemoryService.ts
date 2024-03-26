@@ -1,4 +1,4 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -6,14 +6,10 @@ import type { CollectionsList } from '../models/CollectionsList';
 import type { ConversationMessage } from '../models/ConversationMessage';
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { MemoryRecall } from '../models/MemoryRecall';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
-
 export class MemoryService {
-
     constructor(private readonly httpRequest: BaseHttpRequest) {}
-
     /**
      * Recall Memories From Text
      * Search k memories similar to given text.
@@ -38,7 +34,6 @@ export class MemoryService {
             },
         });
     }
-
     /**
      * Get Collections
      * Get list of available collections
@@ -51,7 +46,6 @@ export class MemoryService {
             url: '/memory/collections',
         });
     }
-
     /**
      * Wipe Collections
      * Delete and create all collections
@@ -64,7 +58,6 @@ export class MemoryService {
             url: '/memory/collections',
         });
     }
-
     /**
      * Wipe Single Collection
      * Delete and recreate a collection
@@ -86,7 +79,6 @@ export class MemoryService {
             },
         });
     }
-
     /**
      * Delete Point In Memory
      * Delete specific point in memory
@@ -111,7 +103,6 @@ export class MemoryService {
             },
         });
     }
-
     /**
      * Wipe Memory Points By Metadata
      * Delete points in memory by filter
@@ -137,7 +128,6 @@ export class MemoryService {
             },
         });
     }
-
     /**
      * Get Conversation History
      * Get the specified user's conversation history from working memory
@@ -152,7 +142,6 @@ export class MemoryService {
             url: '/memory/conversation_history',
         });
     }
-
     /**
      * Wipe Conversation History
      * Delete the specified user's conversation history from working memory
@@ -165,5 +154,4 @@ export class MemoryService {
             url: '/memory/conversation_history',
         });
     }
-
 }

@@ -1,4 +1,4 @@
-/* generated using openapi-typescript-codegen -- do no edit */
+/* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
@@ -7,14 +7,10 @@ import type { BodyUploadMemory } from '../models/BodyUploadMemory';
 import type { BodyUploadUrl } from '../models/BodyUploadUrl';
 import type { FileResponse } from '../models/FileResponse';
 import type { WebResponse } from '../models/WebResponse';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
-
 export class RabbitHoleService {
-
     constructor(private readonly httpRequest: BaseHttpRequest) {}
-
     /**
      * Upload File
      * Upload a file containing text (.txt, .md, .pdf, etc.). File content will be extracted and segmented into chunks.
@@ -36,7 +32,6 @@ export class RabbitHoleService {
             },
         });
     }
-
     /**
      * Upload URL
      * Upload a URL. Website content will be extracted and segmented into chunks.
@@ -58,7 +53,6 @@ export class RabbitHoleService {
             },
         });
     }
-
     /**
      * Upload Memory
      * Upload a memory json file to the cat memory
@@ -79,7 +73,6 @@ export class RabbitHoleService {
             },
         });
     }
-
     /**
      * Get Allowed Mimetypes
      * Retrieve the allowed mimetypes that can be ingested by the Rabbit Hole
@@ -94,5 +87,4 @@ export class RabbitHoleService {
             url: '/rabbithole/allowed-mimetypes',
         });
     }
-
 }
