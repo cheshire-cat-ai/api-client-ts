@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.10.4
+
+### Patch Changes
+
+- de5799b: Improve types, renamed `user` to `userId`
+
 ## 0.10.3
 
 ### Patch Changes
