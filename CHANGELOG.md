@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.10.6
+
+### Patch Changes
+
+- 95d692f: Fix type module in package.json
+
 ## 0.10.5
 
 ### Patch Changes
