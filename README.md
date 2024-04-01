@@ -41,7 +41,7 @@ import { CatClient } from 'ccat-api'
 
 const cat = new CatClient({
     baseUrl: 'localhost',
-    user: 'user'.
+    userId: 'user'.
     //... other settings
 })
 
