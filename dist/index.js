@@ -480,8 +480,8 @@ var EmbedderService = class {
   }
 };
 
-// api/services/LargeLanguageModelService.ts
-var LargeLanguageModelService = class {
+// api/services/LlmService.ts
+var LlmService = class {
   constructor(httpRequest) {
     this.httpRequest = httpRequest;
   }
@@ -1048,7 +1048,7 @@ var StatusService = class {
 // api/CCatAPI.ts
 var CCatAPI = class {
   embedder;
-  largeLanguageModel;
+  llm;
   memory;
   plugins;
   rabbitHole;
@@ -1068,7 +1068,7 @@ var CCatAPI = class {
       ENCODE_PATH: config?.ENCODE_PATH
     });
     this.embedder = new EmbedderService(this.request);
-    this.largeLanguageModel = new LargeLanguageModelService(this.request);
+    this.llm = new LlmService(this.request);
     this.memory = new MemoryService(this.request);
     this.plugins = new PluginsService(this.request);
     this.rabbitHole = new RabbitHoleService(this.request);
