@@ -95,7 +95,7 @@ declare class EmbedderService {
     upsertEmbedderSetting(languageEmbedderName: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
 }
 
-declare class LargeLanguageModelService {
+declare class LlmService {
     private readonly httpRequest;
     constructor(httpRequest: BaseHttpRequest);
     /**
@@ -497,7 +497,7 @@ declare class StatusService {
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 declare class CCatAPI {
     readonly embedder: EmbedderService;
-    readonly largeLanguageModel: LargeLanguageModelService;
+    readonly llm: LlmService;
     readonly memory: MemoryService;
     readonly plugins: PluginsService;
     readonly rabbitHole: RabbitHoleService;
