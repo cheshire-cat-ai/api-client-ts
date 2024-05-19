@@ -258,7 +258,7 @@
         "/llm/settings": {
             "get": {
                 "tags": [
-                    "Large Language Model"
+                    "LLM"
                 ],
                 "summary": "Get LLMs Settings",
                 "description": "Get the list of the Large Language Models",
@@ -281,7 +281,7 @@
         "/llm/settings/{languageModelName}": {
             "get": {
                 "tags": [
-                    "Large Language Model"
+                    "LLM"
                 ],
                 "summary": "Get Llm Settings",
                 "description": "Get settings and schema of the specified Large Language Model",
@@ -323,7 +323,7 @@
             },
             "put": {
                 "tags": [
-                    "Large Language Model"
+                    "LLM"
                 ],
                 "summary": "Upsert LLM Setting",
                 "description": "Upsert the Large Language Model setting",

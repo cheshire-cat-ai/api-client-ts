@@ -6,7 +6,7 @@ import type { BaseHttpRequest } from './core/BaseHttpRequest';
 import type { OpenAPIConfig } from './core/OpenAPI';
 import { AxiosHttpRequest } from './core/AxiosHttpRequest';
 import { EmbedderService } from './services/EmbedderService';
-import { LargeLanguageModelService } from './services/LargeLanguageModelService';
+import { LlmService } from './services/LlmService';
 import { MemoryService } from './services/MemoryService';
 import { PluginsService } from './services/PluginsService';
 import { RabbitHoleService } from './services/RabbitHoleService';
@@ -15,7 +15,7 @@ import { StatusService } from './services/StatusService';
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 export class CCatAPI {
     public readonly embedder: EmbedderService;
-    public readonly largeLanguageModel: LargeLanguageModelService;
+    public readonly llm: LlmService;
     public readonly memory: MemoryService;
     public readonly plugins: PluginsService;
     public readonly rabbitHole: RabbitHoleService;
@@ -35,7 +35,7 @@ export class CCatAPI {
             ENCODE_PATH: config?.ENCODE_PATH,
         });
         this.embedder = new EmbedderService(this.request);
-        this.largeLanguageModel = new LargeLanguageModelService(this.request);
+        this.llm = new LlmService(this.request);
         this.memory = new MemoryService(this.request);
         this.plugins = new PluginsService(this.request);
         this.rabbitHole = new RabbitHoleService(this.request);

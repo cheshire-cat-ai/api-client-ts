@@ -6,7 +6,7 @@ import type { Setting } from '../models/Setting';
 import type { SettingsResponse } from '../models/SettingsResponse';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import type { BaseHttpRequest } from '../core/BaseHttpRequest';
-export class LargeLanguageModelService {
+export class LlmService {
     constructor(private readonly httpRequest: BaseHttpRequest) {}
     /**
      * Get LLMs Settings
