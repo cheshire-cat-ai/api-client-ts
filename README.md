@@ -80,7 +80,7 @@ cat.send('Hello from a new user!') // this will send a message to the /ws/new_us
 Then, for example, you can configure the LLM like this:
 
 ```ts
-cat.api.settingsLargeLanguageModel.upsertLlmSetting('LLMOpenAIConfig', {
+cat.api.llm.upsertLlmSetting('LLMOpenAIConfig', {
     openai_api_key: 'OPEN_API_KEY'
 })
 ```
