@@ -1,11 +1,11 @@
 {
-    "openapi": "3.0.2",
+    "openapi": "3.1.0",
     "info": {
         "title": "😸 Cheshire-Cat API",
-        "description": "Customizable AI architecture",
-        "version": "0.0.5",
+        "description": "Production ready AI assistant framework",
+        "version": "1.6.2",
         "x-logo": {
-            "url": "https://github.com/cheshire-cat-ai/core/blob/main/cheshire-cat.jpeg?raw=true"
+            "url": "https://cheshirecat.ai/wp-content/uploads/2023/10/Logo-Cheshire-Cat.svg"
         }
     },
     "paths": {
@@ -30,6 +30,479 @@
                     }
                 },
                 "security": []
+            }
+        },
+        "/message": {
+            "post": {
+                "tags": [
+                    "Status"
+                ],
+                "summary": "Message With Cat",
+                "description": "Get a response from the Cat",
+                "operationId": "message_with_cat",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload",
+                                "required": [
+                                    "text"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "title": "Text"
+                                    }
+                                },
+                                "default": {
+                                    "text": "hello!"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CatMessage"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/available-permissions": {
+            "get": {
+                "tags": [
+                    "User Auth"
+                ],
+                "summary": "Get Available Permissions",
+                "description": "Returns all available resources and permissions.",
+                "operationId": "get_available_permissions",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "items": {
+                                            "$ref": "#/components/schemas/AuthPermission"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "type": "object",
+                                    "title": "Response Get Available Permissions"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/token": {
+            "post": {
+                "tags": [
+                    "User Auth"
+                ],
+                "summary": "Auth Token",
+                "description": "Endpoint called from client to get a JWT from local identity provider.\nThis endpoint receives username and password as form-data, validates credentials and issues a JWT.",
+                "operationId": "auth_token",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCredentials"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JWTResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create User",
+                "operationId": "create_user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Read Users",
+                "operationId": "read_users",
+                "parameters": [
+                    {
+                        "name": "skip",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 0,
+                            "title": "Skip"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 100,
+                            "title": "Limit"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserResponse"
+                                    },
+                                    "title": "Response Read Users"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Read User",
+                "operationId": "read_user",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "User Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update User",
+                "operationId": "update_user",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "User Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete User",
+                "operationId": "delete_user",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "User Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth_handler/settings": {
+            "get": {
+                "tags": [
+                    "AuthHandler"
+                ],
+                "summary": "Get Auth Handler Settings",
+                "description": "Get the list of the AuthHandlers",
+                "operationId": "get_auth_handler_settings",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Get Auth Handler Settings"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth_handler/settings/{auth_handler_name}": {
+            "get": {
+                "tags": [
+                    "AuthHandler"
+                ],
+                "summary": "Get Auth Handler Setting",
+                "description": "Get the settings of a specific AuthHandler",
+                "operationId": "get_auth_handler_setting",
+                "parameters": [
+                    {
+                        "name": "auth_handler_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Auth Handler Name"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Get Auth Handler Setting"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "AuthHandler"
+                ],
+                "summary": "Upsert Authenticator Setting",
+                "description": "Upsert the settings of a specific AuthHandler",
+                "operationId": "upsert_authenticator_setting",
+                "parameters": [
+                    {
+                        "name": "auth_handler_name",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Auth Handler Name"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "title": "Payload"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "title": "Response Upsert Authenticator Setting"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/settings": {
@@ -1100,60 +1573,60 @@
             }
         },
         "/memory/collections/{collection_id}/points": {
-			"delete": {
-				"tags": [
-					"Memory"
-				],
-				"summary": "Wipe Memory Points By Metadata",
-				"description": "Delete points in memory by filter",
-				"operationId": "wipe_memory_points",
-				"security": [],
-				"parameters": [
-					{
-						"name": "collection_id",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string",
-							"title": "Collection Id"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"type": "object",
-								"default": {},
-								"title": "Metadata"
-							}
-						}
-					}
-				},
-				"responses": {
-					"200": {
-						"description": "Successful Response",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/DeleteResponse"
-								}
-							}
-						}
-					},
-					"422": {
-						"description": "Validation Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/HTTPValidationError"
-								}
-							}
-						}
-					}
-				}
-			}
-		},
+            "delete": {
+                "tags": [
+                    "Memory"
+                ],
+                "summary": "Wipe Memory Points By Metadata",
+                "description": "Delete points in memory by filter",
+                "operationId": "wipe_memory_points",
+                "security": [],
+                "parameters": [
+                    {
+                        "name": "collection_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Collection Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "default": {},
+                                "title": "Metadata"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeleteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/memory/conversation_history": {
             "get": {
                 "tags": [
@@ -1377,6 +1850,229 @@
     },
     "components": {
         "schemas": {
+            "AuthPermission": {
+                "type": "string",
+                "enum": [
+                    "WRITE",
+                    "EDIT",
+                    "LIST",
+                    "READ",
+                    "DELETE"
+                ],
+                "title": "AuthPermission"
+            },
+            "AuthResource": {
+                "type": "string",
+                "enum": [
+                    "STATUS",
+                    "MEMORY",
+                    "CONVERSATION",
+                    "SETTINGS",
+                    "LLM",
+                    "EMBEDDER",
+                    "AUTH_HANDLER",
+                    "USERS",
+                    "UPLOAD",
+                    "PLUGINS",
+                    "ADMIN",
+                    "STATIC"
+                ],
+                "title": "AuthResource"
+            },
+            "CatMessage": {
+                "properties": {
+                    "content": {
+                        "type": "string",
+                        "title": "Content"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type",
+                        "default": "chat"
+                    },
+                    "why": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/MessageWhy"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "content",
+                    "user_id"
+                ],
+                "title": "CatMessage"
+            },
+            "JWTResponse": {
+                "properties": {
+                    "access_token": {
+                        "type": "string",
+                        "title": "Access Token"
+                    },
+                    "token_type": {
+                        "type": "string",
+                        "title": "Token Type",
+                        "default": "bearer"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "access_token"
+                ],
+                "title": "JWTResponse"
+            },
+            "MessageWhy": {
+                "properties": {
+                    "input": {
+                        "type": "string",
+                        "title": "Input"
+                    },
+                    "intermediate_steps": {
+                        "items": {},
+                        "type": "array",
+                        "title": "Intermediate Steps"
+                    },
+                    "memory": {
+                        "type": "object",
+                        "title": "Memory"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "input",
+                    "intermediate_steps",
+                    "memory"
+                ],
+                "title": "MessageWhy",
+                "description": "Class for wrapping message why\n\nVariables:\n    input (str): input message\n    intermediate_steps (List): intermediate steps\n    memory (dict): memory"
+            },
+            "UserCreate": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "minLength": 2,
+                        "title": "Username"
+                    },
+                    "permissions": {
+                        "additionalProperties": {
+                            "items": {
+                                "$ref": "#/components/schemas/AuthPermission"
+                            },
+                            "type": "array"
+                        },
+                        "type": "object",
+                        "title": "Permissions",
+                        "default": {
+                            "CONVERSATION": [
+                                "WRITE",
+                                "EDIT",
+                                "LIST",
+                                "READ",
+                                "DELETE"
+                            ]
+                        }
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 5,
+                        "title": "Password"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "title": "UserCreate"
+            },
+            "UserCredentials": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "title": "Username"
+                    },
+                    "password": {
+                        "type": "string",
+                        "title": "Password"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "title": "UserCredentials"
+            },
+            "UserResponse": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "minLength": 2,
+                        "title": "Username"
+                    },
+                    "permissions": {
+                        "additionalProperties": {
+                            "items": {
+                                "$ref": "#/components/schemas/AuthPermission"
+                            },
+                            "type": "array"
+                        },
+                        "type": "object",
+                        "title": "Permissions",
+                        "default": {
+                            "CONVERSATION": [
+                                "WRITE",
+                                "EDIT",
+                                "LIST",
+                                "READ",
+                                "DELETE"
+                            ]
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "username",
+                    "id"
+                ],
+                "title": "UserResponse"
+            },
+            "UserUpdate": {
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "minLength": 2,
+                        "title": "Username"
+                    },
+                    "permissions": {
+                        "additionalProperties": {
+                            "items": {
+                                "$ref": "#/components/schemas/AuthPermission"
+                            },
+                            "type": "array"
+                        },
+                        "type": "object",
+                        "title": "Permissions"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "UserUpdate"
+            },
             "BodyInstallPlugin": {
                 "title": "BodyInstallPlugin",
                 "required": [

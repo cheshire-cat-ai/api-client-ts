@@ -31,7 +31,6 @@ export class CatClient {
             timeout: 10000,
             port: 1865,
             userId: 'user',
-            headers: {},
             ...settings
         }
         if (this.config.instant) this.init()
@@ -40,13 +39,13 @@ export class CatClient {
     private initWebSocket() {
         const wsConfig = this.config.ws = {
             delay: 3000,
-            path: '/ws',
             retries: 3,
             ...this.config.ws
         } satisfies WebSocketSettings
         const userId = this.config.userId ?? 'user'
         const url = this.url.replace(/http/g, 'ws')
-        this.ws = new WebSocket(`${url}${wsConfig.path}/${userId}${wsConfig.query ?? ''}`)
+        const query = this.config.credential ? `?token=${this.config.credential}` : ''
+        this.ws = new WebSocket(`${url}/ws/${userId}${query}`)
         this.ws.onopen = () => {
             this.connectedHandler?.()
         }
@@ -101,9 +100,11 @@ export class CatClient {
             this.apiClient = new CCatAPI({
                 BASE: `${this.url}`,
                 HEADERS: {
-                    'access_token': this.config.authKey ?? '',
+                    ...this.config.credential ? {
+                        'access_token': this.config.credential,
+                        'Authorization': `Bearer ${this.config.credential}`,
+                    } : {},
                     'user_id': this.config.userId ?? 'user',
-                    ...this.config.headers
                 }
             })
         }
@@ -146,11 +147,11 @@ export class CatClient {
     }
     
     /**
-     * Setter for the authentication key used by the client. This will also reset the client.
-     * @param key The authentication key to be set.
+     * Setter for the authentication key or token used by the client. This will also reset the client.
+     * @param key The authentication key or token to be set.
      */
-    set authKey(key: string) {
-        this.config.authKey = key
+    set credential(key: string) {
+        this.config.credential = key
         this.reset().init()
     }
 
