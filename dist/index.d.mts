@@ -55,6 +55,35 @@ declare abstract class BaseHttpRequest {
     abstract request<T>(options: ApiRequestOptions): CancelablePromise<T>;
 }
 
+declare class AuthHandlerService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get Auth Handler Settings
+     * Get the list of the AuthHandlers
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    getAuthHandlerSettings(): CancelablePromise<Record<string, any>>;
+    /**
+     * Get Auth Handler Setting
+     * Get the settings of a specific AuthHandler
+     * @param authHandlerName
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    getAuthHandlerSetting(authHandlerName: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Upsert Authenticator Setting
+     * Upsert the settings of a specific AuthHandler
+     * @param authHandlerName
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    upsertAuthenticatorSetting(authHandlerName: string, requestBody: Record<string, any>): CancelablePromise<Record<string, any>>;
+}
+
 type Setting = {
     name: string;
     value: Record<string, any>;
@@ -477,6 +506,27 @@ declare class SettingsService {
     updateSetting(settingId: string, requestBody: SettingBody): CancelablePromise<Setting>;
 }
 
+/**
+ * Class for wrapping message why
+ *
+ * Variables:
+ * input (str): input message
+ * intermediate_steps (List): intermediate steps
+ * memory (dict): memory
+ */
+type MessageWhy = {
+    input: string;
+    intermediate_steps: Array<any>;
+    memory: Record<string, any>;
+};
+
+type CatMessage = {
+    content: string;
+    user_id: string;
+    type?: string;
+    why?: (MessageWhy | null);
+};
+
 type Status = {
     status: string;
     version: string;
@@ -492,10 +542,113 @@ declare class StatusService {
      * @throws ApiError
      */
     home(): CancelablePromise<Status>;
+    /**
+     * Message With Cat
+     * Get a response from the Cat
+     * @param requestBody
+     * @returns CatMessage Successful Response
+     * @throws ApiError
+     */
+    messageWithCat(requestBody?: {
+        text: string;
+    }): CancelablePromise<CatMessage>;
+}
+
+type AuthPermission = 'WRITE' | 'EDIT' | 'LIST' | 'READ' | 'DELETE';
+
+type JWTResponse = {
+    access_token: string;
+    token_type?: string;
+};
+
+type UserCredentials = {
+    username: string;
+    password: string;
+};
+
+declare class UserAuthService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get Available Permissions
+     * Returns all available resources and permissions.
+     * @returns AuthPermission Successful Response
+     * @throws ApiError
+     */
+    getAvailablePermissions(): CancelablePromise<Record<string, Array<AuthPermission>>>;
+    /**
+     * Auth Token
+     * Endpoint called from client to get a JWT from local identity provider.
+     * This endpoint receives username and password as form-data, validates credentials and issues a JWT.
+     * @param requestBody
+     * @returns JWTResponse Successful Response
+     * @throws ApiError
+     */
+    authToken(requestBody: UserCredentials): CancelablePromise<JWTResponse>;
+}
+
+type UserCreate = {
+    username: string;
+    permissions?: Record<string, Array<AuthPermission>>;
+    password: string;
+};
+
+type UserResponse = {
+    username: string;
+    permissions?: Record<string, Array<AuthPermission>>;
+    id: string;
+};
+
+type UserUpdate = {
+    username?: string;
+    permissions?: Record<string, Array<AuthPermission>>;
+};
+
+declare class UsersService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Create User
+     * @param requestBody
+     * @returns UserResponse Successful Response
+     * @throws ApiError
+     */
+    createUser(requestBody: UserCreate): CancelablePromise<UserResponse>;
+    /**
+     * Read Users
+     * @param skip
+     * @param limit
+     * @returns UserResponse Successful Response
+     * @throws ApiError
+     */
+    readUsers(skip?: number, limit?: number): CancelablePromise<Array<UserResponse>>;
+    /**
+     * Read User
+     * @param userId
+     * @returns UserResponse Successful Response
+     * @throws ApiError
+     */
+    readUser(userId: string): CancelablePromise<UserResponse>;
+    /**
+     * Update User
+     * @param userId
+     * @param requestBody
+     * @returns UserResponse Successful Response
+     * @throws ApiError
+     */
+    updateUser(userId: string, requestBody: UserUpdate): CancelablePromise<UserResponse>;
+    /**
+     * Delete User
+     * @param userId
+     * @returns UserResponse Successful Response
+     * @throws ApiError
+     */
+    deleteUser(userId: string): CancelablePromise<UserResponse>;
 }
 
 type HttpRequestConstructor = new (config: OpenAPIConfig) => BaseHttpRequest;
 declare class CCatAPI {
+    readonly authHandler: AuthHandlerService;
     readonly embedder: EmbedderService;
     readonly llm: LlmService;
     readonly memory: MemoryService;
@@ -503,22 +656,13 @@ declare class CCatAPI {
     readonly rabbitHole: RabbitHoleService;
     readonly settings: SettingsService;
     readonly status: StatusService;
+    readonly userAuth: UserAuthService;
+    readonly users: UsersService;
     readonly request: BaseHttpRequest;
     constructor(config?: Partial<OpenAPIConfig>, HttpRequest?: HttpRequestConstructor);
 }
 
 interface WebSocketSettings {
-    /**
-     * Websocket path to use to communicate with the Cat. It should start with a slash.
-     * @default '/ws'
-    */
-    path?: `/${string}`;
-    /**
-     * The query to append to the URL. It should start with a question mark.
-     * @example '?token=123'
-     * @default undefined
-    */
-    query?: `?${string}`;
     /**
      * The maximum number of retries before calling {@link WebSocketSettings.onFailed}
      * @default 3
@@ -541,10 +685,10 @@ interface CatSettings {
     */
     baseUrl: string;
     /**
-     * The key to authenticate the Cat endpoints
-     * @default ''
+     * The token or key to authenticate the Cat endpoints
+     * @default undefined
     */
-    authKey?: string;
+    credential?: string;
     /**
      * The user ID to use for Websocket connection
      * @default 'user'
@@ -570,10 +714,6 @@ interface CatSettings {
      * @default 10000
     */
     timeout?: number;
-    /**
-     * The headers to pass to the API Client on initialization
-     */
-    headers?: Record<string, any>;
     /** An object of type {@link WebSocketSettings} */
     ws?: WebSocketSettings;
 }
@@ -640,10 +780,10 @@ declare class CatClient {
      */
     get api(): CCatAPI | undefined;
     /**
-     * Setter for the authentication key used by the client. This will also reset the client.
-     * @param key The authentication key to be set.
+     * Setter for the authentication key or token used by the client. This will also reset the client.
+     * @param key The authentication key or token to be set.
      */
-    set authKey(key: string);
+    set credential(key: string);
     /**
      * Setter for the user ID used by the client. This will also reset the client.
      * @param user The user ID to be set.
@@ -703,10 +843,12 @@ declare class ApiError extends Error {
     constructor(request: ApiRequestOptions, response: ApiResult, message: string);
 }
 
+type AuthResource = 'STATUS' | 'MEMORY' | 'CONVERSATION' | 'SETTINGS' | 'LLM' | 'EMBEDDER' | 'AUTH_HANDLER' | 'USERS' | 'UPLOAD' | 'PLUGINS' | 'ADMIN' | 'STATIC';
+
 type HTTPValidationError = {
     detail?: {
         error: string;
     };
 };
 
-export { type AcceptedMemoryType, AcceptedMemoryTypes, type AcceptedPluginType, AcceptedPluginTypes, ApiError, type BodyInstallPlugin, type BodyUploadFile, type BodyUploadMemory, type BodyUploadUrl, CancelError, CancelablePromise, CatClient, type CatSettings, type Collection, type CollectionData, type CollectionsList, type ConversationMessage, type DeleteResponse, type FileResponse, type HTTPValidationError, type MemoryRecall, type Metadata, type Plugin, type PluginsList, type QueryData, type Setting, type SettingBody, type SettingsResponse, type SocketError, type SocketResponse, type Status, type VectorsData, type WebResponse, type WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { type AcceptedMemoryType, AcceptedMemoryTypes, type AcceptedPluginType, AcceptedPluginTypes, ApiError, type AuthPermission, type AuthResource, type BodyInstallPlugin, type BodyUploadFile, type BodyUploadMemory, type BodyUploadUrl, CancelError, CancelablePromise, CatClient, type CatMessage, type CatSettings, type Collection, type CollectionData, type CollectionsList, type ConversationMessage, type DeleteResponse, type FileResponse, type HTTPValidationError, type JWTResponse, type MemoryRecall, type MessageWhy, type Metadata, type Plugin, type PluginsList, type QueryData, type Setting, type SettingBody, type SettingsResponse, type SocketError, type SocketResponse, type Status, type UserCreate, type UserCredentials, type UserResponse, type UserUpdate, type VectorsData, type WebResponse, type WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
