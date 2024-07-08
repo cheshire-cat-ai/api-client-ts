@@ -150,7 +150,7 @@ export class CatClient {
      * Setter for the authentication key or token used by the client. This will also reset the client.
      * @param key The authentication key or token to be set.
      */
-    set credential(key: string) {
+    set credential(key: string | undefined) {
         this.config.credential = key
         this.reset().init()
     }
