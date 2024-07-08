@@ -783,7 +783,7 @@ declare class CatClient {
      * Setter for the authentication key or token used by the client. This will also reset the client.
      * @param key The authentication key or token to be set.
      */
-    set credential(key: string);
+    set credential(key: string | undefined);
     /**
      * Setter for the user ID used by the client. This will also reset the client.
      * @param user The user ID to be set.
