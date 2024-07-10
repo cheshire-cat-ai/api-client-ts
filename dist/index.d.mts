@@ -843,7 +843,7 @@ declare class ApiError extends Error {
     constructor(request: ApiRequestOptions, response: ApiResult, message: string);
 }
 
-type AuthResource = 'STATUS' | 'MEMORY' | 'CONVERSATION' | 'SETTINGS' | 'LLM' | 'EMBEDDER' | 'AUTH_HANDLER' | 'USERS' | 'UPLOAD' | 'PLUGINS' | 'ADMIN' | 'STATIC';
+type AuthResource = 'STATUS' | 'MEMORY' | 'CONVERSATION' | 'SETTINGS' | 'LLM' | 'EMBEDDER' | 'AUTH_HANDLER' | 'USERS' | 'UPLOAD' | 'PLUGINS' | 'STATIC';
 
 type HTTPValidationError = {
     detail?: {

@@ -61,16 +61,14 @@ var CancelablePromise = class {
           return;
         }
         this.#isResolved = true;
-        if (this.#resolve)
-          this.#resolve(value);
+        if (this.#resolve) this.#resolve(value);
       };
       const onReject = (reason) => {
         if (this.#isResolved || this.#isRejected || this.#isCancelled) {
           return;
         }
         this.#isRejected = true;
-        if (this.#reject)
-          this.#reject(reason);
+        if (this.#reject) this.#reject(reason);
       };
       const onCancel = (cancelHandler) => {
         if (this.#isResolved || this.#isRejected || this.#isCancelled) {
@@ -118,8 +116,7 @@ var CancelablePromise = class {
       }
     }
     this.#cancelHandlers.length = 0;
-    if (this.#reject)
-      this.#reject(new CancelError("Request aborted"));
+    if (this.#reject) this.#reject(new CancelError("Request aborted"));
   }
   get isCancelled() {
     return this.#isCancelled;
@@ -1299,8 +1296,7 @@ var CatClient = class {
       userId: "user",
       ...settings
     };
-    if (this.config.instant)
-      this.init();
+    if (this.config.instant) this.init();
   }
   initWebSocket() {
     const wsConfig = this.config.ws = {
@@ -1320,17 +1316,15 @@ var CatClient = class {
         this.retried += 1;
         if (wsConfig.retries < 0 || this.retried < wsConfig.retries) {
           setTimeout(() => this.initWebSocket(), wsConfig.delay);
-        } else
-          wsConfig.onFailed?.({
-            name: "FailedRetry",
-            description: `Failed to connect WebSocket after ${wsConfig.retries} retries.`
-          });
+        } else wsConfig.onFailed?.({
+          name: "FailedRetry",
+          description: `Failed to connect WebSocket after ${wsConfig.retries} retries.`
+        });
       }
       this.disconnectedHandler?.();
     };
     this.ws.onmessage = (event) => {
-      if (typeof event.data != "string")
-        return;
+      if (typeof event.data != "string") return;
       const data = JSON.parse(event.data);
       if (isMessageResponse(data)) {
         this.messageHandler?.(data);
