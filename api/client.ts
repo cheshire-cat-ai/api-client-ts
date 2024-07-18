@@ -47,6 +47,7 @@ export class CatClient {
         const query = this.config.credential ? `?token=${this.config.credential}` : ''
         this.ws = new WebSocket(`${url}/ws/${userId}${query}`)
         this.ws.onopen = () => {
+            this.retried = 0
             this.connectedHandler?.()
         }
         this.ws.onclose = () => {
