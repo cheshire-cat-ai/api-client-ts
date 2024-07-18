@@ -1353,6 +1353,7 @@ var CatClient = class {
     const query = this.config.credential ? `?token=${this.config.credential}` : "";
     this.ws = new import_isomorphic_ws.default(`${url}/ws/${userId}${query}`);
     this.ws.onopen = () => {
+      this.retried = 0;
       this.connectedHandler?.();
     };
     this.ws.onclose = () => {
