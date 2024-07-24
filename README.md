@@ -25,11 +25,13 @@ Every endpoint is a `CancelablePromise`, which means you can cancel the request 
 ## Installation
 
 ```bash
-npm install ccat-api
+npm i ccat-api
 # OR
 yarn add ccat-api
 # OR
 pnpm i ccat-api
+# OR
+bun i ccat-api
 ```
 
 ## Getting started
@@ -54,34 +56,31 @@ cat.send('Hello from a new user!') // this will send a message to the /ws/new_us
 
 ## Client settings
 
-**API_KEY**, **CORE_HOST**, **CORE_PORT** and **CORE_USE_SECURE_PROTOCOLS** refer to the CCAT Core [.env file](https://github.com/cheshire-cat-ai/core/blob/main/.env.example).
+**CCAT_API_KEY**, **CCAT_CORE_HOST**, **CCAT_CORE_PORT** and **CCAT_CORE_USE_SECURE_PROTOCOLS** refer to the CCAT Core [.env file](https://github.com/cheshire-cat-ai/core/blob/main/.env.example).
 
-| **Property** | **Type** | **Default**  | **Description**                                                                  |
-|:------------:|:--------:|:------------:|:--------------------------------------------------------------------------------:|
-| **baseUrl**  | string   | **Required** | The same of **CORE_HOST**                                                        |
-| **authKey**  | string   | ''           | The same of **API_KEY**                                                          |
-| **port**     | number   | 1865         | The same of the **CORE_PORT**                                                    |
-| **secure**   | boolean  | false        | The same of the **CORE_USE_SECURE_PROTOCOLS**                                    |
-| **user**     | string   | 'user'       | The user ID to use for the WebSocket and the API client                          |
-| **instant**  | boolean  | true         | Instantly initialize the WebSocket and the API client, or later with **.init()** |
-| **timeout**  | number   | 10000        | Timeout for the endpoints, in milliseconds                                       |
-| **headers**  | object   | {}           | The headers to send with the API requests                                        |
-| **ws**       | string   | undefined    | An object of type [WebSocketSettings](#websocket-settings)                       |
+| **Property**   | **Type** | **Default**  | **Description**                                                                  |
+|:--------------:|:--------:|:------------:|:--------------------------------------------------------------------------------:|
+| **baseUrl**    | string   | **Required** | The same of **CCAT_CORE_HOST**                                                   |
+| **credential** | string   | undefined    | The same of **CCAT_API_KEY** or the JWT token                                    |
+| **port**       | number   | 1865         | The same of the **CCAT_CORE_PORT**                                               |
+| **secure**     | boolean  | false        | The same of the **CCAT_CORE_USE_SECURE_PROTOCOLS**                               |
+| **user**       | string   | 'user'       | The user ID to use for the WebSocket and the API client                          |
+| **instant**    | boolean  | true         | Instantly initialize the WebSocket and the API client, or later with **.init()** |
+| **timeout**    | number   | 10000        | Timeout for the endpoints, in milliseconds                                       |
+| **ws**         | string   | undefined    | An object of type [WebSocketSettings](#websocket-settings)                       |
 
 ### WebSocket settings
 
 | **Property** | **Type** | **Default** | **Description**                                           |
-|:------------:|:--------:|:-----------:|:--------------------------------------------------------:|
-| **path**     | string   | 'ws'        | Websocket path to use to communicate with the CCat        |
+|:------------:|:--------:|:-----------:|:---------------------------------------------------------:|
 | **retries**  | number   | 3           | The maximum number of retries before calling **onFailed** |
-| **query**    | string   | undefined   | The query to send with the WebSocket connection           |
 | **delay**    | number   | 3000        | The delay for reconnect, in milliseconds                  |
 | **onFailed** | function | undefined   | The function to call after failing all the retries        |
 
 Then, for example, you can configure the LLM like this:
 
 ```ts
-cat.api.settingsLargeLanguageModel.upsertLlmSetting('LLMOpenAIConfig', {
+cat.api.llm.upsertLlmSetting('LLMOpenAIConfig', {
     openai_api_key: 'OPEN_API_KEY'
 })
 ```
@@ -99,8 +98,8 @@ cat.onConnected(() => {
     console.log('Socket connected')
 }).onMessage(msg => {
     console.log(msg)
-}).onError(err => {
-    console.log(err)
+}).onError((err, e) => {
+    console.error(err, e)
 }).onDisconnected(() => {
     console.log('Socket disconnected')
 })

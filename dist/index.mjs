@@ -61,16 +61,14 @@ var CancelablePromise = class {
           return;
         }
         this.#isResolved = true;
-        if (this.#resolve)
-          this.#resolve(value);
+        if (this.#resolve) this.#resolve(value);
       };
       const onReject = (reason) => {
         if (this.#isResolved || this.#isRejected || this.#isCancelled) {
           return;
         }
         this.#isRejected = true;
-        if (this.#reject)
-          this.#reject(reason);
+        if (this.#reject) this.#reject(reason);
       };
       const onCancel = (cancelHandler) => {
         if (this.#isResolved || this.#isRejected || this.#isCancelled) {
@@ -118,8 +116,7 @@ var CancelablePromise = class {
       }
     }
     this.#cancelHandlers.length = 0;
-    if (this.#reject)
-      this.#reject(new CancelError("Request aborted"));
+    if (this.#reject) this.#reject(new CancelError("Request aborted"));
   }
   get isCancelled() {
     return this.#isCancelled;
@@ -376,6 +373,66 @@ var AxiosHttpRequest = class extends BaseHttpRequest {
   }
 };
 
+// api/services/AuthHandlerService.ts
+var AuthHandlerService = class {
+  constructor(httpRequest) {
+    this.httpRequest = httpRequest;
+  }
+  /**
+   * Get Auth Handler Settings
+   * Get the list of the AuthHandlers
+   * @returns any Successful Response
+   * @throws ApiError
+   */
+  getAuthHandlerSettings() {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/auth_handler/settings"
+    });
+  }
+  /**
+   * Get Auth Handler Setting
+   * Get the settings of a specific AuthHandler
+   * @param authHandlerName
+   * @returns any Successful Response
+   * @throws ApiError
+   */
+  getAuthHandlerSetting(authHandlerName) {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/auth_handler/settings/{auth_handler_name}",
+      path: {
+        "auth_handler_name": authHandlerName
+      },
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Upsert Authenticator Setting
+   * Upsert the settings of a specific AuthHandler
+   * @param authHandlerName
+   * @param requestBody
+   * @returns any Successful Response
+   * @throws ApiError
+   */
+  upsertAuthenticatorSetting(authHandlerName, requestBody) {
+    return this.httpRequest.request({
+      method: "PUT",
+      url: "/auth_handler/settings/{auth_handler_name}",
+      path: {
+        "auth_handler_name": authHandlerName
+      },
+      body: requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+};
+
 // api/services/EmbedderService.ts
 var EmbedderService = class {
   constructor(httpRequest) {
@@ -436,8 +493,8 @@ var EmbedderService = class {
   }
 };
 
-// api/services/LargeLanguageModelService.ts
-var LargeLanguageModelService = class {
+// api/services/LlmService.ts
+var LlmService = class {
   constructor(httpRequest) {
     this.httpRequest = httpRequest;
   }
@@ -999,22 +1056,182 @@ var StatusService = class {
       url: "/"
     });
   }
+  /**
+   * Message With Cat
+   * Get a response from the Cat
+   * @param requestBody
+   * @returns CatMessage Successful Response
+   * @throws ApiError
+   */
+  messageWithCat(requestBody) {
+    return this.httpRequest.request({
+      method: "POST",
+      url: "/message",
+      body: requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+};
+
+// api/services/UserAuthService.ts
+var UserAuthService = class {
+  constructor(httpRequest) {
+    this.httpRequest = httpRequest;
+  }
+  /**
+   * Get Available Permissions
+   * Returns all available resources and permissions.
+   * @returns AuthPermission Successful Response
+   * @throws ApiError
+   */
+  getAvailablePermissions() {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/auth/available-permissions"
+    });
+  }
+  /**
+   * Auth Token
+   * Endpoint called from client to get a JWT from local identity provider.
+   * This endpoint receives username and password as form-data, validates credentials and issues a JWT.
+   * @param requestBody
+   * @returns JWTResponse Successful Response
+   * @throws ApiError
+   */
+  authToken(requestBody) {
+    return this.httpRequest.request({
+      method: "POST",
+      url: "/auth/token",
+      body: requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+};
+
+// api/services/UsersService.ts
+var UsersService = class {
+  constructor(httpRequest) {
+    this.httpRequest = httpRequest;
+  }
+  /**
+   * Create User
+   * @param requestBody
+   * @returns UserResponse Successful Response
+   * @throws ApiError
+   */
+  createUser(requestBody) {
+    return this.httpRequest.request({
+      method: "POST",
+      url: "/users/",
+      body: requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Read Users
+   * @param skip
+   * @param limit
+   * @returns UserResponse Successful Response
+   * @throws ApiError
+   */
+  readUsers(skip, limit = 100) {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/users/",
+      query: {
+        "skip": skip,
+        "limit": limit
+      },
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Read User
+   * @param userId
+   * @returns UserResponse Successful Response
+   * @throws ApiError
+   */
+  readUser(userId) {
+    return this.httpRequest.request({
+      method: "GET",
+      url: "/users/{user_id}",
+      path: {
+        "user_id": userId
+      },
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Update User
+   * @param userId
+   * @param requestBody
+   * @returns UserResponse Successful Response
+   * @throws ApiError
+   */
+  updateUser(userId, requestBody) {
+    return this.httpRequest.request({
+      method: "PUT",
+      url: "/users/{user_id}",
+      path: {
+        "user_id": userId
+      },
+      body: requestBody,
+      mediaType: "application/json",
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
+  /**
+   * Delete User
+   * @param userId
+   * @returns UserResponse Successful Response
+   * @throws ApiError
+   */
+  deleteUser(userId) {
+    return this.httpRequest.request({
+      method: "DELETE",
+      url: "/users/{user_id}",
+      path: {
+        "user_id": userId
+      },
+      errors: {
+        422: `Validation Error`
+      }
+    });
+  }
 };
 
 // api/CCatAPI.ts
 var CCatAPI = class {
+  authHandler;
   embedder;
-  largeLanguageModel;
+  llm;
   memory;
   plugins;
   rabbitHole;
   settings;
   status;
+  userAuth;
+  users;
   request;
   constructor(config, HttpRequest = AxiosHttpRequest) {
     this.request = new HttpRequest({
       BASE: config?.BASE ?? "",
-      VERSION: config?.VERSION ?? "0.0.5",
+      VERSION: config?.VERSION ?? "1.6.2",
       WITH_CREDENTIALS: config?.WITH_CREDENTIALS ?? false,
       CREDENTIALS: config?.CREDENTIALS ?? "include",
       TOKEN: config?.TOKEN,
@@ -1023,13 +1240,16 @@ var CCatAPI = class {
       HEADERS: config?.HEADERS,
       ENCODE_PATH: config?.ENCODE_PATH
     });
+    this.authHandler = new AuthHandlerService(this.request);
     this.embedder = new EmbedderService(this.request);
-    this.largeLanguageModel = new LargeLanguageModelService(this.request);
+    this.llm = new LlmService(this.request);
     this.memory = new MemoryService(this.request);
     this.plugins = new PluginsService(this.request);
     this.rabbitHole = new RabbitHoleService(this.request);
     this.settings = new SettingsService(this.request);
     this.status = new StatusService(this.request);
+    this.userAuth = new UserAuthService(this.request);
+    this.users = new UsersService(this.request);
   }
 };
 
@@ -1074,23 +1294,22 @@ var CatClient = class {
       timeout: 1e4,
       port: 1865,
       userId: "user",
-      headers: {},
       ...settings
     };
-    if (this.config.instant)
-      this.init();
+    if (this.config.instant) this.init();
   }
   initWebSocket() {
     const wsConfig = this.config.ws = {
       delay: 3e3,
-      path: "/ws",
       retries: 3,
       ...this.config.ws
     };
     const userId = this.config.userId ?? "user";
     const url = this.url.replace(/http/g, "ws");
-    this.ws = new WebSocket(`${url}${wsConfig.path}/${userId}${wsConfig.query ?? ""}`);
+    const query = this.config.credential ? `?token=${this.config.credential}` : "";
+    this.ws = new WebSocket(`${url}/ws/${userId}${query}`);
     this.ws.onopen = () => {
+      this.retried = 0;
       this.connectedHandler?.();
     };
     this.ws.onclose = () => {
@@ -1098,17 +1317,15 @@ var CatClient = class {
         this.retried += 1;
         if (wsConfig.retries < 0 || this.retried < wsConfig.retries) {
           setTimeout(() => this.initWebSocket(), wsConfig.delay);
-        } else
-          wsConfig.onFailed?.({
-            name: "FailedRetry",
-            description: `Failed to connect WebSocket after ${wsConfig.retries} retries.`
-          });
+        } else wsConfig.onFailed?.({
+          name: "FailedRetry",
+          description: `Failed to connect WebSocket after ${wsConfig.retries} retries.`
+        });
       }
       this.disconnectedHandler?.();
     };
     this.ws.onmessage = (event) => {
-      if (typeof event.data != "string")
-        return;
+      if (typeof event.data != "string") return;
       const data = JSON.parse(event.data);
       if (isMessageResponse(data)) {
         this.messageHandler?.(data);
@@ -1144,9 +1361,11 @@ var CatClient = class {
       this.apiClient = new CCatAPI({
         BASE: `${this.url}`,
         HEADERS: {
-          "access_token": this.config.authKey ?? "",
-          "user_id": this.config.userId ?? "user",
-          ...this.config.headers
+          ...this.config.credential ? {
+            "access_token": this.config.credential,
+            "Authorization": `Bearer ${this.config.credential}`
+          } : {},
+          "user_id": this.config.userId ?? "user"
         }
       });
     }
@@ -1186,11 +1405,11 @@ var CatClient = class {
     return this.apiClient;
   }
   /**
-   * Setter for the authentication key used by the client. This will also reset the client.
-   * @param key The authentication key to be set.
+   * Setter for the authentication key or token used by the client. This will also reset the client.
+   * @param key The authentication key or token to be set.
    */
-  set authKey(key) {
-    this.config.authKey = key;
+  set credential(key) {
+    this.config.credential = key;
     this.reset().init();
   }
   /**

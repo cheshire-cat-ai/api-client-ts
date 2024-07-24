@@ -1,0 +1,11 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { AuthPermission } from './AuthPermission';
+export type UserCreate = {
+    username: string;
+    permissions?: Record<string, Array<AuthPermission>>;
+    password: string;
+};
+

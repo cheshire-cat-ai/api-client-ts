@@ -1,15 +1,6 @@
+import { MessageWhy } from "./models/MessageWhy"
+
 export interface WebSocketSettings {
-    /** 
-     * Websocket path to use to communicate with the Cat. It should start with a slash.
-     * @default '/ws'
-    */
-    path?: `/${string}`
-    /** 
-     * The query to append to the URL. It should start with a question mark.
-     * @example '?token=123'
-     * @default undefined
-    */
-    query?: `?${string}`
     /** 
      * The maximum number of retries before calling {@link WebSocketSettings.onFailed}
      * @default 3
@@ -33,10 +24,10 @@ export interface CatSettings {
     */
     baseUrl: string
     /** 
-     * The key to authenticate the Cat endpoints
-     * @default ''
+     * The token or key to authenticate the Cat endpoints
+     * @default undefined
     */
-    authKey?: string
+    credential?: string
     /** 
      * The user ID to use for Websocket connection
      * @default 'user'
@@ -62,10 +53,6 @@ export interface CatSettings {
      * @default 10000
     */
     timeout?: number
-    /**
-     * The headers to pass to the API Client on initialization
-     */
-    headers?: Record<string, any>
     /** An object of type {@link WebSocketSettings} */
     ws?: WebSocketSettings
 }
@@ -90,7 +77,8 @@ export enum WebSocketState {
 export interface SocketResponse {
     type: 'notification' | 'chat' | 'chat_token'
     content: string
-    why?: unknown
+    why?: MessageWhy & Record<string, any>
+    [key: string]: any
 }
 
 export interface SocketError {
