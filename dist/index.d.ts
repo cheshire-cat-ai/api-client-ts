@@ -730,7 +730,8 @@ declare enum WebSocketState {
 interface SocketResponse {
     type: 'notification' | 'chat' | 'chat_token';
     content: string;
-    why?: unknown;
+    why?: MessageWhy & Record<string, any>;
+    [key: string]: any;
 }
 interface SocketError {
     name: 'SocketError' | 'FailedRetry' | 'SocketClosed';
