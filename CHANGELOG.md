@@ -1,5 +1,19 @@
 # ccat-api
 
+## 0.11.0
+
+### Minor Changes
+
+- 1f4e778: - Added new auth endpoints
+  - Removed unused `ws`, `query` and `headers` parameters
+  - Renamed `authKey` to `credential` for better understanding
+  - Renamed `largeLanguageModel` service to `llm`
+  - Reset retries on WS connection open
+
+### Patch Changes
+
+- 6da4693: Update SocketResponse interface
+
 ## 0.10.6
 
 ### Patch Changes
