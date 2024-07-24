@@ -1,3 +1,5 @@
+import { MessageWhy } from "./models/MessageWhy"
+
 export interface WebSocketSettings {
     /** 
      * The maximum number of retries before calling {@link WebSocketSettings.onFailed}
@@ -75,7 +77,8 @@ export enum WebSocketState {
 export interface SocketResponse {
     type: 'notification' | 'chat' | 'chat_token'
     content: string
-    why?: unknown
+    why?: MessageWhy & Record<string, any>
+    [key: string]: any
 }
 
 export interface SocketError {
