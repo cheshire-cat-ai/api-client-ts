@@ -6,5 +6,6 @@ import type { AuthPermission } from './AuthPermission';
 export type UserUpdate = {
     username?: string;
     permissions?: Record<string, Array<AuthPermission>>;
+    password?: string;
 };
 

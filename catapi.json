@@ -2066,6 +2066,11 @@
                         },
                         "type": "object",
                         "title": "Permissions"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 4,
+                        "title": "Password"
                     }
                 },
                 "additionalProperties": false,
