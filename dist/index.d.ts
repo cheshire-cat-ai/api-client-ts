@@ -602,6 +602,7 @@ type UserResponse = {
 type UserUpdate = {
     username?: string;
     permissions?: Record<string, Array<AuthPermission>>;
+    password?: string;
 };
 
 declare class UsersService {
