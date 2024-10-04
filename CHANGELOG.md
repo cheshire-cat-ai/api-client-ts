@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.11.1
+
+### Patch Changes
+
+- df6a9e9: renamed `baseUrl` to `host` for better understanding.
+
 ## 0.11.0
 
 ### Minor Changes
