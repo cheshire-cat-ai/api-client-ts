@@ -1518,7 +1518,7 @@ var CatClient = class {
   }
   get url() {
     return `http${this.config.secure ? "s" : ""}://
-            ${this.config.baseUrl}
+            ${this.config.host}
             ${this.config.port ? `:${this.config.port}` : ""}
             `.replace(/\s/g, "");
   }
