@@ -42,7 +42,7 @@ To set up the client, you must first import the `CatClient` class:
 import { CatClient } from 'ccat-api'
 
 const cat = new CatClient({
-    baseUrl: 'localhost',
+    host: 'localhost',
     userId: 'user',
     //... other settings
 })
@@ -60,7 +60,7 @@ cat.send('Hello from a new user!') // this will send a message to the /ws/new_us
 
 | **Property**   | **Type** | **Default**  | **Description**                                                                  |
 |:--------------:|:--------:|:------------:|:--------------------------------------------------------------------------------:|
-| **baseUrl**    | string   | **Required** | The same of **CCAT_CORE_HOST**                                                   |
+| **host**       | string   | **Required** | The same of **CCAT_CORE_HOST**                                                   |
 | **credential** | string   | undefined    | The same of **CCAT_API_KEY** or the JWT token                                    |
 | **port**       | number   | 1865         | The same of the **CCAT_CORE_PORT**                                               |
 | **secure**     | boolean  | false        | The same of the **CCAT_CORE_USE_SECURE_PROTOCOLS**                               |

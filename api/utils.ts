@@ -19,10 +19,10 @@ export interface WebSocketSettings {
 }
 
 export interface CatSettings {
-    /** The URL to which connect to the Cat 
+    /** The hostname to which connect to the Cat 
      * @example 'localhost'
     */
-    baseUrl: string
+    host: string
     /** 
      * The token or key to authenticate the Cat endpoints
      * @default undefined
