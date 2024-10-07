@@ -399,8 +399,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "title": "Response Get Auth Handler Settings"
+                                    "$ref": "#/components/schemas/SettingsResponse"
                                 }
                             }
                         }
@@ -433,8 +432,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "title": "Response Get Auth Handler Setting"
+                                    "$ref": "#/components/schemas/Setting"
                                 }
                             }
                         }
@@ -486,8 +484,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "title": "Response Upsert Authenticator Setting"
+                                    "$ref": "#/components/schemas/Setting"
                                 }
                             }
                         }
