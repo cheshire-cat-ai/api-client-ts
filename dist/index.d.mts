@@ -55,35 +55,6 @@ declare abstract class BaseHttpRequest {
     abstract request<T>(options: ApiRequestOptions): CancelablePromise<T>;
 }
 
-declare class AuthHandlerService {
-    private readonly httpRequest;
-    constructor(httpRequest: BaseHttpRequest);
-    /**
-     * Get Auth Handler Settings
-     * Get the list of the AuthHandlers
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    getAuthHandlerSettings(): CancelablePromise<Record<string, any>>;
-    /**
-     * Get Auth Handler Setting
-     * Get the settings of a specific AuthHandler
-     * @param authHandlerName
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    getAuthHandlerSetting(authHandlerName: string): CancelablePromise<Record<string, any>>;
-    /**
-     * Upsert Authenticator Setting
-     * Upsert the settings of a specific AuthHandler
-     * @param authHandlerName
-     * @param requestBody
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    upsertAuthenticatorSetting(authHandlerName: string, requestBody: Record<string, any>): CancelablePromise<Record<string, any>>;
-}
-
 type Setting = {
     name: string;
     value: Record<string, any>;
@@ -94,6 +65,35 @@ type SettingsResponse = {
     settings: Array<Setting>;
     selected_configuration?: string;
 };
+
+declare class AuthHandlerService {
+    private readonly httpRequest;
+    constructor(httpRequest: BaseHttpRequest);
+    /**
+     * Get Auth Handler Settings
+     * Get the list of the AuthHandlers
+     * @returns SettingsResponse Successful Response
+     * @throws ApiError
+     */
+    getAuthHandlerSettings(): CancelablePromise<SettingsResponse>;
+    /**
+     * Get Auth Handler Setting
+     * Get the settings of a specific AuthHandler
+     * @param authHandlerName
+     * @returns Setting Successful Response
+     * @throws ApiError
+     */
+    getAuthHandlerSetting(authHandlerName: string): CancelablePromise<Setting>;
+    /**
+     * Upsert Authenticator Setting
+     * Upsert the settings of a specific AuthHandler
+     * @param authHandlerName
+     * @param requestBody
+     * @returns Setting Successful Response
+     * @throws ApiError
+     */
+    upsertAuthenticatorSetting(authHandlerName: string, requestBody: Record<string, any>): CancelablePromise<Setting>;
+}
 
 declare class EmbedderService {
     private readonly httpRequest;
