@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.11.2
+
+### Patch Changes
+
+- 54fc277: fix types in auth handler endpoints
+
 ## 0.11.1
 
 ### Patch Changes
