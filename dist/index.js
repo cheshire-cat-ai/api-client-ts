@@ -425,7 +425,7 @@ var AuthHandlerService = class {
   /**
    * Get Auth Handler Settings
    * Get the list of the AuthHandlers
-   * @returns any Successful Response
+   * @returns SettingsResponse Successful Response
    * @throws ApiError
    */
   getAuthHandlerSettings() {
@@ -438,7 +438,7 @@ var AuthHandlerService = class {
    * Get Auth Handler Setting
    * Get the settings of a specific AuthHandler
    * @param authHandlerName
-   * @returns any Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   getAuthHandlerSetting(authHandlerName) {
@@ -458,7 +458,7 @@ var AuthHandlerService = class {
    * Upsert the settings of a specific AuthHandler
    * @param authHandlerName
    * @param requestBody
-   * @returns any Successful Response
+   * @returns Setting Successful Response
    * @throws ApiError
    */
   upsertAuthenticatorSetting(authHandlerName, requestBody) {
