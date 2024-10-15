@@ -2099,6 +2099,36 @@
                         "title": "File",
                         "type": "string",
                         "format": "binary"
+                    },
+                    "chunk_size": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chunk Size",
+                        "description": "Maximum length of each chunk after the document is split (in tokens)"
+                    },
+                    "chunk_overlap": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Chunk Overlap",
+                        "description": "Chunk overlap (in tokens)"
+                    },
+                    "metadata": {
+                        "type": "string",
+                        "title": "Metadata",
+                        "description": "Metadata to be stored with each chunk (e.g. author, category, etc.). Since we are passing this along side form data, must be a JSON string.",
+                        "default": "{}"
                     }
                 }
             },
