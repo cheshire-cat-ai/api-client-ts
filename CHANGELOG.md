@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.11.3
+
+### Patch Changes
+
+- d4e7ee8: add missing params to file upload
+
 ## 0.11.2
 
 ### Patch Changes
