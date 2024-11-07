@@ -22,5 +22,7 @@ export type Plugin = {
     tools?: Array<{
         name: string;
     }>;
+    min_cat_version: string;
+    max_cat_version: string;
 };
 
