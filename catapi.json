@@ -2391,6 +2391,14 @@
                         "title": "Version",
                         "type": "string"
                     },
+                    "min_cat_version": {
+                        "title": "Min Cat Version",
+                        "type": "string"
+                    },
+                    "max_cat_version": {
+                        "title": "Max Cat Version",
+                        "type": "string"
+                    },
                     "active": {
                         "title": "Active",
                         "type": "boolean"

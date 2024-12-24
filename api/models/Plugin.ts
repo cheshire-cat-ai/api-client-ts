@@ -12,6 +12,8 @@ export type Plugin = {
     tags: string;
     thumb: string;
     version: string;
+    min_cat_version?: string;
+    max_cat_version?: string;
     active?: boolean;
     url?: string;
     upgrade?: string;
@@ -22,7 +24,5 @@ export type Plugin = {
     tools?: Array<{
         name: string;
     }>;
-    min_cat_version: string;
-    max_cat_version: string;
 };
 
