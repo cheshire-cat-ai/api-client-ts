@@ -74,11 +74,18 @@ export enum WebSocketState {
     CONNECTING, OPEN, CLOSING, CLOSED
 }
 
-export interface SocketResponse {
-    type: 'notification' | 'chat' | 'chat_token'
-    content: string
-    why?: MessageWhy & Record<string, any>
+export interface SocketRequest {
+    text?: string
+    audio?: string
+    image?: string
     [key: string]: any
+}
+
+export interface SocketResponse extends SocketRequest {
+    type: 'notification' | 'chat' | 'chat_token'
+    user_id: string
+    who: string
+    why?: MessageWhy & Record<string, any>
 }
 
 export interface SocketError {
@@ -88,7 +95,9 @@ export interface SocketError {
 
 export const isMessageResponse = (value: unknown): value is SocketResponse => {
     return !!(value && typeof value === 'object' 
-        && 'content' in value
+        && ('text' in value || 'audio' in value || 'image' in value)
+        && 'user_id' in value
+        && 'who' in value
         && 'type' in value
         && value.type !== 'error'
     )

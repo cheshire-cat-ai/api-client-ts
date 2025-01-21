@@ -300,6 +300,8 @@ type Plugin = {
     tags: string;
     thumb: string;
     version: string;
+    min_cat_version?: string;
+    max_cat_version?: string;
     active?: boolean;
     url?: string;
     upgrade?: string;
@@ -740,11 +742,17 @@ declare enum WebSocketState {
     CLOSING = 2,
     CLOSED = 3
 }
-interface SocketResponse {
-    type: 'notification' | 'chat' | 'chat_token';
-    content: string;
-    why?: MessageWhy & Record<string, any>;
+interface SocketRequest {
+    text?: string;
+    audio?: string;
+    image?: string;
     [key: string]: any;
+}
+interface SocketResponse extends SocketRequest {
+    type: 'notification' | 'chat' | 'chat_token';
+    user_id: string;
+    who: string;
+    why?: MessageWhy & Record<string, any>;
 }
 interface SocketError {
     name: 'SocketError' | 'FailedRetry' | 'SocketClosed';
@@ -783,12 +791,12 @@ declare class CatClient {
     init(): CatClient;
     /**
      * Sends a message to the Cat through the WebSocket connection.
-     * @param message The message to send to the Cat.
-     * @param data The custom data to send to the Cat.
+     * @param msg The message to send to the Cat.
      * @param userId The ID of the user sending the message. Defaults to "user".
+     * @throws If the message does not contain text, audio or image.
      * @returns The `CatClient` instance.
      */
-    send(message: string, data?: Record<string, any>, userId?: string): CatClient;
+    send(msg: SocketRequest, userId?: string): CatClient;
     /**
      * @returns The API Client
      */
@@ -865,4 +873,4 @@ type HTTPValidationError = {
     };
 };
 
-export { type AcceptedMemoryType, AcceptedMemoryTypes, type AcceptedPluginType, AcceptedPluginTypes, ApiError, type AuthPermission, type AuthResource, type BodyInstallPlugin, type BodyUploadFile, type BodyUploadMemory, type BodyUploadUrl, CancelError, CancelablePromise, CatClient, type CatMessage, type CatSettings, type Collection, type CollectionData, type CollectionsList, type ConversationMessage, type DeleteResponse, type FileResponse, type HTTPValidationError, type JWTResponse, type MemoryRecall, type MessageWhy, type Metadata, type Plugin, type PluginsList, type QueryData, type Setting, type SettingBody, type SettingsResponse, type SocketError, type SocketResponse, type Status, type UserCreate, type UserCredentials, type UserResponse, type UserUpdate, type VectorsData, type WebResponse, type WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { type AcceptedMemoryType, AcceptedMemoryTypes, type AcceptedPluginType, AcceptedPluginTypes, ApiError, type AuthPermission, type AuthResource, type BodyInstallPlugin, type BodyUploadFile, type BodyUploadMemory, type BodyUploadUrl, CancelError, CancelablePromise, CatClient, type CatMessage, type CatSettings, type Collection, type CollectionData, type CollectionsList, type ConversationMessage, type DeleteResponse, type FileResponse, type HTTPValidationError, type JWTResponse, type MemoryRecall, type MessageWhy, type Metadata, type Plugin, type PluginsList, type QueryData, type Setting, type SettingBody, type SettingsResponse, type SocketError, type SocketRequest, type SocketResponse, type Status, type UserCreate, type UserCredentials, type UserResponse, type UserUpdate, type VectorsData, type WebResponse, type WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };

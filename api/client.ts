@@ -4,6 +4,7 @@ import {
     SocketResponse, SocketError, 
     WebSocketState, WebSocketSettings,
     isMessageResponse, CatSettings,
+    SocketRequest,
 } from './utils'
 
 /**
@@ -114,13 +115,12 @@ export class CatClient {
 
     /**
      * Sends a message to the Cat through the WebSocket connection.
-     * @param message The message to send to the Cat.
-     * @param data The custom data to send to the Cat.
+     * @param msg The message to send to the Cat.
      * @param userId The ID of the user sending the message. Defaults to "user".
+     * @throws If the message does not contain text, audio or image.
      * @returns The `CatClient` instance.
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    send(message: string, data?: Record<string, any>, userId?: string): CatClient {
+    send(msg: SocketRequest, userId?: string): CatClient {
         if (this.ws?.readyState !== WebSocket.OPEN) {
             this.errorHandler?.({
                 name: 'SocketClosed',
@@ -128,15 +128,13 @@ export class CatClient {
             })
             return this
         }
-        if (data && ('text' in data || 'user_id' in data)) {
-            throw new Error('The data object should not have a "text" or a "user_id" property')
-        }
-        const jsonMessage = JSON.stringify({ 
-            text: message,
-            user_id: userId ?? (this.config.userId ?? 'user'),
-            ...data
-        })
-        this.ws.send(jsonMessage)
+        if ('text' in msg || 'audio' in msg || 'image' in msg) {
+            const jsonMessage = JSON.stringify({ 
+                ...msg,
+                user_id: userId ?? (this.config.userId ?? 'user'),
+            })
+            this.ws.send(jsonMessage)
+        } else throw new Error('The message argument must contain either text, audio or image.')
         return this
     }
 
