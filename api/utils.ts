@@ -93,6 +93,14 @@ export interface SocketError {
     description: string
 }
 
+export const isTokenResponse = (value: unknown): value is SocketResponse => {
+    return !!(value && typeof value === 'object' 
+        && 'content' in value
+        && 'type' in value
+        && value.type !== 'error'
+    )
+}
+
 export const isMessageResponse = (value: unknown): value is SocketResponse => {
     return !!(value && typeof value === 'object' 
         && ('text' in value || 'audio' in value || 'image' in value)

@@ -5,6 +5,7 @@ import {
     WebSocketState, WebSocketSettings,
     isMessageResponse, CatSettings,
     SocketRequest,
+    isTokenResponse,
 } from './utils'
 
 /**
@@ -67,6 +68,9 @@ export class CatClient {
             if (typeof event.data != 'string') return
             const data = JSON.parse(event.data) as SocketError | SocketResponse
             if (isMessageResponse(data)) {
+                this.messageHandler?.(data)
+                return
+            } else if (isTokenResponse(data)) {
                 this.messageHandler?.(data)
                 return
             }
