@@ -758,6 +758,7 @@ interface SocketError {
     name: 'SocketError' | 'FailedRetry' | 'SocketClosed';
     description: string;
 }
+declare const isTokenResponse: (value: unknown) => value is SocketResponse;
 declare const isMessageResponse: (value: unknown) => value is SocketResponse;
 
 /**
@@ -873,4 +874,4 @@ type HTTPValidationError = {
     };
 };
 
-export { type AcceptedMemoryType, AcceptedMemoryTypes, type AcceptedPluginType, AcceptedPluginTypes, ApiError, type AuthPermission, type AuthResource, type BodyInstallPlugin, type BodyUploadFile, type BodyUploadMemory, type BodyUploadUrl, CancelError, CancelablePromise, CatClient, type CatMessage, type CatSettings, type Collection, type CollectionData, type CollectionsList, type ConversationMessage, type DeleteResponse, type FileResponse, type HTTPValidationError, type JWTResponse, type MemoryRecall, type MessageWhy, type Metadata, type Plugin, type PluginsList, type QueryData, type Setting, type SettingBody, type SettingsResponse, type SocketError, type SocketRequest, type SocketResponse, type Status, type UserCreate, type UserCredentials, type UserResponse, type UserUpdate, type VectorsData, type WebResponse, type WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse };
+export { type AcceptedMemoryType, AcceptedMemoryTypes, type AcceptedPluginType, AcceptedPluginTypes, ApiError, type AuthPermission, type AuthResource, type BodyInstallPlugin, type BodyUploadFile, type BodyUploadMemory, type BodyUploadUrl, CancelError, CancelablePromise, CatClient, type CatMessage, type CatSettings, type Collection, type CollectionData, type CollectionsList, type ConversationMessage, type DeleteResponse, type FileResponse, type HTTPValidationError, type JWTResponse, type MemoryRecall, type MessageWhy, type Metadata, type Plugin, type PluginsList, type QueryData, type Setting, type SettingBody, type SettingsResponse, type SocketError, type SocketRequest, type SocketResponse, type Status, type UserCreate, type UserCredentials, type UserResponse, type UserUpdate, type VectorsData, type WebResponse, type WebSocketSettings, WebSocketState, CatClient as default, isMessageResponse, isTokenResponse };

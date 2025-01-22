@@ -38,7 +38,8 @@ __export(api_client_ts_exports, {
   CatClient: () => CatClient,
   WebSocketState: () => WebSocketState,
   default: () => api_client_ts_default,
-  isMessageResponse: () => isMessageResponse
+  isMessageResponse: () => isMessageResponse,
+  isTokenResponse: () => isTokenResponse
 });
 module.exports = __toCommonJS(api_client_ts_exports);
 
@@ -1312,6 +1313,9 @@ var WebSocketState = /* @__PURE__ */ ((WebSocketState2) => {
   WebSocketState2[WebSocketState2["CLOSED"] = 3] = "CLOSED";
   return WebSocketState2;
 })(WebSocketState || {});
+var isTokenResponse = (value) => {
+  return !!(value && typeof value === "object" && "content" in value && "type" in value && value.type !== "error");
+};
 var isMessageResponse = (value) => {
   return !!(value && typeof value === "object" && ("text" in value || "audio" in value || "image" in value) && "user_id" in value && "who" in value && "type" in value && value.type !== "error");
 };
@@ -1372,6 +1376,9 @@ var CatClient = class {
       if (typeof event.data != "string") return;
       const data = JSON.parse(event.data);
       if (isMessageResponse(data)) {
+        this.messageHandler?.(data);
+        return;
+      } else if (isTokenResponse(data)) {
         this.messageHandler?.(data);
         return;
       }
@@ -1532,5 +1539,6 @@ var api_client_ts_default = CatClient;
   CancelablePromise,
   CatClient,
   WebSocketState,
-  isMessageResponse
+  isMessageResponse,
+  isTokenResponse
 });

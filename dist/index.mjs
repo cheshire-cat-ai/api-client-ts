@@ -1268,6 +1268,9 @@ var WebSocketState = /* @__PURE__ */ ((WebSocketState2) => {
   WebSocketState2[WebSocketState2["CLOSED"] = 3] = "CLOSED";
   return WebSocketState2;
 })(WebSocketState || {});
+var isTokenResponse = (value) => {
+  return !!(value && typeof value === "object" && "content" in value && "type" in value && value.type !== "error");
+};
 var isMessageResponse = (value) => {
   return !!(value && typeof value === "object" && ("text" in value || "audio" in value || "image" in value) && "user_id" in value && "who" in value && "type" in value && value.type !== "error");
 };
@@ -1328,6 +1331,9 @@ var CatClient = class {
       if (typeof event.data != "string") return;
       const data = JSON.parse(event.data);
       if (isMessageResponse(data)) {
+        this.messageHandler?.(data);
+        return;
+      } else if (isTokenResponse(data)) {
         this.messageHandler?.(data);
         return;
       }
@@ -1488,5 +1494,6 @@ export {
   CatClient,
   WebSocketState,
   api_client_ts_default as default,
-  isMessageResponse
+  isMessageResponse,
+  isTokenResponse
 };
