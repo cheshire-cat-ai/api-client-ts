@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.12.0
+
+### Minor Changes
+
+- 4d7425b: update send method to work with multimodality
+
 ## 0.11.3
 
 ### Patch Changes
