@@ -1,5 +1,11 @@
 # ccat-api
 
+## 0.12.1
+
+### Patch Changes
+
+- 9c31f33: fix chat_token check response
+
 ## 0.12.0
 
 ### Minor Changes
