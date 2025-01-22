@@ -38,20 +38,20 @@
     "generate": "openapi --input ./catapi.json --output ./api --client axios --name CCatAPI --useUnionTypes"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.7",
-    "@types/node": "^20.14.10",
+    "@changesets/cli": "^2.27.11",
+    "@types/node": "^22.10.7",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
     "eslint": "^8.57.0",
     "openapi-typescript-codegen": "^0.29.0",
     "ts-node": "^10.9.2",
-    "tsup": "^8.1.0",
-    "typescript": "^5.5.3"
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@types/ws": "^8.5.10",
-    "axios": "^1.7.2",
-    "form-data": "^4.0.0",
+    "@types/ws": "^8.5.13",
+    "axios": "^1.7.9",
+    "form-data": "^4.0.1",
     "isomorphic-ws": "^5.0.0",
     "ws": "^8.18.0"
   }
