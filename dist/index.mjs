@@ -1484,7 +1484,7 @@ var CatClient = class {
 };
 
 // index.ts
-var api_client_ts_default = CatClient;
+var index_default = CatClient;
 export {
   AcceptedMemoryTypes,
   AcceptedPluginTypes,
@@ -1493,7 +1493,7 @@ export {
   CancelablePromise,
   CatClient,
   WebSocketState,
-  api_client_ts_default as default,
+  index_default as default,
   isMessageResponse,
   isTokenResponse
 };
